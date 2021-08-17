@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://rentyhq.herokuapp.com/posts";
+const url = "https://rentyhq.herokuapp.com/items";
 // const url = "http://localhost:5000/items";
 
 const fetchItemsAPI = () => axios.get(url);
