@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const url = "https://sageka.herokuapp.com/posts";
-const url = "http://localhost:5000/items";
+const url = "https://rentyhq.herokuapp.com/posts";
+// const url = "http://localhost:5000/items";
 
 const fetchItemsAPI = () => axios.get(url);
 const createItemAPI = (newItem) => axios.post(url, newItem);
