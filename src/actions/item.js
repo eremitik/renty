@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// const url = "https://rentyhq.herokuapp.com/items";  //live deploy
-const url = `http://localhost:5000/items`; // local deploy
+const url = `http://54.254.145.250/items`; // ec2 deploy
+// const url = "https://renty.herokuapp.com/items";  // heroku deploy
+// const url = `http://localhost:4000/items`; // local deploy
 
 const fetchItemsAPI = () => axios.get(url);
 const createItemAPI = (newItem) => axios.post(url, newItem);
