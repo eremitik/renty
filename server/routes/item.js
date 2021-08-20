@@ -1,5 +1,5 @@
 import express from 'express';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import PostItem from '../models/postItem.js';
 
 const getItems = async (req, res) => {
@@ -67,6 +67,5 @@ router.post('/', createItem);
 router.patch('/:id', updateItem);
 router.delete('/:id', deleteItem);
 router.get('/search', getItemsBySearch)
-
 
 export default router;

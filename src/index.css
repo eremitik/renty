@@ -35,4 +35,7 @@
   color: orange;
   letter-spacing: 1.3px;
   text-transform: uppercase;
+
+#item-container {
+  border: solid black;
 }
