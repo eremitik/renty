@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { getItems } from "./actions/item";
 import { useSelector } from "react-redux";
+import Items from './components/Items/Items';
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
   return (
     <div className="App">
       <h1>RENTY</h1>
-      {items.map(item =>
+      <Items items={items}/>
+      {/* {items.map(item =>
         <div>
           Tags: {item.tags}
           <br></br>
@@ -24,7 +26,7 @@ function App() {
           <br></br>
           Description: {item.description}
         </div>)
-      }
+      } */}
     </div>
   );
 }
