@@ -1,7 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import router from './routes/item.js';
+import itemRoutes from './routes/item.js';
+import authRoutes from './routes/auth.js';
+import userRoutes from './routes/user.js';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -12,7 +14,6 @@ app.use(express.json({ limit: "30mb", extended: true }))
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-app.use('/items', router)
 
 // just to say hello from server app launch
 app.get('/', (req, res) => {
@@ -22,12 +23,13 @@ app.get('/', (req, res) => {
 
 const password = process.env.DB_PASS
 const CONNECTION_URL = "mongodb+srv://renty:" + password + "@cluster0.trccm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7777;
 
 mongoose
   .connect(CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true
 
   })
   .then(() =>
@@ -39,3 +41,7 @@ mongoose
   .catch((err) => console.log(err.message));
 
 mongoose.set("useFindAndModify", false);
+//Routes
+app.use('/items', itemRoutes)
+app.use('/user', userRoutes)
+app.use('/auth', authRoutes)
