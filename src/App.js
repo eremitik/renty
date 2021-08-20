@@ -18,7 +18,7 @@ import { Context } from "./Store";
 function App() {
 
   const [state, dispatch] = useContext(Context);
-  console.log(dispatch)
+  // console.log(dispatch)
 
 
   useEffect(() => {

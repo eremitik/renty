@@ -6,19 +6,11 @@ import { storeToken } from "../helper"
 import { Context } from "../Store";
 
 function Register() {
-    // const [user, setUser] = useState({
-    //     name: '', email: '', password: ''
-    // })
+
     const [state, dispatch] = useContext(Context);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-
-    // const onChangeInput = e => {
-    //     const { name, value } = e.target;
-    //     setUser({ ...user, [name]: value })
-    // }
 
     const registerSubmit = async (e) => {
         e.preventDefault()
