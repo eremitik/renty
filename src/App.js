@@ -1,7 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-// import { useDispatch } from "react-redux";
-// import { getItems } from "./actions/item";
-// import { useSelector } from "react-redux";
 import { storeToken } from './helper';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -18,8 +15,6 @@ import { Context } from "./Store";
 function App() {
 
   const [state, dispatch] = useContext(Context);
-  // console.log(dispatch)
-
 
   useEffect(() => {
     storeToken(dispatch);
@@ -29,7 +24,7 @@ function App() {
     homePage: "/",
     loginPage: "/login",
     registPage: "/register",
-    itemsPage: "/items",
+    itemsPage: "/main",
   };
 
   const routes = [

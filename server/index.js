@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 
 const password = process.env.DB_PASS
 const CONNECTION_URL = "mongodb+srv://renty:" + password + "@cluster0.trccm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-const PORT = process.env.PORT || 7777;
+const PORT = process.env.PORT || 4000;
 
 mongoose
   .connect(CONNECTION_URL, {

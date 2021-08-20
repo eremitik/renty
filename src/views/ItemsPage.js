@@ -7,7 +7,7 @@ export default function NotesPage() {
 
     return (
         <div>
-            {state.user && state.user.name ? <p>Hello, {state.user.name}</p> : ""}
+            {state.user && state.user.name ? <p>Hello, {state.user.name}</p> : "User state not pulling in"}
             <Items />
         </div>
     );

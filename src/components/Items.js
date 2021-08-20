@@ -24,7 +24,7 @@ const Items = () => {
     const [state] = useContext(Context);
     const [items, setItems] = useState([]);
     const displayItems = async () => {
-        const response = await axios.get("/items", {
+        const response = await axios.get("http://localhost:4000/items", {
             headers: { Authorization: `Bearer ${state.token}` },
         });
         setItems(response.data);
@@ -49,17 +49,5 @@ const Items = () => {
       )
     )
 }
-
-
-
-//     return (
-//         <div>
-//             <p>{state.token}</p>
-//             {items.map((item) => (
-//                 <Item key={item.id} item={item} />
-//             ))}
-//         </div>
-//     );
-// }
 
 export default Items;

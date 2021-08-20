@@ -7,7 +7,7 @@ import { Context } from "../Store";
 
 function Register() {
 
-    const [state, dispatch] = useContext(Context);
+    const dispatch = useContext(Context);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,14 +15,14 @@ function Register() {
     const registerSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('/auth/register', {
+            const response = await axios.post('http://localhost:4000/auth/register', {
                 name,
                 email,
                 password
             })
             localStorage.setItem('jwt', response.data.token)
             storeToken(dispatch)
-            window.location.href = "/items";
+            window.location.href = "/main";
         } catch (err) {
             alert(err.response.data.msg)
         }

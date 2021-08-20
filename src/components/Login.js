@@ -6,24 +6,14 @@ import { storeToken } from "../helper.js"
 
 function Login() {
 
-    // const [user, setUser] = useState({
-    //     email: '', password: ''
-    // })
-
-    const [state, dispatch] = useContext(Context)
+    const dispatch = useContext(Context)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-
-    // const onChangeInput = e => {
-    //     const { name, value } = e.target;
-    //     setUser({ ...user, [name]: value })
-    // }
 
     const loginSubmit = async e => {
         e.preventDefault()
         try {
-            const response = await axios.post('/auth/login', {
+            const response = await axios.post('http://localhost:4000/auth/login', {
                 email,
                 password
             })
@@ -31,7 +21,7 @@ function Login() {
             localStorage.setItem('jwt', response.data.token)
             storeToken(dispatch)
 
-            window.location.href = "/items";
+            window.location.href = "/main";
         } catch (err) {
             alert(err.response.data.msg)
         }

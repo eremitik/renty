@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from "moment";
+import MBA from "../images/mba.jpg";
 
 const useStyles = makeStyles({
   media: {
@@ -49,14 +50,12 @@ const useStyles = makeStyles({
   },
 })
 
-
-
 const Item = ({ item }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} title={item.title} />
+      <CardMedia className={classes.media} title={item.title} image={MBA}/>
       <div className={classes.overlay}>
         <Typography variant="h6">{item.title}</Typography>
         <Typography variant="body2">{moment(item.createAt).fromNow()}</Typography>
@@ -73,7 +72,5 @@ const Item = ({ item }) => {
     </Card>
   )
 }
-
-
 
 export default Item;
