@@ -1,16 +1,12 @@
 import React, { useEffect, useContext } from 'react';
 import { storeToken } from './helper';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./views/HomePage";
 import LoginPage from "./views/LoginPage";
 import RegistPage from "./views/RegistPage";
 import ItemsPage from "./views/ItemsPage";
 import { Context } from "./Store";
-
-
-
-
 
 function App() {
 
@@ -48,7 +44,7 @@ function App() {
   ];
 
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
       <Switch>
         {routes.map((route) => (
@@ -60,7 +56,8 @@ function App() {
           />
         ))}
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
+
 export default App;

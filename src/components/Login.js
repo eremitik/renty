@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Context } from "../Store";
 import { storeToken } from "../helper.js"
+import dotenv from "dotenv";
+
+dotenv.config();
 
 function Login() {
 
@@ -21,7 +24,7 @@ function Login() {
             localStorage.setItem('jwt', response.data.token)
             storeToken(dispatch)
 
-            window.location.href = "/main";
+            window.location.href = "/#/main";
         } catch (err) {
             alert(err.response.data.msg)
         }

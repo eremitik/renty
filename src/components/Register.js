@@ -22,7 +22,7 @@ function Register() {
             })
             localStorage.setItem('jwt', response.data.token)
             storeToken(dispatch)
-            window.location.href = "/main";
+            window.location.href = "/#/main";
         } catch (err) {
             alert(err.response.data.msg)
         }
