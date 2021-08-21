@@ -1,48 +1,76 @@
 import axios from 'axios';
+// import auth from '../../server/middleware/auth.js';
 import {
-    LOGIN_USER,
-    REGISTER_USER,
-    AUTH_USER,
-    LOGOUT_USER,
-} from './types';
-import { USER_SERVER } from '../components/Config.js';
+    USER_LOGIN,
+    USER_LOGOUT,
+    USER_REGISTER,
+} from '../types/userTypes.js';
 
-export function registerUser(dataToSubmit) {
-    const request = axios.post(`${USER_SERVER}/register`, dataToSubmit)
-        .then(response => response.data);
+// User Registration
 
-    return {
-        type: REGISTER_USER,
-        payload: request
+export const register = (name, email, password) => async (dispatch) => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+
+        const { data } = await axios.post(
+            '/users',
+            { name, email, password },
+            config
+        )
+
+        dispatch({
+            type: USER_REGISTER,
+            payload: data,
+        })
+
+        dispatch({
+            type: USER_LOGIN,
+            payload: data,
+        })
+
+        localStorage.setItem('userInfo', JSON.stringify(data))
+    } catch (error) {
+        alert(error)
     }
 }
 
-export function loginUser(dataToSubmit) {
-    const request = axios.post(`${USER_SERVER}/login`, dataToSubmit)
-        .then(response => response.data);
+// User Login
 
-    return {
-        type: LOGIN_USER,
-        payload: request
+export const login = (email, password) => async (dispatch) => {
+    try {
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+
+        const { data } = await axios.post(
+            '/users/login',
+            { email, password },
+            config
+        )
+
+        dispatch({
+            type: USER_LOGIN,
+            payload: data,
+        })
+
+        localStorage.setItem('userInfo', JSON.stringify(data))
+    } catch (error) {
+        alert(error)
     }
 }
 
-export function auth() {
-    const request = axios.get(`${USER_SERVER}/auth`)
-        .then(response => response.data);
+// User Logout
 
-    return {
-        type: AUTH_USER,
-        payload: request
-    }
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('userInfo')
+    dispatch({ type: USER_LOGOUT })
+    document.location.href = '/login'
 }
 
-export function logoutUser() {
-    const request = axios.get(`${USER_SERVER}/logout`)
-        .then(response => response.data);
-
-    return {
-        type: LOGOUT_USER,
-        payload: request
-    }
-}

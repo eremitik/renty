@@ -1,12 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import { storeToken } from './helper';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+
 import Navbar from "./components/Navbar";
 import HomePage from "./views/HomePage";
 import LoginPage from "./views/LoginPage";
 import RegistPage from "./views/RegistPage";
 import ItemsPage from "./views/ItemsPage";
-import { Context } from "./Store";
+// import { Context } from "./Store";
 
 
 
@@ -14,11 +16,6 @@ import { Context } from "./Store";
 
 function App() {
 
-  const [state, dispatch] = useContext(Context);
-
-  useEffect(() => {
-    storeToken(dispatch);
-  }, [dispatch]);
 
   const paths = {
     homePage: "/",

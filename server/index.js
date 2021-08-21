@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import itemRoutes from './routes/item.js';
-import authRoutes from './routes/auth.js';
+// import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import dotenv from "dotenv";
 
@@ -43,5 +43,5 @@ mongoose
 mongoose.set("useFindAndModify", false);
 //Routes
 app.use('/items', itemRoutes)
-app.use('/user', userRoutes)
-app.use('/auth', authRoutes)
+app.use('/users', userRoutes)
+// app.use('/auth', authRoutes)

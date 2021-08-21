@@ -1,23 +1,28 @@
 import { Router } from 'express';
 // User Model
-import User from '../models/users.js';
+// import User from '../models/users.js';
+
+import {
+    authUser,
+    registerUser,
+    getUsers,
+    deleteUser,
+    getUserById,
+    updateUser,
+} from '../controllers/userController.js'
+import auth from "../middleware/auth.js"
 
 const router = Router();
 
-/**
- * @route   GET /users
- * @desc    Get all users
- * @access  Private
- */
+router.route('/').post(registerUser).get(auth, getUsers)
+// router.post('/register', registerUser)
+router.post('/login', authUser)
 
-router.get('/', async (req, res) => {
-    try {
-        const users = await User.find();
-        if (!users) throw Error('No users exist');
-        res.json(users);
-    } catch (e) {
-        res.status(400).json({ msg: e.message });
-    }
-});
+router
+    .route('/:id')
+    .delete(auth, deleteUser)
+    .get(auth, getUserById)
+    .put(auth, updateUser)
+
 
 export default router;

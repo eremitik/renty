@@ -1,23 +1,29 @@
-import React, { useContext } from "react";
+// import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../Store";
+import { useDispatch, useSelector } from 'react-redux'
+// import { Context } from "../Store";
 // import { useHistory } from "react-router";
+import { logout } from '../actions/userActions.js'
 
 export default function Navbar() {
-    const [state, dispatch] = useContext(Context);
+    const dispatch = useDispatch()
 
-    const logout = () => {
+    const logoutFunct = () => {
+
         localStorage.setItem("jwt", "");
-        dispatch("UNSET_USER_AND_TOKEN");
+        dispatch(logout());
         window.location.reload();
     };
 
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
     return (
         <div>
-            {state.user.id ? (
+            {userInfo ? (
                 <>
                     <Link to="/notes">Go to notes</Link>
-                    <button onClick={logout}>Log out</button>
+                    <button onClick={logoutFunct}>Log out</button>
                 </>
             ) : (
                 <>

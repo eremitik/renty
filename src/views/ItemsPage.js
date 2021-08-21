@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import Items from "../components/Items";
-import { Context } from "../Store";
+
 
 export default function NotesPage() {
-    const [state] = useContext(Context);
+
+    const user = useSelector(state => state.user)
 
     return (
         <div>
-            {state.user && state.user.name ? <p>Hello, {state.user.name}</p> : "User state not pulling in"}
+            {user && user.name ? <p>Hello, {user.name}</p> : "User state not pulling in"}
             <Items />
         </div>
     );

@@ -1,25 +1,37 @@
 import jwt from 'jsonwebtoken';
+import asyncHandler from 'express-async-handler' //Simple middleware for handling exceptions inside of async express routes and passing them to your express error handlers.
 import dotenv from "dotenv";
 // import config from '../config';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET;
+// const JWT_SECRET = "dsfgrdsfgrsdfgsdgrdsfgf"  //process.env.JWT_SECRET;
 
-export default (req, res, next) => {
-    const token = req.header('x-auth-token');
+const auth = asyncHandler(async (req, res, next) => {
+    let token
 
-    // Check for token
-    if (!token)
-        return res.status(401).json({ msg: 'No token, authorization denied' });
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        try {
+            token = req.headers.authorization.split(' ')[1]
 
-    try {
-        // Verify token
-        const decoded = jwt.verify(token, JWT_SECRET);
-        // Add user from payload
-        req.user = decoded;
-        next();
-    } catch (e) {
-        res.status(400).json({ msg: 'Token is not valid' });
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+            req.user = await User.findById(decoded.id).select('-password')
+
+            next()
+        } catch (error) {
+            console.error(error)
+            res.status(401)
+            throw new Error('Not authorized, token failed')
+        }
     }
-};
+
+    if (!token) {
+        res.status(401)
+        throw new Error('Not authorized, no token')
+    }
+})
+export default auth

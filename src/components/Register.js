@@ -1,27 +1,33 @@
-import React, { useState } from 'react'
-import { useContext } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { storeToken } from "../helper"
-import { Context } from "../Store";
+// import axios from 'axios'
+// import { storeToken } from "../helper"
+// import { Context } from "../Store";
+import { register } from '../actions/userActions.js'
 
-function Register() {
 
-    const dispatch = useContext(Context);
+function Register({ location, history }) {
+
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const userRegister = useSelector((state) => state.userRegister)
+    // const userInfo = userRegister
+    // const redirect = location.search ? location.search.split('=')[1] : '/'
+
+    // useEffect(() => {
+    //     if (userInfo) {
+    //         history.push(redirect)
+    //     }
+    // }, [history, userInfo, redirect])
+
     const registerSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('http://localhost:4000/auth/register', {
-                name,
-                email,
-                password
-            })
-            localStorage.setItem('jwt', response.data.token)
-            storeToken(dispatch)
+            dispatch(register(name, email, password))
             window.location.href = "/main";
         } catch (err) {
             alert(err.response.data.msg)

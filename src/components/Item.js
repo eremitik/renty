@@ -55,7 +55,7 @@ const Item = ({ item }) => {
 
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} title={item.title} image={MBA}/>
+      <CardMedia className={classes.media} title={item.title} image={MBA} />
       <div className={classes.overlay}>
         <Typography variant="h6">{item.title}</Typography>
         <Typography variant="body2">{moment(item.createAt).fromNow()}</Typography>
