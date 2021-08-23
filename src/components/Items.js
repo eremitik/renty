@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
+import { getItems } from "../actions/itemActions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Items = () => {
-  const items = useSelector(state => state.itemList)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getItems())
+
+  }, [dispatch])
+
+  const itemList = useSelector(state => state.itemList)
+  const { items } = itemList
+
   const classes = useStyles();
   console.log(items)
   return (

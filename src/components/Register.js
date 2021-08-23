@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 // import axios from 'axios'
 // import { storeToken } from "../helper"
 // import { Context } from "../Store";
 import { register } from '../actions/userActions.js'
 
 
-function Register({ location, history }) {
+function Register() {
 
     const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const history = useHistory()
 
     const userRegister = useSelector((state) => state.userRegister)
-    // const userInfo = userRegister
+    const { userInfo } = userRegister
     // const redirect = location.search ? location.search.split('=')[1] : '/'
 
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect)
-    //     }
-    // }, [history, userInfo, redirect])
+    useEffect(() => {
+        if (userInfo) {
+            history.push('/main')
+        }
+    }, [history, userInfo])
 
     const registerSubmit = async (e) => {
         e.preventDefault()
         try {
             dispatch(register(name, email, password))
-            window.location.href = "/main";
+            // window.location.href = "/main";
         } catch (err) {
             alert(err.response.data.msg)
         }

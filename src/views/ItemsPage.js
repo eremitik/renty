@@ -4,7 +4,8 @@ import Items from "../components/Items";
 
 export default function NotesPage() {
 
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.userLogin.userInfo)
+    console.log(user)
 
     return (
         <div>

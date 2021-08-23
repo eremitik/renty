@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 // import axios from 'axios'
 // import { Context } from "../Store";
 // import { storeToken } from "../helper.js"
 
+
 import { login } from '../actions/userActions'
 
-function Login({ location, history }) {
+function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch()
-
-    // const userLogin = useSelector((state) => state.userLogin)
-    // const userInfo = userLogin
+    const history = useHistory()
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
 
     // const redirect = location.search ? location.search.split('=')[1] : '/'
 
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect)
-    //     }
-    // }, [history, userInfo, redirect])
+    useEffect(() => {
+        if (userInfo) {
+            history.push('/main')
+        }
+    }, [history, userInfo])
 
     const loginSubmit = async e => {
         e.preventDefault()
         try {
             dispatch(login(email, password))
-            window.location.href = "/main";
+
         } catch (err) {
             alert(err)
         }

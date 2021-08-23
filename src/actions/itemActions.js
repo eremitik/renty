@@ -8,7 +8,7 @@ import {
 } from '../types/itemTypes.js'
 import { logout } from './userActions'
 
-const url = "http://localhost:4000/items"; // local deploy
+const url = "/items"; // local deploy
 
 const fetchItemsAPI = () => axios.get(url);
 const createItemAPI = (newItem) => axios.post(url, newItem);

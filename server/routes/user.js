@@ -14,8 +14,8 @@ import auth from "../middleware/auth.js"
 
 const router = Router();
 
-router.route('/').post(registerUser).get(auth, getUsers)
-// router.post('/register', registerUser)
+router.route('/').get(auth, getUsers)
+router.post('/register', registerUser)
 router.post('/login', authUser)
 
 router
