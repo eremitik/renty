@@ -9,6 +9,10 @@ const postSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  rented: Boolean,
+  price_id: String,
+  price: Number,
+  selectedFile: String,
 });
 
 const postItem = mongoose.model("postItem", postSchema);

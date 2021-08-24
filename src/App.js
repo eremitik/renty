@@ -1,27 +1,20 @@
-import React, { useEffect, useContext } from 'react';
-// import { storeToken } from './helper';
-import { HashRouter, BrowserRouter, Switch, Route } from "react-router-dom";
-
-
+import React from 'react';
+import { HashRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./views/HomePage";
 import LoginPage from "./views/LoginPage";
 import RegistPage from "./views/RegistPage";
 import ItemsPage from "./views/ItemsPage";
-// import { Context } from "./Store";
-
-
-
-
+import FormPage from "./views/FormPage";
 
 function App() {
-
 
   const paths = {
     homePage: "/",
     loginPage: "/login",
     registPage: "/register",
     itemsPage: "/main",
+    formPage: "/form",
   };
 
   const routes = [
@@ -42,6 +35,10 @@ function App() {
       path: paths.itemsPage,
       render: () => <ItemsPage />,
     },
+    {
+      path: paths.formPage,
+      render: () => <FormPage />,
+    }
   ];
 
   return (

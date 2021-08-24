@@ -2,7 +2,6 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from "moment";
-import MBA from "../images/mba.jpg";
 
 const useStyles = makeStyles({
   media: {
@@ -53,9 +52,21 @@ const useStyles = makeStyles({
 const Item = ({ item }) => {
   const classes = useStyles();
 
+  const handlePayment = async () => {
+      const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${item.price_id}`, {
+          method: 'POST',
+          headers: {
+            "Content-Type": 'application/json',
+          }
+        })
+        const body = await res.json()
+        window.location.href = body.url
+  }
+
+
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} title={item.title} image={MBA} />
+      <CardMedia className={classes.media} title={item.title} image={item.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
       <div className={classes.overlay}>
         <Typography variant="h6">{item.title}</Typography>
         <Typography variant="body2">{moment(item.createAt).fromNow()}</Typography>
@@ -67,7 +78,7 @@ const Item = ({ item }) => {
       <Typography className={classes.creator} variant="h5" gutterBottom>{item.creator}</Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">{item.description}</Typography>
-        <button>RENT ME</button>
+        <button onClick={handlePayment}>RENT ME</button>
       </CardContent>
     </Card>
   )
