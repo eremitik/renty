@@ -1,6 +1,9 @@
-// import asyncHandler from 'express-async-handler'
-
 import PostItem from '../models/postItem.js';
+import Stripe from 'stripe';
+import dotenv from 'dotenv';
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe('sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg');
+dotenv.config();
 
 const getItems = async (req, res) => {
     try {
@@ -12,11 +15,38 @@ const getItems = async (req, res) => {
 }
 
 const createItem = async (req, res) => {
-    const item = req.body;
-    const newItem = new PostItem(item);
 
     try {
-        await newItem.save();
+      const {
+        title,
+        description,
+        creator,
+        tags,
+        price,
+        selectedFile
+      } = req.body;
+      const product = await stripe.products.create({
+        name: title,
+        description: description
+        
+      });
+      const newPrice = await stripe.prices.create({
+        unit_amount: price,
+        currency: "jpy",
+        product: product.id,
+      });
+      const newItem = {
+        title,
+        description,
+        creator,
+        tags,
+        rented: false,
+        price_id: newPrice.id,
+        price,
+        selectedFile
+      };
+        const postMongo = new PostItem(newItem);
+        await postMongo.save();
         res.status(201).json(newItem);
     } catch (err) {
         res.status(409).json({ message: err.message })
@@ -67,3 +97,11 @@ export {
     getItemsBySearch,
 
 }
+
+// {
+//     "title":,
+//         "description":,
+//         "creator":,
+//         "tags":,
+//         "price":
+// }

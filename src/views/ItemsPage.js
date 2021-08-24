@@ -1,15 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Items from "../components/Items";
 
 
 export default function NotesPage() {
 
     const user = useSelector(state => state.userLogin.userInfo)
-    console.log(user)
 
     return (
         <div>
-            {user && user.name ? <p>Hello, {user.name}</p> : "User state not pulling in"}
+            {user && user.name ? <p>Hello, {user.name}</p> : "Please log in to rent and create rentals."}
             <Items />
         </div>
     );

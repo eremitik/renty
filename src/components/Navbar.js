@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions.js'
-// import { Context } from "../Store";
-// import { useHistory } from "react-router";
-// import React, { useContext } from "react";
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -38,13 +36,6 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [auth, setAuth] = React.useState(true);
-
-  // const logoutFunct = () => {
-  //   localStorage.setItem("jwt", "");
-  //   dispatch(logout());
-  //   window.location.reload();
-  // };
 
   const logoutSubmit = async (e) => {
     e.preventDefault()
@@ -57,10 +48,6 @@ export default function Navbar() {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -84,7 +71,7 @@ export default function Navbar() {
               onClick={handleMenu}
               color="inherit"
               edge="start"
-              class={classes.menu}
+              className={classes.menu}
             >
               <MenuIcon />
             </IconButton>
@@ -104,9 +91,10 @@ export default function Navbar() {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}><Link to="/">Home</Link></MenuItem>
-              <MenuItem onClick={handleClose}><Link to="/register">Register</Link></MenuItem>
-              <MenuItem onClick={handleClose}><Link to="/login">Login</Link> </MenuItem>
+              { !userInfo ? <MenuItem onClick={handleClose}><Link to="/register">Register</Link></MenuItem> : null }
+              { !userInfo ? <MenuItem onClick={handleClose}><Link to="/login">Login</Link> </MenuItem> : null }
               <MenuItem onClick={handleClose}><Link to="/main">See Rentals</Link></MenuItem>
+              <MenuItem onClick={handleClose}><Link to="/form">Post Rental</Link></MenuItem>
               <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
             </Menu>
           </div>
@@ -114,9 +102,7 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Renty
           </Typography>
-          {auth && (
             <AccountCircle />
-          )}
         </Toolbar>
       </AppBar>
     </div>

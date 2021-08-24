@@ -15,11 +15,6 @@ import {
     itemSearchReducer,
 } from './reducers/itemReducers'
 
-// import React, { createContext, useReducer } from "react";
-// import Reducer from "./reducers/userReducers.js";
-
-
-
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,

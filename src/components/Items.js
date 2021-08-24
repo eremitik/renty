@@ -1,7 +1,6 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect } from "react";
 import Item from "./Item";
 import { useDispatch, useSelector } from 'react-redux'
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
 import { getItems } from "../actions/itemActions";
@@ -31,7 +30,6 @@ const Items = () => {
   const { items } = itemList
 
   const classes = useStyles();
-  console.log(items)
   return (
     !items.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>

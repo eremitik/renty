@@ -2,8 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import itemRoutes from './routes/item.js';
-// import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
+import stripeRoutes from './routes/stripe.js';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -41,7 +41,8 @@ mongoose
   .catch((err) => console.log(err.message));
 
 mongoose.set("useFindAndModify", false);
+
 //Routes
 app.use('/items', itemRoutes)
 app.use('/users', userRoutes)
-// app.use('/auth', authRoutes)
+app.use('/stripe', stripeRoutes)
