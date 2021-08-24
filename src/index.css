@@ -1,6 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Montserrat";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "Montserrat";
+}
+
 .login-page {
   max-width: 500px;
-  border: 2px solid rgb(3, 165, 206);
+  /* border: 2px solid rgb(3, 165, 206); */
   border-radius: 5px;
   padding: 30px;
   margin: 50px auto;
@@ -17,7 +30,7 @@
   margin: 10px 0;
   padding: 0 5px;
   outline: rgb(3, 165, 206);
-  border: 1px solid rgb(3, 165, 206);
+  /* border: 1px solid rgb(3, 165, 206); */
 }
 .login-page form .row {
   display: flex;
@@ -26,13 +39,26 @@
 }
 .login-page form button {
   width: 150px;
-  background: rgb(3, 165, 206);
+  background: blue;
+  border: none;
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.login-page form button:hover {
+  background: darkblue;
 }
 .login-page form a {
-  color: orange;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
   letter-spacing: 1.3px;
   text-transform: uppercase;
+}
+
+.login-page form a:hover {
+  text-decoration: underline;
 }

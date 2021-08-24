@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Toolbar from '@material-ui/core/Toolbar';
 import HomePage from "./views/HomePage";
 import LoginPage from "./views/LoginPage";
 import RegistPage from "./views/RegistPage";
@@ -43,7 +44,8 @@ function App() {
 
   return (
     <HashRouter>
-      <Navbar />
+        <Navbar />
+        <Toolbar />
       <Switch>
         {routes.map((route) => (
           <Route
