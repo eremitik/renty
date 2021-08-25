@@ -29,13 +29,16 @@ const Items = () => {
   const itemList = useSelector(state => state.itemList)
   const { items } = itemList
 
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
   const classes = useStyles();
   return (
     !items.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>
         {items.map((item) => (
           <Grid key={item._id} item xs={12} sm={2}>
-            <Item item={item} />
+            <Item item={item} userInfo={userInfo}/>
           </Grid>
         ))}
       </Grid>

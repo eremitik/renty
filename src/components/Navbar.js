@@ -94,7 +94,7 @@ export default function Navbar() {
               { !userInfo ? <MenuItem onClick={handleClose}><Link to="/register">Register</Link></MenuItem> : null }
               { !userInfo ? <MenuItem onClick={handleClose}><Link to="/login">Login</Link> </MenuItem> : null }
               <MenuItem onClick={handleClose}><Link to="/main">See Rentals</Link></MenuItem>
-              <MenuItem onClick={handleClose}><Link to="/form">Post Rental</Link></MenuItem>
+              { !userInfo ? null : <MenuItem onClick={handleClose}><Link to="/form">Post Rental</Link></MenuItem> }
               <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
             </Menu>
           </div>
