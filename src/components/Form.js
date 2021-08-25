@@ -114,7 +114,7 @@ const Form = () => {
           label="Tags"
           fullWidth
           value={itemData.tags}
-          onChange={(e) => setItemData({ ...itemData, tags: e.target.value })}
+          onChange={(e) => setItemData({ ...itemData, tags: e.target.value.split(',') })}
         />
         <TextField
           name="price"
