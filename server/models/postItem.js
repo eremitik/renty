@@ -11,6 +11,7 @@ const postSchema = mongoose.Schema({
     default: new Date(),
   },
   rented: Boolean,
+  // rentedBy: String,
   price_id: String,
   price: Number,
   selectedFile: String,

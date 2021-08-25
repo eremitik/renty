@@ -76,13 +76,13 @@ const Item = ({ item, userInfo }) => {
         <Typography variant="body2">posted {moment(item.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">{item.tags}</Typography>
+        <Typography variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
         <Typography variant="body2" color="textSecondary">User: {item.name}</Typography>
       </div>
       <Typography className={classes.email} variant="h5" gutterBottom>{item.title}</Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">{item.description}</Typography>
-        { userInfo && userInfo.email !== item.email ? <button onClick={handlePayment}>RENT ME</button> : null }
+        { userInfo && userInfo.email !== item.email ? <button onClick={handlePayment}>¥{item.price} /night</button> : null }
       </CardContent>
       
       <CardActions className={classes.cardActions}>
