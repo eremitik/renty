@@ -8,7 +8,8 @@ export default function NotesPage() {
 
     return (
         <div>
-            {user && user.name ? <p>Hello, {user.name}</p> : "Please log in to rent and create rentals."}
+            {/* {user && user.name ? <p>Hello, {user.name}</p> : "Please log in to rent and create rentals."} */}
+            <br></br>
             <Items />
         </div>
     );
