@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createItem } from "../actions/itemActions";
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     boxShadow: 'none',
+    width: '600px',
+    textAlign: 'center',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   form: {
     display: 'flex',
@@ -26,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonSubmit: {
     marginBottom: 10,
-    backgroundColor: 'black',
+    backgroundColor: 'blue',
     color: 'white',
   },
   buttonClear: {
@@ -35,15 +40,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Form = ({ currentId }) => {
+
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
+
   const [itemData, setItemData] = useState({
     title: "", 
     description: "", 
-    creator: "",
+    creator: userInfo.email,
     tags: "",
     price: "",
     selectedFile: "",
   })
-
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -66,7 +75,7 @@ const Form = ({ currentId }) => {
     setItemData({ 
     title: "", 
     description: "", 
-    creator: "",
+    // creator: "",
     tags: "",
     price: "",
     selectedFile: "",
@@ -76,7 +85,7 @@ const Form = ({ currentId }) => {
   return (
     <Paper className={classes.paper}>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-        <Typography variant="h6">Title</Typography>
+        <Typography variant="h6">Create a new rental posting</Typography>
         <TextField
           name="title"
           variant="outlined"
@@ -93,14 +102,14 @@ const Form = ({ currentId }) => {
           value={itemData.description}
           onChange={(e) => setItemData({ ...itemData, description: e.target.value })}
         />
-        <TextField
+        {/* <TextField
           name="creator"
           variant="outlined"
           label="Creator"
           fullWidth
           value={itemData.creator}
           onChange={(e) => setItemData({ ...itemData, creator: e.target.value })}
-        />
+        /> */}
         <TextField
           name="tags"
           variant="outlined"

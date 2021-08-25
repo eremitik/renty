@@ -3,7 +3,7 @@ import { Router } from 'express';
 import {
   getStripe,
   postStripe,
-} from "../controllers/StripeController.js"
+} from "../controllers/stripeController.js"
 
 const router = Router();
 

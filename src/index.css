@@ -2,6 +2,9 @@
 
 body {
   margin: 0;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 10px;
   font-family: "Montserrat";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

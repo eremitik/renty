@@ -6,7 +6,7 @@ import {
   updateItem,
   deleteItem,
   getItemsBySearch
-} from "../controllers/ItemController.js"
+} from "../controllers/itemController.js"
 
 const router = Router();
 

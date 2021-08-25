@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   },
 })
 
-const Item = ({ item }) => {
+const Item = ({ item, userInfo }) => {
   const classes = useStyles();
 
   const handlePayment = async () => {
@@ -69,11 +69,11 @@ const Item = ({ item }) => {
       <CardMedia className={classes.media} title={item.title} image={item.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
       <div className={classes.overlay}>
         <Typography variant="h6">{item.title}</Typography>
-        <Typography variant="body2">{moment(item.createAt).fromNow()}</Typography>
+        <Typography variant="body2">posted {moment(item.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">{item.tags}</Typography>
-        <Typography variant="body2" color="textSecondary">yoooooooooooo</Typography>
+        {/* <Typography variant="body2" color="textSecondary">yoooooooooooo</Typography> */}
       </div>
       <Typography className={classes.creator} variant="h5" gutterBottom>{item.creator}</Typography>
       <CardContent>

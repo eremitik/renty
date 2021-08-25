@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-// import axios from 'axios'
-// import { storeToken } from "../helper"
-// import { Context } from "../Store";
 import { register } from '../actions/userActions.js'
 
 
@@ -17,7 +14,7 @@ function Register() {
 
     const userRegister = useSelector((state) => state.userRegister)
     const { userInfo } = userRegister
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
+  
 
     useEffect(() => {
         if (userInfo) {
