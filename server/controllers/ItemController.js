@@ -1,6 +1,7 @@
 import PostItem from '../models/postItem.js';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const stripe = new Stripe('sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg');
 dotenv.config();
@@ -20,7 +21,8 @@ const createItem = async (req, res) => {
       const {
         title,
         description,
-        creator,
+        email,
+        name,
         tags,
         price,
         selectedFile
@@ -28,7 +30,6 @@ const createItem = async (req, res) => {
       const product = await stripe.products.create({
         name: title,
         description: description
-        
       });
       const newPrice = await stripe.prices.create({
         unit_amount: price,
@@ -38,7 +39,8 @@ const createItem = async (req, res) => {
       const newItem = {
         title,
         description,
-        creator,
+        email,
+        name,
         tags,
         rented: false,
         price_id: newPrice.id,
@@ -55,11 +57,11 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
     const { id } = req.params;
-    const { title, description, tags, creator } = req.body;
+    const { title, description, tags, email } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
 
-    const updatedItem = { title, description, tags, creator, _id: id };
+    const updatedItem = { title, description, tags, email, _id: id };
 
     await PostItem.findByIdAndUpdate(id, updatedItem, { new: true });
 
@@ -101,7 +103,7 @@ export {
 // {
 //     "title":,
 //         "description":,
-//         "creator":,
+//         "email":,
 //         "tags":,
 //         "price":
 // }

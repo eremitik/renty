@@ -39,16 +39,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Form = ({ currentId }) => {
+const Form = () => {
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
-
   const [itemData, setItemData] = useState({
     title: "", 
     description: "", 
-    creator: userInfo.email,
+    email: userInfo.email,
+    name: userInfo.name,
     tags: "",
     price: "",
     selectedFile: "",
@@ -56,9 +56,7 @@ const Form = ({ currentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (post) setItemData(post);
-  // }, [post])
+  console.log(itemData)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,7 +73,7 @@ const Form = ({ currentId }) => {
     setItemData({ 
     title: "", 
     description: "", 
-    // creator: "",
+    // email: "",
     tags: "",
     price: "",
     selectedFile: "",
@@ -103,12 +101,12 @@ const Form = ({ currentId }) => {
           onChange={(e) => setItemData({ ...itemData, description: e.target.value })}
         />
         {/* <TextField
-          name="creator"
+          name="email"
           variant="outlined"
-          label="Creator"
+          label="Email"
           fullWidth
-          value={itemData.creator}
-          onChange={(e) => setItemData({ ...itemData, creator: e.target.value })}
+          value={itemData.email}
+          onChange={(e) => setItemData({ ...itemData, email: e.target.value })}
         /> */}
         <TextField
           name="tags"

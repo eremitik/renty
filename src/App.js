@@ -7,6 +7,7 @@ import LoginPage from "./views/LoginPage";
 import RegistPage from "./views/RegistPage";
 import ItemsPage from "./views/ItemsPage";
 import FormPage from "./views/FormPage";
+import ProfilePage from "./views/ProfilePage";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     registPage: "/register",
     itemsPage: "/main",
     formPage: "/form",
+    profilePage: "/profile",
   };
 
   const routes = [
@@ -39,6 +41,10 @@ function App() {
     {
       path: paths.formPage,
       render: () => <FormPage />,
+    },
+    {
+      path: paths.profilePage,
+      render: () => <ProfilePage />,
     }
   ];
 
