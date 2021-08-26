@@ -5,6 +5,7 @@ const orderSchema = mongoose.Schema({
   // ref:"User"
   // },
 
+  title: String,
   price_id: String,
   nightPrice: Number,
   totalPrice: Number,
@@ -21,6 +22,6 @@ const orderSchema = mongoose.Schema({
   },
 });
 
-const postItem = mongoose.model("postItem", postSchema);
+const postOrder = mongoose.model("postOrder", orderSchema);
 
-export default postItem;
+export default postOrder;

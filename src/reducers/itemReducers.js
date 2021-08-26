@@ -4,7 +4,8 @@ import {
     ITEM_UPDATE,
     ITEM_DELETE,
     ITEM_REQUEST_SEARCH,
-    CREATE_ORDER
+    CREATE_ORDER,
+    POST_ORDER
 } from '../types/itemTypes.js'
 
 
@@ -62,6 +63,17 @@ export const itemSearchReducer = (state = { items: [] }, action) => {
 export const createOrderReducer = (state = {}, action) => {
   switch (action.type) {
       case CREATE_ORDER:
+          return { item: action.payload };
+
+      default:
+          return state;
+  }
+};
+
+// Post Order to MongoDB
+export const postOrderReducer = (state = {}, action) => {
+  switch (action.type) {
+      case POST_ORDER:
           return { item: action.payload };
 
       default:

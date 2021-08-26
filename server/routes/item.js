@@ -5,7 +5,8 @@ import {
   createItem,
   updateItem,
   deleteItem,
-  getItemsBySearch
+  getItemsBySearch,
+  createOrder
 } from "../controllers/itemController.js"
 
 const router = Router();
@@ -15,7 +16,7 @@ router.post('/', createItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)
 router.get('/:id', getItemsBySearch)
-// router.post('/order', createOrder)
+router.post('/order', createOrder)
 
 
 export default router;

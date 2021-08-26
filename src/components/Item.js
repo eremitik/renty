@@ -57,7 +57,6 @@ const useStyles = makeStyles({
 const Item = ({ item, userInfo }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const [orderItem, setOrderItem] = useState("");
 
   const handlePayment = async () => {
       const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${item.price_id}`, {

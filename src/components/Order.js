@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-// import { createItem } from "../actions/itemActions";
+import { postOrder } from "../actions/itemActions";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 
@@ -41,50 +41,43 @@ const useStyles = makeStyles((theme) => ({
 
 const Order = () => {
 
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
   const itemOrder = useSelector(state => state.createOrder)
   const order = itemOrder.item
 
-  console.log("redux state order: ", order)
+  const [orderData, setOrderData] = useState({
+    title: order.title,
+    price_id: order.price_id,
+    nightPrice: parseInt(order.price),
+    lenderEmail: order.email,
+    lenderName: order.name,
+    numberNights: "",
+    startDate: "",
+    returnDate: "",
+    renterEmail: userInfo.email,
+    renterName: userInfo.name,
+    paid: true,
+    totalPrice: "",
+  })
+  
 
-  // const [itemData, setItemData] = useState({
-  //   title: "", 
-  //   description: "", 
-  //   email: userInfo.email,
-  //   name: userInfo.name,
-  //   tags: "",
-  //   price: "",
-  //   selectedFile: "",
-  // })
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const handlePayment = async () => {
+   
+      dispatch(postOrder(orderData))
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // dispatch(createItem(itemData));
-    // clear()
-  }
-
-  // const clear = () => {
-  //   setItemData({ 
-  //   title: "", 
-  //   description: "", 
-  //   // email: "",
-  //   tags: "",
-  //   price: "",
-  //   selectedFile: "",
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   dispatch(getItems())
-
-  // }, [dispatch]
-
-  const grabInfo = () => {
-    console.log(order)
+      const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}`, {
+          method: 'POST',
+          headers: {
+            "Content-Type": 'application/json',
+          }
+        })
+        const body = await res.json()
+        window.location.href = body.url
   }
 
   return (
@@ -92,42 +85,27 @@ const Order = () => {
       {/* <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}> */}
         { order ? <Typography variant="h6">Book rental for: {order.title}</Typography> : null }
         { order ? <Typography variant="h6">Descirption: {order.description}</Typography> : null }
-        {/* <TextField
-          name="title"
+        <TextField
+          id="date"
+          name="startDate"
+          type="date"
           variant="outlined"
-          label="Title"
+          label="Start Date"
           fullWidth
-          value={order.title}
-          // onChange={(e) => setItemData({ ...itemData, title: e.target.value })}
+          onChange={(e) => setOrderData({ ...orderData, startDate: e.target.value })}
         />
         <TextField
-          name="description"
+          id="date"
+          type="date"
+          name="returnDate"
           variant="outlined"
-          label="Description"
+          label="Return Date"
           fullWidth
-          // value={itemData.description}
-          // onChange={(e) => setItemData({ ...itemData, description: e.target.value })}
+          onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
         />
-        <TextField
-          name="tags"
-          variant="outlined"
-          label="Tags"
-          fullWidth
-          // value={itemData.tags}
-          // onChange={(e) => setItemData({ ...itemData, tags: e.target.value.split(',') })}
-        />
-        <TextField
-          name="price"
-          variant="outlined"
-          label="Price"
-          fullWidth
-          // value={itemData.price}
-          // onChange={(e) => setItemData({ ...itemData, price: e.target.value })}
-        /> */}
         <div className={classes.fileInput}>
         </div>
-        { order ? <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button> : null }
-        {/* <Button className={classes.buttonClear} variant="contained" size="small" onClick={clear} fullWidth>Clear</Button> */}
+        { order ? <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth onClick={handlePayment}>Submit</Button> : null }
        { !order ? <button><Link to="/main">Go back</Link></button> : null } 
       {/* </form> */}
     </Paper>

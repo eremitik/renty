@@ -14,6 +14,7 @@ import {
     itemDeleteReducer,
     itemSearchReducer,
     createOrderReducer,
+    postOrderReducer,
 } from './reducers/itemReducers'
 
 const reducer = combineReducers({
@@ -24,7 +25,8 @@ const reducer = combineReducers({
     itemUpdate: itemUpdateReducer,
     itemDelete: itemDeleteReducer,
     itemSearchByID: itemSearchReducer,
-    createOrder: createOrderReducer
+    createOrder: createOrderReducer,
+    postOrder: postOrderReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
