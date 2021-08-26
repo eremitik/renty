@@ -8,6 +8,7 @@ import RegistPage from "./views/RegistPage";
 import ItemsPage from "./views/ItemsPage";
 import FormPage from "./views/FormPage";
 import ProfilePage from "./views/ProfilePage";
+import OrderPage from "./views/OrderPage";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     itemsPage: "/main",
     formPage: "/form",
     profilePage: "/profile",
+    orderPage: "/order",
   };
 
   const routes = [
@@ -45,6 +47,10 @@ function App() {
     {
       path: paths.profilePage,
       render: () => <ProfilePage />,
+    },
+    { 
+      path: paths.orderPage,
+      render: () => <OrderPage />,
     }
   ];
 

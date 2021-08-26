@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { deleteItem } from "../actions/itemActions"
+import { useDispatch, useSelector } from "react-redux";
+import { deleteItem, createOrder } from "../actions/itemActions"
+import { Link } from "react-router-dom";
 
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -56,6 +57,7 @@ const useStyles = makeStyles({
 const Item = ({ item, userInfo }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  // const [orderItem, setOrderItem] = useState("");
 
   const handlePayment = async () => {
       const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${item.price_id}`, {
@@ -67,6 +69,13 @@ const Item = ({ item, userInfo }) => {
         const body = await res.json()
         window.location.href = body.url
   }
+
+  const grabInfo = () => {
+    // setOrderItem(item)
+    dispatch(createOrder(item))
+
+  }
+  
 
   return (
     <Card className={classes.card}>
@@ -91,6 +100,7 @@ const Item = ({ item, userInfo }) => {
             <DeleteIcon fontSize="small" />
           </Button> 
         : null}
+        <button onClick={grabInfo}><Link to="/order">Book Me</Link></button>
       </CardActions>
     </Card>
   )
