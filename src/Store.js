@@ -13,6 +13,7 @@ import {
     itemUpdateReducer,
     itemDeleteReducer,
     itemSearchReducer,
+    createOrderReducer,
 } from './reducers/itemReducers'
 
 const reducer = combineReducers({
@@ -22,8 +23,8 @@ const reducer = combineReducers({
     itemList: itemRequestAllReducer,
     itemUpdate: itemUpdateReducer,
     itemDelete: itemDeleteReducer,
-    itemSearchByID: itemSearchReducer
-
+    itemSearchByID: itemSearchReducer,
+    createOrder: createOrderReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

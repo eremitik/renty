@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import mongoose from 'mongoose';
+
 import {
   getItems,
   createItem,
@@ -15,6 +15,7 @@ router.post('/', createItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)
 router.get('/:id', getItemsBySearch)
+// router.post('/order', createOrder)
 
 
 export default router;

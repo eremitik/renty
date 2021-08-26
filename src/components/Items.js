@@ -33,6 +33,7 @@ const Items = () => {
   const { userInfo } = userLogin
 
   const classes = useStyles();
+
   return (
     !items.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>

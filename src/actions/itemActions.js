@@ -4,7 +4,8 @@ import {
   ITEM_REQUEST_ALL,
   ITEM_UPDATE,
   ITEM_DELETE,
-  ITEM_REQUEST_SEARCH
+  ITEM_REQUEST_SEARCH,
+  CREATE_ORDER
 } from '../types/itemTypes.js'
 
 // const url = "/items"; // local deploy
@@ -58,6 +59,16 @@ export const getItemsBySearch = (searchQuery) => async (dispatch) => {
     const { data: { data } } = await fetchItemsBySearchAPI(searchQuery);
     dispatch({ type: ITEM_REQUEST_SEARCH, payload: data });
     console.log('data:', data)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// ORDER 
+export const createOrder = (item) => (dispatch) => {
+  try {
+    const data = item;
+    dispatch({ type: CREATE_ORDER, payload: data });
   } catch (err) {
     console.log(err)
   }

@@ -100,10 +100,48 @@ export {
 
 }
 
-// {
-//     "title":,
-//         "description":,
-//         "email":,
-//         "tags":,
-//         "price":
-// }
+const createOrder = async (req, res) => {
+
+    try {
+      const {
+        price_id,
+        nightPrice,
+        totalPrice,
+        lenderEmail,
+        lenderName,
+        numberNights,
+        startDate,
+        returnDate,
+        renterEmail,
+        renterName,
+        paid,
+      } = req.body;
+      // const product = await stripe.products.create({
+      //   name: title,
+      //   description: description
+      // });
+      // const newPrice = await stripe.prices.create({
+      //   unit_amount: price,
+      //   currency: "jpy",
+      //   product: product.id,
+      // });
+      const newOrder = {
+        price_id: req.params.id,
+        totalPrice: ((returnDate - startDate) * nightPrice),
+        lenderEmail,
+        lenderName,
+        numberNights: (returnDate - startDate),
+        startDate, 
+        returnDate,
+        price_id: newPrice.id,
+        price,
+        selectedFile,
+        paid: false
+      };
+        const postMongo = new PostItem(newItem);
+        await postMongo.save();
+        res.status(201).json(newItem);
+    } catch (err) {
+        res.status(409).json({ message: err.message })
+    }
+}

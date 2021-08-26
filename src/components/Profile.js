@@ -32,7 +32,6 @@ export default function Profile() {
   }
 
   const filteredItems = filterItems(userInfo.email)
-  console.log(filteredItems)
 
   const dispatch = useDispatch()
   useEffect(() => {
