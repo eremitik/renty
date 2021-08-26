@@ -27,6 +27,7 @@ const postStripe = async (req, res) => {
     success_url: `${YOUR_DOMAIN}/#/orders/${req.params.id}`,
     cancel_url: `${YOUR_DOMAIN}/#/main`,
   });
+  // do something
   res.json({url: session.url}) 
 };
 

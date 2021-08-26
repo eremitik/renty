@@ -5,3 +5,4 @@ export const ITEM_DELETE = 'ITEM_DELETE'
 export const ITEM_REQUEST_SEARCH = 'ITEM_REQUEST_SEARCH'
 
 export const CREATE_ORDER = 'CREATE_ORDER'
+export const POST_ORDER = 'POST_ORDER'

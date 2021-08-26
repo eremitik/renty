@@ -1,4 +1,5 @@
 import PostItem from '../models/postItem.js';
+import PostOrder from '../models/orders.js';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -91,57 +92,69 @@ const getItemsBySearch = async (req, res) => {
 }
 
 
-export {
-    getItems,
-    createItem,
-    updateItem,
-    deleteItem,
-    getItemsBySearch,
-
-}
 
 const createOrder = async (req, res) => {
 
+    const { returnDate, startDate } = req.body
+
+    let calcNights = parseInt((new Date(returnDate) - new Date(startDate)) / (1000 * 60 * 60 * 24), 10)
+
     try {
       const {
+        title,
         price_id,
         nightPrice,
         totalPrice,
         lenderEmail,
         lenderName,
         numberNights,
-        startDate,
-        returnDate,
+        // startDate,
+        // returnDate,
         renterEmail,
         renterName,
         paid,
       } = req.body;
-      // const product = await stripe.products.create({
-      //   name: title,
-      //   description: description
-      // });
-      // const newPrice = await stripe.prices.create({
-      //   unit_amount: price,
-      //   currency: "jpy",
-      //   product: product.id,
-      // });
       const newOrder = {
-        price_id: req.params.id,
-        totalPrice: ((returnDate - startDate) * nightPrice),
+        title,
+        price_id,
+        nightPrice: parseInt(nightPrice),
         lenderEmail,
         lenderName,
-        numberNights: (returnDate - startDate),
+        numberNights: calcNights,
         startDate, 
         returnDate,
-        price_id: newPrice.id,
-        price,
-        selectedFile,
-        paid: false
+        renterEmail,
+        renterName,
+        paid,
+        totalPrice: calcNights * nightPrice,
       };
-        const postMongo = new PostItem(newItem);
+        const postMongo = new PostOrder(newOrder);
         await postMongo.save();
-        res.status(201).json(newItem);
+        res.status(201).json(newOrder);
     } catch (err) {
         res.status(409).json({ message: err.message })
     }
+}
+
+// const updateOrder = async (req, res) => {
+//   const { id } = req.params;
+//   const { title, description, tags, email } = req.body;
+
+//   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
+
+//   const updatedItem = { title, description, tags, email, _id: id };
+
+//   await PostItem.findByIdAndUpdate(id, updatedOrder, { new: true });
+
+//   res.json(updatedOrder);
+// }
+
+
+export {
+    getItems,
+    createItem,
+    updateItem,
+    deleteItem,
+    getItemsBySearch,
+    createOrder,
 }

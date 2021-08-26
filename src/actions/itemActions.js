@@ -5,17 +5,21 @@ import {
   ITEM_UPDATE,
   ITEM_DELETE,
   ITEM_REQUEST_SEARCH,
-  CREATE_ORDER
+  CREATE_ORDER,
+  POST_ORDER
 } from '../types/itemTypes.js'
 
 // const url = "/items"; // local deploy
 const url = "http://localhost:4000/items"; // local deploy
+// const orderUrl = "http://localhost:4000/items/order"; // local deploy
+const orderUrl = "order"
 
 const fetchItemsAPI = () => axios.get(url);
 const createItemAPI = (newItem) => axios.post(url, newItem);
 const updateItemAPI = (id, updatedItem) => axios.patch(`${url}/${id}`, updatedItem);
 const deleteItemAPI = (id) => axios.delete(`${url}/${id}`)
 const fetchItemsBySearchAPI = (searchQuery) => axios.get(`${url}/search?searchQuery=${searchQuery.search || 'none'}`)
+const createOrderAPI = (newOrder) => axios.post(`${url}/${'order'}`, newOrder);
 
 
 export const getItems = () => async (dispatch) => {
@@ -64,7 +68,7 @@ export const getItemsBySearch = (searchQuery) => async (dispatch) => {
   }
 }
 
-// ORDER 
+// Order for REDUX 
 export const createOrder = (item) => (dispatch) => {
   try {
     const data = item;
@@ -72,4 +76,15 @@ export const createOrder = (item) => (dispatch) => {
   } catch (err) {
     console.log(err)
   }
+}
+
+// Order to post to MongoDB
+export const postOrder = (order) => async (dispatch) => {
+  try {
+    const data = await createOrderAPI(order)
+    dispatch({ type: POST_ORDER, payload: data });
+  } catch (err) {
+    console.log(err)
+  }
+
 }
