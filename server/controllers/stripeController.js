@@ -24,7 +24,7 @@ const postStripe = async (req, res) => {
     ],
     mode: 'payment',
     // success_url: `${YOUR_DOMAIN}/#/main`,
-    success_url: `${YOUR_DOMAIN}/#/orders/${req.params.id}`,
+    success_url: `${YOUR_DOMAIN}/#/profile`,
     cancel_url: `${YOUR_DOMAIN}/#/main`,
   });
   // do something

@@ -13,9 +13,15 @@ import {
     itemUpdateReducer,
     itemDeleteReducer,
     itemSearchReducer,
+    // createOrderReducer,
+    // postOrderReducer,
+} from './reducers/itemReducers'
+
+import {
+    orderRequestAllReducer,
     createOrderReducer,
     postOrderReducer,
-} from './reducers/itemReducers'
+} from './reducers/orderReducers'
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -27,6 +33,7 @@ const reducer = combineReducers({
     itemSearchByID: itemSearchReducer,
     createOrder: createOrderReducer,
     postOrder: postOrderReducer,
+    orderList: orderRequestAllReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
@@ -34,7 +41,6 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
     : null
 
 const initialState = {
-
     userLogin: { userInfo: userInfoFromStorage },
 }
 

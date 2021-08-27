@@ -1,13 +1,8 @@
 import React from "react";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { createOrder } from "../actions/orderActions"
-import { deleteItem } from "../actions/itemActions"
-import { Link } from "react-router-dom";
 
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Card, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
   media: {
@@ -55,41 +50,30 @@ const useStyles = makeStyles({
   },
 })
 
-const Item = ({ item, userInfo }) => {
+const OrderItem = ({ item, userInfo }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-
-  const grabInfo = () => {
-    dispatch(createOrder(item))
-
-  }
-  
 
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} title={item.title} image={item.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
       <div className={classes.overlay}>
+        {/* <Typography variant="h6">{item.title}</Typography> */}
         <Typography variant="body2">posted {moment(item.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
-        <Typography variant="body2" color="textSecondary">User: {item.name}</Typography>
+        {/* <Typography variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography> */}
+        <Typography variant="body2" color="textSecondary">User: {item.lenderName}</Typography>
       </div>
       <Typography className={classes.email} variant="h5" gutterBottom>{item.title}</Typography>
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">{item.description}</Typography>
+        {/* <Typography variant="body2" color="textSecondary" component="p">{item.description}</Typography> */}
+        {/* { userInfo && userInfo.email !== item.email ? <button onClick={handlePayment}>¥{item.price} /night</button> : null } */}
       </CardContent>
       
       <CardActions className={classes.cardActions}>
-        { userInfo && userInfo.email === item.email ? 
-          <Button size="small" onClick={() => dispatch(deleteItem(item._id))}>
-            <DeleteIcon fontSize="small" />
-          </Button> 
-        : null}
-        { userInfo && userInfo.email !== item.email ? <button onClick={grabInfo}><Link to="/order">¥{item.price} /night</Link></button> : null }
       </CardActions>
     </Card>
   )
 }
 
-export default Item;
+export default OrderItem;

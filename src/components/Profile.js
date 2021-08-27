@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import Item from "./Item.js";
+import OrderItem from "./orderItem.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
 import { getItems } from "../actions/itemActions";
+import { getOrder } from "../actions/orderActions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Profile() {
+
+  const dispatch = useDispatch()
+
+   useEffect(() => {
+    dispatch(getItems())
+    dispatch(getOrder())
+  }, [dispatch])
   
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -27,17 +36,22 @@ export default function Profile() {
   const itemList = useSelector(state => state.itemList)
   const { items } = itemList
 
+  const orderList = useSelector(state => state.orderList)
+  const { orders } = orderList
+
+
   const filterItems = (userEmail) => {
     return items.filter((item) => userEmail === (item.email))
   }
 
+
+  const orderItems = (userEmail) => {
+    return orders.filter((order) => userEmail === (order.renterEmail))
+  }
+
   const filteredItems = filterItems(userInfo.email)
-
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getItems())
-  }, [dispatch])
-
+  const orderedItems = orderItems(userInfo.email)
+ 
   const classes = useStyles();
 
   return (
@@ -57,7 +71,15 @@ export default function Profile() {
       </Grid>
     )}
     <h1>Items you've rented:</h1>
-    <h4>work in progress.</h4>
+      { !orders.length ? <CircularProgress /> : (
+      <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+        {orderedItems.map((orderedItem) => (
+          <Grid key={orderedItem._id} item xs={12} sm={2}>
+            <OrderItem item={orderedItem} userInfo={userInfo}/>
+          </Grid>
+        ))}
+      </Grid>
+      )}
     </div>
   )
 }

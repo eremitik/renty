@@ -1,6 +1,6 @@
 // import { useSelector } from 'react-redux'
 import Items from "../components/Items";
-import Search from "../components/Search";
+// import Search from "../components/Search";
 
 
 export default function NotesPage() {
@@ -10,7 +10,10 @@ export default function NotesPage() {
     return (
         <div>
             {/* {user && user.name ? <p>Hello, {user.name}</p> : "Please log in to rent and create rentals."} */}
-            <Search />
+            {/* <Search /> */}
+            <br></br>
+            <br></br>
+            <br></br>
             <Items />
         </div>
     );
