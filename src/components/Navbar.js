@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions.js'
+import Search from './Search.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,17 +17,28 @@ import Menu from '@material-ui/core/Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    // backdropFilter: 'blur(8px)',
+  },
+  navBar: {
+    boxShadow: 'none',
+    opacity: 0.9,
+    // filter: 'blur(8px)',
+  },
+  toolBar: {
+    // backdropFilter: 'blur(3px)',
+    // filter: 'blur(8px)',
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
+    fontWeight: 'bold',
   },
   links: {
     textDecoration: 'none',
     fontSize: '20px',
-  }
+  },
 }));
 
 
@@ -59,10 +71,10 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" color="inherit">
-        <Toolbar>
+      <AppBar className={classes.navBar} position="fixed" color="inherit" sx={{backdropFilter: "blur(5px)"}}>
+        <Toolbar className={classes.toolBar}>
 
-          <div>
+          <div className={classes.blurDiv}>
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -99,11 +111,12 @@ export default function Navbar() {
           </div>
 
           <Typography variant="h6" className={classes.title}>
-            Renty
+            RENTY
           </Typography>
+          <Search />
               { !userInfo ? 
-                <Link to="/login"><AccountCircle></AccountCircle></Link> :
-                <Link to="/profile"><AccountCircle></AccountCircle></Link>
+                <Link to="/login"><AccountCircle style={{color:"black"}}></AccountCircle></Link> :
+                <Link to="/profile"><AccountCircle style={{color:"black"}}></AccountCircle></Link>
               }
         </Toolbar>
       </AppBar>

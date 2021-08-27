@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { postOrder } from "../actions/itemActions";
+import { postOrder } from "../actions/orderActions";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
+import emailjs from 'emailjs-com';
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,29 +52,35 @@ const Order = () => {
   const { userInfo } = userLogin
 
   const itemOrder = useSelector(state => state.createOrder)
-  const order = itemOrder.item
+  const order  = itemOrder.tempOrder
 
   const [orderData, setOrderData] = useState({
-    title: order.title,
-    price_id: order.price_id,
-    nightPrice: parseInt(order.price),
-    lenderEmail: order.email,
-    lenderName: order.name,
+    title: "",
+    price_id: "",
+    nightPrice: "",
+    lenderEmail: "",
+    lenderName: "",
     numberNights: "",
     startDate: "",
     returnDate: "",
-    renterEmail: userInfo.email,
-    renterName: userInfo.name,
+    renterEmail: "",
+    renterName: "",
     paid: true,
     totalPrice: "",
   })
-  
+ 
+  const sendEmail = (e) => {
+    e.preventDefault();
+    emailjs.sendForm(process.env.REACT_APP_EMAIL_CLIENT, process.env.REACT_APP_EMAIL_TEMPLATE, e.target, process.env.REACT_APP_EMAIL_USER)
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+    }
 
-  const handlePayment = async () => {
-   
-      dispatch(postOrder(orderData))
-
-      const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}`, {
+  const sendToStripe = async () => {
+    const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}`, {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json',
@@ -78,11 +88,20 @@ const Order = () => {
         })
         const body = await res.json()
         window.location.href = body.url
+    }
+
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    sendEmail(e)     
+    dispatch(postOrder(orderData))
+    setTimeout(sendToStripe, 2000)
   }
 
   return (
+    <div>
+    { order ? 
     <Paper className={classes.paper}>
-      {/* <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}> */}
+      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
         { order ? <Typography variant="h6">Book rental for: {order.title}</Typography> : null }
         { order ? <Typography variant="h6">Descirption: {order.description}</Typography> : null }
         <TextField
@@ -92,7 +111,17 @@ const Order = () => {
           variant="outlined"
           label="Start Date"
           fullWidth
-          onChange={(e) => setOrderData({ ...orderData, startDate: e.target.value })}
+          onChange={(e) => setOrderData({ 
+            ...orderData, 
+            startDate: e.target.value, 
+            title: order.title, 
+            price_id: order.price_id, 
+            nightPrice: parseInt(order.price),
+            lenderEmail: order.email,
+            lenderName: order.name,
+            renterEmail: userInfo.email,
+            renterName: userInfo.name,
+          })}
         />
         <TextField
           id="date"
@@ -103,12 +132,59 @@ const Order = () => {
           fullWidth
           onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
         />
-        <div className={classes.fileInput}>
-        </div>
-        { order ? <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth onClick={handlePayment}>Submit</Button> : null }
-       { !order ? <button><Link to="/main">Go back</Link></button> : null } 
-      {/* </form> */}
+        <TextField
+          id="name"
+          type="text"
+          name="name"
+          variant="outlined"
+          label="name"
+          value={order.name}
+          fullWidth
+        />
+        <TextField
+          id="email"
+          type="text"
+          name="email"
+          variant="outlined"
+          label="email"
+          value={order.email}
+          fullWidth
+        />
+        <TextField
+          id="message"
+          type="text"
+          name="message"
+          variant="outlined"
+          label="message"
+          value={order.description}
+          fullWidth
+        />
+        <TextField
+          id="subject"
+          type="text"
+          name="subject"
+          variant="outlined"
+          label="subject"
+          value="Congrats on your rental."
+          fullWidth
+        />
+        <TextField
+          id="recipient"
+          type="text"
+          name="recipient"
+          variant="outlined"
+          label="recipient"
+          value="renty@internet.ru"
+          fullWidth
+        />
+        <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
+        {/* { order ? <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth onClick={handlePayment}>Submit</Button> : null } */}
+      </form>
     </Paper>
+
+   : <button><Link to="/main">Go back</Link></button>  }
+
+    </div>
   )
 }
 
