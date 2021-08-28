@@ -9,6 +9,20 @@ import ItemsPage from "./views/ItemsPage";
 import FormPage from "./views/FormPage";
 import ProfilePage from "./views/ProfilePage";
 import OrderPage from "./views/OrderPage";
+import { ThemeProvider } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Montserrat',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+    ].join(','),
+    fontWeightRegular: 700,
+  },
+});
 
 function App() {
 
@@ -55,6 +69,7 @@ function App() {
   ];
 
   return (
+  <ThemeProvider theme={theme}> 
     <HashRouter>
         <Navbar />
         <Toolbar />
@@ -69,6 +84,7 @@ function App() {
         ))}
       </Switch>
     </HashRouter>
+  </ThemeProvider>
   );
 }
 export default App;

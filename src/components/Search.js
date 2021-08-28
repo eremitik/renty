@@ -24,19 +24,23 @@ const useStyles = makeStyles((theme) => ({
   },
   searchField: {
     // marginBottom: '5px',
+    backgroundColor: '#D3D3D3',
+    border: 'none',
+    borderRadius: '10px',
+    width: '600px',
   },
   searchButton: {
-    // marginBottom: 10,
+    fontFamily: 'Montserrat',
     width: '100px',
-    backgroundColor: 'transparent',
-    border: '3px solid blue',
+    background: 'linear-gradient(45deg, #1E90FF 30%, blue 90%)',
+    border: 'none',
     borderRadius: '20px',
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
     transition: '0.3s',
+    cursor: 'pointer',
     '&:hover': {
-      backgroundColor: 'blue',
-      color: 'white',
+      background: 'linear-gradient(15deg, #1E90FF 30%, blue 90%)',
     }
   },
 }));
@@ -56,6 +60,7 @@ const Search = () => {
   }
 
   const searchItem = () => {
+    console.log('search button clicked!')
     if (search.trim()) {
       dispatch(getItemsBySearch({ search }))
       history.push(`/items/search?searchQuery=${search || 'none'}`)
@@ -74,9 +79,7 @@ const Search = () => {
               className={classes.searchField}
               name="search"
               autoComplete="off"
-              variant="outlined"
-              label="search items"
-              // fullWidth
+              placeholder="search items"
               value={search}
               onKeyPress={handleKeyPress}
               onChange={(e) => setSearch(e.target.value)}

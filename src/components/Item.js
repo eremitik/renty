@@ -13,8 +13,12 @@ const useStyles = makeStyles({
   media: {
     height: 0,
     paddingTop: '56.25%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     backgroundBlendMode: 'darken',
+    '&:hover': {
+      // backgroundBlendMode: 'light',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+    },
   },
   border: {
     border: 'solid',
@@ -29,6 +33,11 @@ const useStyles = makeStyles({
     borderRadius: '15px',
     height: '100%',
     position: 'relative',
+  },
+  metadata: {
+    fontSize: '12px',
+    color: 'grey',
+
   },
   overlay: {
     position: 'absolute',
@@ -48,10 +57,33 @@ const useStyles = makeStyles({
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px',
+    margin: '15px',
+    marginBottom: '0px',
   },
-  email: {
-    padding: '0 16px',
+  detailsTwo: {
+    margin: '15px',
+    marginBottom: '0px',
+  },
+  title: {
+    fontSize: '18px',
+  },
+  name: {
+    color: 'black',
+    fontSize: '12px',
+  },
+  buyButton: {
+    border: 'none',
+    borderRadius: '5px',
+    backgroundColor: 'white',
+    '&:hover': {
+      backgroundColor: '#F5F5F5',
+    },
+  },
+  buyButtonText: {
+    color: '#1E90FF',
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
+    textDecoration: 'none',
   },
 })
 
@@ -61,24 +93,25 @@ const Item = ({ item, userInfo }) => {
 
   const grabInfo = () => {
     dispatch(createOrder(item))
-
   }
   
 
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} title={item.title} image={item.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
-      <div className={classes.overlay}>
-        <Typography variant="body2">posted {moment(item.createdAt).fromNow()}</Typography>
-      </div>
+      {/* <div className={classes.overlay}>
+        <Typography className={classes.title} variant="body2">{item.title}</Typography>
+      </div> */}
       <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
-        <Typography variant="body2" color="textSecondary">User: {item.name}</Typography>
+        <Typography className={classes.metadata} variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
+        {/* <Typography className={classes.metadata} variant="body2" color="textSecondary">User: {item.name}</Typography> */}
       </div>
-      <Typography className={classes.email} variant="h5" gutterBottom>{item.title}</Typography>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">{item.description}</Typography>
-      </CardContent>
+      <div className={classes.detailsTwo}>
+        <Typography className={classes.title} variant="body2">{item.title}</Typography>
+        {/* <Typography className={classes.metadata} variant="body2" >added {moment(item.createdAt).fromNow()}</Typography> */}
+        <Typography className={classes.name} variant="body2" >user: {item.name}</Typography>
+        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{item.description}</Typography>
+      </div>
       
       <CardActions className={classes.cardActions}>
         { userInfo && userInfo.email === item.email ? 
@@ -86,7 +119,8 @@ const Item = ({ item, userInfo }) => {
             <DeleteIcon fontSize="small" />
           </Button> 
         : null}
-        { userInfo && userInfo.email !== item.email ? <button onClick={grabInfo}><Link to="/order">¥{item.price} /night</Link></button> : null }
+        { userInfo && userInfo.email !== item.email ? 
+            <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">¥{item.price} /night</Link></button> : null }
       </CardActions>
     </Card>
   )
