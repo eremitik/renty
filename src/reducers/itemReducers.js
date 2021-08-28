@@ -24,7 +24,8 @@ export const itemRequestAllReducer = (state = { items: [] }, action) => {
     switch (action.type) {
         case ITEM_REQUEST_ALL:
             return { items: action.payload };
-
+        case ITEM_REQUEST_SEARCH:
+            return { items: action.payload };
         default:
             return state;
     }
@@ -50,15 +51,15 @@ export const itemDeleteReducer = (state = {}, action) => {
     }
 }
 
-export const itemSearchReducer = (state = { items: [] }, action) => {
-    switch (action.type) {
-        case ITEM_REQUEST_SEARCH:
-            return { items: action.payload };
+// export const itemSearchReducer = (state = { items: [] }, action) => {
+//     switch (action.type) {
+//         case ITEM_REQUEST_SEARCH:
+//             return { items: action.payload };
 
-        default:
-            return state;
-    }
-}
+//         default:
+//             return state;
+//     }
+// }
 
 // export const createOrderReducer = (state = {}, action) => {
 //   switch (action.type) {

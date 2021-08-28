@@ -3,7 +3,7 @@ import { Container, Grid, Paper } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import { getItemsBySearch } from "../actions/itemActions"
+import { getItemsBySearch, getItems } from "../actions/itemActions"
 
 const useStyles = makeStyles((theme) => ({
   searchPaper: {
@@ -63,8 +63,10 @@ const Search = () => {
     console.log('search button clicked!')
     if (search.trim()) {
       dispatch(getItemsBySearch({ search }))
-      history.push(`/items/search?searchQuery=${search || 'none'}`)
+      // history.push(`/items/search?searchQuery=${search || 'none'}`)
+      // history.push(`/search`)
     } else {
+      dispatch(getItems())
       history.push('/main')
     }
   }
