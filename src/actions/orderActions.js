@@ -21,7 +21,7 @@ export const getOrder = () => async (dispatch) => {
   }
 }
 
-// Order for REDUX 
+// Order info for booking page 
 export const createOrder = (item) => (dispatch) => {
   try {
     const data = item;

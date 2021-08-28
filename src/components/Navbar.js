@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     fontWeight: 'bold',
+    textDecoration: 'none',
   },
   links: {
     textDecoration: 'none',
@@ -111,7 +112,7 @@ export default function Navbar() {
           </div>
 
           <Typography variant="h6" className={classes.title}>
-            RENTY
+            <Link to="/main">RENTY</Link>
           </Typography>
           <Search />
               { !userInfo ? 
@@ -121,24 +122,5 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
     </div>
-
-
-
-
-
-
-    // <div>
-    //     {userInfo ? (
-    //         <>
-    //             <Link to="/notes">Go to notes</Link>
-    //             <button onClick={logoutFunct}>Log out</button>
-    //         </>
-    //     ) : (
-    //         <>
-    //             <Link to="/register">Register</Link> <br />
-    //             <Link to="/login">Login</Link>
-    //         </>
-    //     )}
-    // </div>
   );
 }

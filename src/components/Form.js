@@ -100,14 +100,6 @@ const Form = () => {
           value={itemData.description}
           onChange={(e) => setItemData({ ...itemData, description: e.target.value })}
         />
-        {/* <TextField
-          name="email"
-          variant="outlined"
-          label="Email"
-          fullWidth
-          value={itemData.email}
-          onChange={(e) => setItemData({ ...itemData, email: e.target.value })}
-        /> */}
         <TextField
           name="tags"
           variant="outlined"
