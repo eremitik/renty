@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import Item from "./Item.js";
-import OrderItem from "./orderItem.js";
+import OrderItem from "./OrderItem.js";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
 import { getItems } from "../actions/itemActions";
 import { getOrder } from "../actions/orderActions";
-
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+
 export default function Profile() {
 
+  const classes = useStyles();
   const dispatch = useDispatch()
 
    useEffect(() => {
@@ -44,15 +46,12 @@ export default function Profile() {
     return items.filter((item) => userEmail === (item.email))
   }
 
-
   const orderItems = (userEmail) => {
     return orders.filter((order) => userEmail === (order.renterEmail))
   }
 
   const filteredItems = filterItems(userInfo.email)
   const orderedItems = orderItems(userInfo.email)
- 
-  const classes = useStyles();
 
   return (
     <div>
@@ -75,7 +74,7 @@ export default function Profile() {
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>
         {orderedItems.map((orderedItem) => (
           <Grid key={orderedItem._id} item xs={12} sm={2}>
-            <OrderItem item={orderedItem} userInfo={userInfo}/>
+            <OrderItem orderedItem={orderedItem} userInfo={userInfo}/>
           </Grid>
         ))}
       </Grid>

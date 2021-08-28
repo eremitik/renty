@@ -11,18 +11,6 @@ const postSchema = mongoose.Schema({
     default: new Date(),
   },
   rented: Boolean,
-
-  // startRentDate: Date,
-  // endRentDate: Date,
-
-
-  // rentedBy: [String], 
-  // startDateRental: [Date],
-  // endDateRental: [Date],
-  // numberNights: [Number],
-
-  // itemArr[2]
-
   price_id: String,
   price: Number,
   selectedFile: String,

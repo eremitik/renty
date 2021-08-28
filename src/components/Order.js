@@ -178,7 +178,6 @@ const Order = () => {
           fullWidth
         />
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
-        {/* { order ? <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth onClick={handlePayment}>Submit</Button> : null } */}
       </form>
     </Paper>
 
