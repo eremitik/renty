@@ -50,6 +50,10 @@ export default function Profile() {
     return orders.filter((order) => userEmail === (order.renterEmail))
   }
 
+  const orderItemsPics = (id) => {
+    
+  }
+
   const filteredItems = filterItems(userInfo.email)
   const orderedItems = orderItems(userInfo.email)
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "./Item";
 import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Items = () => {
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getItems())

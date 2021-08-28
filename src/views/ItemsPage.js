@@ -1,11 +1,8 @@
-// import { useSelector } from 'react-redux'
+import React from 'react';
 import Items from "../components/Items";
 // import Search from "../components/Search";
 
-
-export default function NotesPage() {
-
-    // const user = useSelector(state => state.userLogin.userInfo)
+export default function ItemsPage() {
 
     return (
         <div>
