@@ -30,7 +30,7 @@ const reducer = combineReducers({
     itemList: itemRequestAllReducer,
     itemUpdate: itemUpdateReducer,
     itemDelete: itemDeleteReducer,
-    itemSearchByID: itemSearchReducer,
+    itemSearch: itemSearchReducer,
     createOrder: createOrderReducer,
     postOrder: postOrderReducer,
     orderList: orderRequestAllReducer,
