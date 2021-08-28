@@ -15,7 +15,7 @@ router.get('/', getItems)
 router.post('/', createItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)
-router.get('/:id', getItemsBySearch)
+router.get('/search', getItemsBySearch)
 router.post('/order', createOrder)
 
 
