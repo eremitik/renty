@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import auth from "../middleware/auth.js"
 
 import {
   getOrders,
@@ -7,7 +8,7 @@ import {
 
 const router = Router();
 
-router.get('/', getOrders)
+router.get('/', auth, getOrders)
 router.post('/', createOrder)
 
 

@@ -8,13 +8,22 @@ import {
 // const url = "/items"; // local deploy
 const url = "http://localhost:4000/order"; // local deploy
 
-const fetchOrdersAPI = () => axios.get(url);
+const fetchOrdersAPI = (config) => axios.get(url, config);
 const createOrderAPI = (newOrder) => axios.post(url, newOrder);
 
 
-export const getOrder = () => async (dispatch) => {
+export const getOrder = () => async (dispatch, getState) => {
   try {
-    const { data } = await fetchOrdersAPI();
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    const { data } = await fetchOrdersAPI(config);
     dispatch({ type: ORDER_REQUEST_ALL, payload: data });
   } catch (err) {
     console.log(err)
