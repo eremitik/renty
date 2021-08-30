@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 })
 
 function TransitionUp(props) {
-  return <Slide {...props} direction="up" />;
+  return <Slide {...props} direction="down" />;
 }
 
 
@@ -96,7 +96,7 @@ export default function OrderItem ({ orderedItem, userInfo }) {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'right',
         }}
         open={open}
