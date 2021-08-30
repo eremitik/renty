@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import dotenv from "dotenv";
+import { CardMedia } from '@material-ui/core';
 dotenv.config();
 
 
@@ -67,6 +68,7 @@ const Order = () => {
     renterName: "",
     paid: true,
     totalPrice: "",
+    selectedFile: "",
   })
  
   const sendEmail = (e) => {
@@ -110,6 +112,7 @@ const Order = () => {
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
         { order ? <Typography variant="h6">Book rental for: {order.title}</Typography> : null }
         { order ? <Typography variant="h6">Descirption: {order.description}</Typography> : null }
+        {/* { order ? <CardMedia image={order.selectedFile}/> : null } */}
         <TextField
           id="date"
           name="startDate"
@@ -127,6 +130,7 @@ const Order = () => {
             lenderName: order.name,
             renterEmail: userInfo.email,
             renterName: userInfo.name,
+            selectedFile: order.selectedFile,
           })}
         />
         <TextField

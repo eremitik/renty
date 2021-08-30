@@ -36,6 +36,7 @@ const createOrder = async (req, res) => {
         renterEmail,
         renterName,
         paid,
+        selectedFile,
       } = req.body;
       const newOrder = {
         title,
@@ -44,14 +45,13 @@ const createOrder = async (req, res) => {
         lenderEmail,
         lenderName,
         numberNights: calcNights,
-        // numberNights: numberNights,
         startDate, 
         returnDate,
         renterEmail,
         renterName,
         paid,
         totalPrice: calcNights * nightPrice,
-        // totalPrice: numberNights * nightPrice,
+        selectedFile,
       };
         const postMongo = new PostOrder(newOrder);
         await postMongo.save();
