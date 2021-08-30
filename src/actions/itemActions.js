@@ -10,16 +10,25 @@ import {
 // const url = "/items"; // local deploy
 const url = "http://localhost:4000/items"; // local deploy
 
-const fetchItemsAPI = () => axios.get(url);
+const fetchItemsAPI = (config) => axios.get(url, config);
 const createItemAPI = (newItem) => axios.post(url, newItem);
 const updateItemAPI = (id, updatedItem) => axios.patch(`${url}/${id}`, updatedItem);
 const deleteItemAPI = (id) => axios.delete(`${url}/${id}`)
 const fetchItemsBySearchAPI = (searchQuery) => axios.get(`${url}/search?searchQuery=${searchQuery.search || 'none'}`)
 
 
-export const getItems = () => async (dispatch) => {
+export const getItems = () => async (dispatch, getState) => {
   try {
-    const { data } = await fetchItemsAPI();
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    const { data } = await fetchItemsAPI(config);
     dispatch({ type: ITEM_REQUEST_ALL, payload: data });
   } catch (err) {
     console.log(err)

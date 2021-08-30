@@ -81,10 +81,10 @@ function TransitionUp(props) {
 }
 
 
-export default function OrderItem ({ orderedItem, userInfo }) {
+export default function OrderItem({ orderedItem, userInfo }) {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
- 
+
   const handleClick = () => {
     setOpen(true);
   };
