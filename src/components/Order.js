@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import dotenv from "dotenv";
-import { CardMedia } from '@material-ui/core';
 dotenv.config();
 
 

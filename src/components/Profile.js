@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
 import { getItems } from "../actions/itemActions";
 import { getOrder } from "../actions/orderActions";
-// import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -48,10 +47,6 @@ export default function Profile() {
 
   const orderItems = (userEmail) => {
     return orders.filter((order) => userEmail === (order.renterEmail))
-  }
-
-  const orderItemsPics = (id) => {
-    
   }
 
   const filteredItems = filterItems(userInfo.email)

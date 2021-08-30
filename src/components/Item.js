@@ -1,11 +1,10 @@
 import React from "react";
-import moment from "moment";
 import { useDispatch } from "react-redux";
 import { createOrder } from "../actions/orderActions"
 import { deleteItem } from "../actions/itemActions"
 import { Link } from "react-router-dom";
 
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Button, Card, CardActions, CardMedia, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 
