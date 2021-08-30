@@ -8,11 +8,10 @@ import {
   getItemsBySearch,
   createOrder
 } from "../controllers/itemController.js"
-import auth from "../middleware/auth.js"
 
 const router = Router();
 
-router.get('/', auth, getItems)
+router.get('/', getItems)
 router.post('/', createItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)
