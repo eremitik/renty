@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions.js'
 import Search from './Search.js';
@@ -50,11 +50,13 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory();
 
   const logoutSubmit = async (e) => {
     e.preventDefault()
     try {
       dispatch(logout())
+      history.push('/login')
     } catch (err) {
       alert(err.response.data.msg)
     }

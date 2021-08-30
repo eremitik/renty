@@ -92,7 +92,9 @@ const Order = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
-    sendEmail(e)     
+
+    // turning off emails for now
+    // sendEmail(e)     
     dispatch(postOrder(orderData))
     setTimeout(sendToStripe, 2000)
   }
