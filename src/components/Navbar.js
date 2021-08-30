@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navBar: {
     boxShadow: 'none',
-    opacity: 0.9,
+    // opacity: 0.9,
     // filter: 'blur(8px)',
   },
   toolBar: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '10px',
     paddingRight: '20px',
     paddingLeft: '20px',
-    marginTop: '3px',
+    marginTop: '1px',
     marginBottom: '3px',
     '&:hover': {
       background: '#F5F5F5',

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     transition: '0.3s',
     cursor: 'pointer',
-    marginRight: '10px',
+    marginRight: '8px',
     '&:hover': {
       background: 'linear-gradient(15deg, #1E90FF 30%, blue 90%)',
     }
