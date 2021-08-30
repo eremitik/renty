@@ -44,12 +44,14 @@ const createOrder = async (req, res) => {
         lenderEmail,
         lenderName,
         numberNights: calcNights,
+        // numberNights: numberNights,
         startDate, 
         returnDate,
         renterEmail,
         renterName,
         paid,
         totalPrice: calcNights * nightPrice,
+        // totalPrice: numberNights * nightPrice,
       };
         const postMongo = new PostOrder(newOrder);
         await postMongo.save();
