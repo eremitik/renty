@@ -60,10 +60,10 @@ function TransitionUp(props) {
 }
 
 
-export default function OrderItem ({ orderedItem, userInfo }) {
+export default function OrderItem({ orderedItem, userInfo }) {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
- 
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -89,7 +89,7 @@ export default function OrderItem ({ orderedItem, userInfo }) {
         {/* <Typography variant="body2" color="textSecondary" component="p">{orderedItem.description}</Typography> */}
         {/* { userInfo && userInfo.email !== orderedItem.email ? <button onClick={handlePayment}>¥{orderedItem.price} /night</button> : null } */}
       </CardContent>
-      
+
       <CardActions className={classes.cardActions}>
       </CardActions>
 

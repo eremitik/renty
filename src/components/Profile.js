@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
 import { getItems } from "../actions/itemActions";
 import { getOrder } from "../actions/orderActions";
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -27,11 +27,11 @@ export default function Profile() {
   const classes = useStyles();
   const dispatch = useDispatch()
 
-   useEffect(() => {
+  useEffect(() => {
     dispatch(getItems())
     dispatch(getOrder())
   }, [dispatch])
-  
+
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
@@ -60,24 +60,24 @@ export default function Profile() {
       <h3>Email: {userInfo.email}</h3>
       <br></br>
       <h1>Items you've posted for rent:</h1>
-      { !items.length ? <CircularProgress /> : (
-      <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        {filteredItems.map((item) => (
-          <Grid key={item._id} item xs={12} sm={2}>
-            <Item item={item} userInfo={userInfo}/>
-          </Grid>
-        ))}
-      </Grid>
-    )}
-    <h1>Items you've rented:</h1>
-      { !orders.length ? <CircularProgress /> : (
-      <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        {orderedItems.map((orderedItem) => (
-          <Grid key={orderedItem._id} item xs={12} sm={2}>
-            <OrderItem orderedItem={orderedItem} userInfo={userInfo}/>
-          </Grid>
-        ))}
-      </Grid>
+      {!items.length ? <CircularProgress /> : (
+        <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+          {filteredItems.map((item) => (
+            <Grid key={item._id} item xs={12} sm={2}>
+              <Item item={item} userInfo={userInfo} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+      <h1>Items you've rented:</h1>
+      {!orders.length ? <CircularProgress /> : (
+        <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+          {orderedItems.map((orderedItem) => (
+            <Grid key={orderedItem._id} item xs={12} sm={2}>
+              <OrderItem orderedItem={orderedItem} userInfo={userInfo} />
+            </Grid>
+          ))}
+        </Grid>
       )}
     </div>
   )

@@ -3,8 +3,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const getStripe = async (req, res) => {
-    const products = await stripe.products.list();
-    res.send(products);
+  const products = await stripe.products.list();
+  res.send(products);
 };
 
 
@@ -28,10 +28,10 @@ const postStripe = async (req, res) => {
     cancel_url: `${YOUR_DOMAIN}/#/main`,
   });
   // do something
-  res.json({url: session.url}) 
+  res.json({ url: session.url })
 };
 
 export {
-    getStripe,
-    postStripe,
+  getStripe,
+  postStripe,
 }
