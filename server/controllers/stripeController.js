@@ -16,14 +16,13 @@ const postStripe = async (req, res) => {
     line_items: [
       {
         price: req.params.id,
-        quantity: 1,
+        quantity: req.params.qty,
       },
     ],
     payment_method_types: [
       'card',
     ],
     mode: 'payment',
-    // success_url: `${YOUR_DOMAIN}/#/main`,
     success_url: `${YOUR_DOMAIN}/#/profile`,
     cancel_url: `${YOUR_DOMAIN}/#/main`,
   });

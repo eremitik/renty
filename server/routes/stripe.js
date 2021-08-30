@@ -8,7 +8,6 @@ import {
 const router = Router();
 
 router.get('/', getStripe)
-router.post('/create-checkout-session/:id', postStripe)
-// router.post('/create-checkout-session/', postStripe)
+router.post('/create-checkout-session/:id/:qty', postStripe)
 
 export default router;

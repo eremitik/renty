@@ -79,8 +79,12 @@ const Order = () => {
       });
     }
 
+  const calcNights = (start, end) => {
+    return parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10)
+  }
+
   const sendToStripe = async () => {
-    const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}`, {
+    const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json',
@@ -133,6 +137,15 @@ const Order = () => {
           label="Return Date"
           fullWidth
           onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
+        />
+        <TextField
+          id="numberNights"
+          name="numberNights"
+          variant="outlined"
+          label="Number of nights calculated"
+          value={calcNights(orderData.startDate, orderData.returnDate)}
+          fullWidth
+          // onChange={(e) => setOrderData({ ...orderData, numberNights: e.target.value, })}
         />
         <TextField
           id="name"
