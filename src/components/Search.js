@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     // marginRight: 'auto',
   },
   gridContainer: {
-    // marginTop: '7px',
+    // marginTop: '0px',
   },
   appBarSearch: {
     // borderRadius: 8,
@@ -24,12 +24,23 @@ const useStyles = makeStyles((theme) => ({
   },
   searchField: {
     // marginBottom: '5px',
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
+    height: '35px',
+    marginTop: '1px',
     backgroundColor: '#D3D3D3',
     border: 'none',
-    borderRadius: '10px',
+    borderRadius: '15px',
     width: '600px',
+    alignItem: 'left',
+    textIndent: '15px',
+    marginRight: '15px',
+      '&:focus': {
+        outline: 'none',
+      }
   },
   searchButton: {
+    marginTop: '1px',
     fontFamily: 'Montserrat',
     width: '100px',
     background: 'linear-gradient(45deg, #1E90FF 30%, blue 90%)',
@@ -39,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     transition: '0.3s',
     cursor: 'pointer',
+    marginRight: '10px',
     '&:hover': {
       background: 'linear-gradient(15deg, #1E90FF 30%, blue 90%)',
     }
@@ -80,7 +92,7 @@ const Search = () => {
               className={classes.searchField}
               name="search"
               autoComplete="off"
-              placeholder="search items"
+              placeholder="Search by creator, item or tag"
               value={search}
               onKeyPress={handleKeyPress}
               onChange={(e) => setSearch(e.target.value)}

@@ -10,7 +10,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
@@ -31,9 +30,29 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  profileButton: {
+    alignItem: 'right',
+    fontFamily: 'Montserrat',
+    background: 'white',
+    border: '1px solid #D3D3D3',
+    borderRadius: '20px',
+    color: 'black',
+    fontWeight: 'bold',
+    transition: '0.3s',
+    cursor: 'pointer',
+    padding: '10px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    marginTop: '3px',
+    marginBottom: '3px',
+    '&:hover': {
+      background: '#F5F5F5',
+    }
+  },
   title: {
     flexGrow: 1,
-    fontWeight: 'bold',
+    fontWeight: '800',
+    fontSize: '30px',
     textDecoration: 'none',
     color: 'black',
   },
@@ -42,6 +61,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '20px',
     color: 'red',
   },
+  menuIcon: {
+    fontSize: '35px',
+    fontWeight: '800',
+  }
 }));
 
 
@@ -75,11 +98,9 @@ export default function Navbar() {
 
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.navBar} position="fixed" color="inherit" sx={{backdropFilter: "blur(5px)"}}>
+      <AppBar className={classes.navBar} position="fixed" color="inherit">
         <Toolbar className={classes.toolBar}>
 
-          <div className={classes.blurDiv}>
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -89,8 +110,9 @@ export default function Navbar() {
               edge="start"
               className={classes.menu}
             >
-              <MenuIcon />
+              <MenuIcon className={classes.menuIcon}/>
             </IconButton>
+
             <Menu
               className={classes.link}
               id="menu-appbar"
@@ -114,19 +136,14 @@ export default function Navbar() {
               { !userInfo ? null : <MenuItem onClick={handleClose} component={Link} to="/form">Post Rental</MenuItem> }
               <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
             </Menu>
-          </div>
-
-          <Typography variant="h6" className={classes.title} component={Link} to="/main">
-            {/* <Link to="/main">RENTY</Link> */}
-            RENTY
-          </Typography>
+          <Typography variant="h6" className={classes.title} component={Link} to="/main">RENTY</Typography>
           <Search />
+
               { !userInfo ? 
-                <Link to="/login"><AccountCircle style={{color:"black"}}></AccountCircle></Link> :
-                <Link to="/profile"><AccountCircle style={{color:"black"}}></AccountCircle></Link>
+                <Link to="/login"><button style={{color:"black"}} className={classes.profileButton}>Sign in</button></Link> :
+                <Link to="/profile"><button style={{color:"black"}} className={classes.profileButton}>Profile</button></Link>
               }
         </Toolbar>
       </AppBar>
-    </div>
   );
 }
