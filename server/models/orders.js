@@ -20,6 +20,7 @@ const orderSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  selectedFile: String,
 });
 
 const postOrder = mongoose.model("postOrder", orderSchema);
