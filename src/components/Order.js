@@ -100,7 +100,7 @@ const Order = () => {
     e.preventDefault();
 
     // turning off emails for now
-    // sendEmail(e)     
+    sendEmail(e)     
     dispatch(postOrder(orderData))
     setTimeout(sendToStripe, 2000)
   }
@@ -193,7 +193,7 @@ const Order = () => {
           name="recipient"
           variant="outlined"
           label="recipient"
-          value="renty@internet.ru"
+          value={userInfo.email}
           fullWidth
         />
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
