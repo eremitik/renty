@@ -16,7 +16,6 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     backgroundBlendMode: 'darken',
     '&:hover': {
-      // backgroundBlendMode: 'light',
       backgroundColor: 'rgba(0, 0, 0, 0)',
     },
   },
