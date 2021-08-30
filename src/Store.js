@@ -12,7 +12,7 @@ import {
     itemRequestAllReducer,
     itemUpdateReducer,
     itemDeleteReducer,
-    itemSearchReducer,
+    // itemSearchReducer,
     // createOrderReducer,
     // postOrderReducer,
 } from './reducers/itemReducers'
@@ -30,7 +30,7 @@ const reducer = combineReducers({
     itemList: itemRequestAllReducer,
     itemUpdate: itemUpdateReducer,
     itemDelete: itemDeleteReducer,
-    itemSearch: itemSearchReducer,
+    // itemSearch: itemSearchReducer,
     createOrder: createOrderReducer,
     postOrder: postOrderReducer,
     orderList: orderRequestAllReducer,

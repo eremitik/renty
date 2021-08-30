@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
 import { createItem } from "../actions/itemActions";
@@ -43,6 +44,7 @@ const Form = () => {
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+  const history = useHistory();
 
   const [itemData, setItemData] = useState({
     title: "", 
@@ -58,15 +60,15 @@ const Form = () => {
 
   console.log(itemData)
 
+  const redirect = () => {
+    return history.push('/main')
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (currentId) {
-      // dispatch(updatePost(currentId, itemData));
-    // } else {
       dispatch(createItem(itemData));
-      clear()
-    // }
+      setTimeout(redirect, 2000)
   }
 
   const clear = () => {

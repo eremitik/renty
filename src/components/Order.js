@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import dotenv from "dotenv";
+import { CardMedia } from '@material-ui/core';
 dotenv.config();
 
 
@@ -67,6 +68,7 @@ const Order = () => {
     renterName: "",
     paid: true,
     totalPrice: "",
+    selectedFile: "",
   })
  
   const sendEmail = (e) => {
@@ -79,8 +81,12 @@ const Order = () => {
       });
     }
 
+  const calcNights = (start, end) => {
+    return parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10)
+  }
+
   const sendToStripe = async () => {
-    const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}`, {
+    const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json',
@@ -92,6 +98,8 @@ const Order = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
+
+    // turning off emails for now
     sendEmail(e)     
     dispatch(postOrder(orderData))
     setTimeout(sendToStripe, 2000)
@@ -104,6 +112,7 @@ const Order = () => {
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
         { order ? <Typography variant="h6">Book rental for: {order.title}</Typography> : null }
         { order ? <Typography variant="h6">Descirption: {order.description}</Typography> : null }
+        {/* { order ? <CardMedia image={order.selectedFile}/> : null } */}
         <TextField
           id="date"
           name="startDate"
@@ -121,6 +130,7 @@ const Order = () => {
             lenderName: order.name,
             renterEmail: userInfo.email,
             renterName: userInfo.name,
+            selectedFile: order.selectedFile,
           })}
         />
         <TextField
@@ -131,6 +141,15 @@ const Order = () => {
           label="Return Date"
           fullWidth
           onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
+        />
+        <TextField
+          id="numberNights"
+          name="numberNights"
+          variant="outlined"
+          label="Number of nights calculated"
+          value={calcNights(orderData.startDate, orderData.returnDate)}
+          fullWidth
+          // onChange={(e) => setOrderData({ ...orderData, numberNights: e.target.value, })}
         />
         <TextField
           id="name"
@@ -174,7 +193,7 @@ const Order = () => {
           name="recipient"
           variant="outlined"
           label="recipient"
-          value="renty@internet.ru"
+          value={userInfo.email}
           fullWidth
         />
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>

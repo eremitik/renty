@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../actions/userActions.js'
 import Search from './Search.js';
@@ -35,10 +35,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     fontWeight: 'bold',
     textDecoration: 'none',
+    color: 'black',
   },
   links: {
     textDecoration: 'none',
     fontSize: '20px',
+    color: 'red',
   },
 }));
 
@@ -48,11 +50,13 @@ export default function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory();
 
   const logoutSubmit = async (e) => {
     e.preventDefault()
     try {
       dispatch(logout())
+      history.push('/login')
     } catch (err) {
       alert(err.response.data.msg)
     }
@@ -88,6 +92,7 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
             <Menu
+              className={classes.link}
               id="menu-appbar"
               anchorEl={anchorEl}
               anchorOrigin={{
@@ -102,17 +107,18 @@ export default function Navbar() {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}><Link to="/">Home</Link></MenuItem>
-              { !userInfo ? <MenuItem onClick={handleClose}><Link to="/register">Register</Link></MenuItem> : null }
-              { !userInfo ? <MenuItem onClick={handleClose}><Link to="/login">Login</Link> </MenuItem> : null }
-              <MenuItem onClick={handleClose}><Link to="/main">See Rentals</Link></MenuItem>
-              { !userInfo ? null : <MenuItem onClick={handleClose}><Link to="/form">Post Rental</Link></MenuItem> }
+              <MenuItem className={classes.link} onClick={handleClose} component={Link} to="/">Home</MenuItem>
+              { !userInfo ? <MenuItem onClick={handleClose} component={Link} to="/register">Register</MenuItem> : null }
+              { !userInfo ? <MenuItem onClick={handleClose} component={Link} to="/login">Login</MenuItem> : null }
+              <MenuItem onClick={handleClose} component={Link} to="/main">See Rentals</MenuItem>
+              { !userInfo ? null : <MenuItem onClick={handleClose} component={Link} to="/form">Post Rental</MenuItem> }
               <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
             </Menu>
           </div>
 
-          <Typography variant="h6" className={classes.title}>
-            <Link to="/main">RENTY</Link>
+          <Typography variant="h6" className={classes.title} component={Link} to="/main">
+            {/* <Link to="/main">RENTY</Link> */}
+            RENTY
           </Typography>
           <Search />
               { !userInfo ? 
