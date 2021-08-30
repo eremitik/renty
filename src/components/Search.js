@@ -75,7 +75,6 @@ const Search = () => {
     <Paper className={classes.searchPaper}>
       <Container maxWidth="xl" >
         <Grid container justifyContent="center" alignItems="stretch" spacing={5} className={classes.gridContainer}>
-          {/* <Typography variant="h6">Search for a Product to Rent</Typography> */}
           <div className={classes.appBarSearch} position="static" color="inherit">
             <input
               className={classes.searchField}

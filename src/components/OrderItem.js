@@ -7,14 +7,18 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import { Today } from "@material-ui/icons";
 
 
 const useStyles = makeStyles({
   media: {
     height: 0,
     paddingTop: '56.25%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     backgroundBlendMode: 'darken',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+    },
   },
   border: {
     border: 'solid',
@@ -29,6 +33,14 @@ const useStyles = makeStyles({
     borderRadius: '15px',
     height: '100%',
     position: 'relative',
+  },
+  metadata: {
+    fontSize: '12px',
+    color: 'grey',
+  },
+  metadataTwo: {
+    fontSize: '12px',
+    color: 'red',
   },
   overlay: {
     position: 'absolute',
@@ -48,10 +60,19 @@ const useStyles = makeStyles({
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px',
+    margin: '15px',
+    marginBottom: '0px',
   },
-  email: {
-    padding: '0 16px',
+  detailsTwo: {
+    margin: '15px',
+    marginBottom: '10px',
+  },
+  title: {
+    fontSize: '18px',
+  },
+  name: {
+    color: 'black',
+    fontSize: '12px',
   },
 })
 
@@ -72,26 +93,26 @@ export default function OrderItem ({ orderedItem, userInfo }) {
     setOpen(false);
   };
 
+  console.log('test return', moment(orderedItem.returnDate) > moment())
+
 
 
   return (
     <Card className={classes.card} onClick={handleClick}>
       <CardMedia className={classes.media} title={orderedItem.title} image={orderedItem.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
       <div className={classes.overlay}>
-        <Typography variant="body2">posted {moment(orderedItem.createdAt).fromNow()}</Typography>
       </div>
       <div className={classes.details}>
-        {/* <Typography variant="body2" color="textSecondary">{orderedItem.tags.map((tag) => `#${tag} `)}</Typography> */}
-        <Typography variant="body2" color="textSecondary">User: {orderedItem.lenderName}</Typography>
+        <Typography className={classes.metadata} variant="body2">rented {moment(orderedItem.startDate).fromNow()}</Typography>
       </div>
-      <Typography className={classes.email} variant="h5" gutterBottom>{orderedItem.title}</Typography>
-      <CardContent>
-        {/* <Typography variant="body2" color="textSecondary" component="p">{orderedItem.description}</Typography> */}
-        {/* { userInfo && userInfo.email !== orderedItem.email ? <button onClick={handlePayment}>¥{orderedItem.price} /night</button> : null } */}
-      </CardContent>
-      
-      <CardActions className={classes.cardActions}>
-      </CardActions>
+      <div className={classes.detailsTwo}>
+        <Typography className={classes.title} variant="body2">{orderedItem.title}</Typography>
+        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{orderedItem.lenderEmail}</Typography>
+        { moment(orderedItem.returnDate) > moment() ? 
+            <Typography className={classes.metadataTwo} variant="body2" color="textSecondary" component="p">Return by: {moment(orderedItem.returnDate).calendar()}</Typography> :
+            <Typography className={classes.metadata}>Item has been returned.</Typography>
+        }
+      </div>
 
 
       <Snackbar
