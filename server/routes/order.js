@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import auth from "../middleware/auth.js"
+// import auth from "../middleware/auth.js"
 
 import {
   getOrders,
@@ -8,7 +8,7 @@ import {
 
 const router = Router();
 
-router.get('/', auth, getOrders)
+router.get('/', getOrders)
 router.post('/', createOrder)
 
 
