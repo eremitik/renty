@@ -6,9 +6,12 @@ import {
   ITEM_DELETE,
   ITEM_REQUEST_SEARCH,
 } from '../types/itemTypes.js'
+import dotenv from "dotenv";
+dotenv.config();
 
-// const url = "/items"; // local deploy
-const url = "http://localhost:4000/items"; // local deploy
+
+let url;
+(process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "/items") : (url = "http://localhost:4000/items")
 
 const fetchItemsAPI = () => axios.get(url);
 const createItemAPI = (newItem) => axios.post(url, newItem);

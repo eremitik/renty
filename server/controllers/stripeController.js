@@ -1,6 +1,10 @@
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import dotenv from "dotenv";
+dotenv.config();
+
+
 
 const getStripe = async (req, res) => {
   const products = await stripe.products.list();
@@ -8,7 +12,8 @@ const getStripe = async (req, res) => {
 };
 
 
-const YOUR_DOMAIN = 'http://localhost:3000';
+let YOUR_DOMAIN;
+(process.env.ENVIRONMENT === "PROD") ? (YOUR_DOMAIN = 'http://13.212.157.177/') : (YOUR_DOMAIN = 'http://localhost:3000') 
 
 const postStripe = async (req, res) => {
 

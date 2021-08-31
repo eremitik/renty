@@ -4,9 +4,12 @@ import {
   CREATE_ORDER,
   POST_ORDER
 } from '../types/orderTypes.js'
+import dotenv from "dotenv";
+dotenv.config();
 
-// const url = "/items"; // local deploy
-const url = "http://localhost:4000/order"; // local deploy
+
+let url;
+(process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "/order") : (url = "http://localhost:4000/order")
 
 const fetchOrdersAPI = (config) => axios.get(url, config);
 const createOrderAPI = (newOrder) => axios.post(url, newOrder);
