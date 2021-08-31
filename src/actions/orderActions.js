@@ -11,22 +11,13 @@ dotenv.config();
 let url;
 (process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "/order") : (url = "http://localhost:4000/order")
 
-const fetchOrdersAPI = (config) => axios.get(url, config);
+const fetchOrdersAPI = () => axios.get(url);
 const createOrderAPI = (newOrder) => axios.post(url, newOrder);
 
 
-export const getOrder = () => async (dispatch, getState) => {
+export const getOrder = () => async (dispatch) => {
   try {
-    const {
-      userLogin: { userInfo },
-    } = getState()
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    }
-    const { data } = await fetchOrdersAPI(config);
+    const { data } = await fetchOrdersAPI();
     dispatch({ type: ORDER_REQUEST_ALL, payload: data });
   } catch (err) {
     console.log(err)
