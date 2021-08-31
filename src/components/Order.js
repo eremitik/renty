@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { postOrder } from "../actions/orderActions";
+import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import dotenv from "dotenv";
+import moment from "moment";
 dotenv.config();
 
 
@@ -24,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+  label: {
+    marginTop: '10px',
+    display: 'inline-block',
+    width: '100%',
+    textAlign: 'left',
+  },
   form: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -37,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
     backgroundColor: 'blue',
     color: 'white',
+    '&:hover': {
+      backgroundColor: '#1E90FF',
+    },
   },
   buttonClear: {
     marginBottom: 10, 
@@ -99,7 +109,7 @@ const Order = () => {
     e.preventDefault();
 
     // turning off emails for now
-    sendEmail(e)     
+    // sendEmail(e)     
     dispatch(postOrder(orderData))
     setTimeout(sendToStripe, 2000)
   }
@@ -109,15 +119,16 @@ const Order = () => {
     { order ? 
     <Paper className={classes.paper}>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
-        { order ? <Typography variant="h6">Book rental for: {order.title}</Typography> : null }
-        { order ? <Typography variant="h6">Descirption: {order.description}</Typography> : null }
-        {/* { order ? <CardMedia image={order.selectedFile}/> : null } */}
+        { order ? <Typography className={classes.label}>{order.title}</Typography> : null }
+        { order ? <Typography className={classes.label}>{order.description}</Typography> : null }
+        <br></br>
+        <Typography className={classes.label}>Input Start date: </Typography>
         <TextField
           id="date"
           name="startDate"
           type="date"
           variant="outlined"
-          label="Start Date"
+          // label="Start Date"
           fullWidth
           onChange={(e) => setOrderData({ 
             ...orderData, 
@@ -132,12 +143,14 @@ const Order = () => {
             selectedFile: order.selectedFile,
           })}
         />
+        <br></br>
+        <Typography className={classes.label}>Input Return date: </Typography>
         <TextField
           id="date"
           type="date"
           name="returnDate"
           variant="outlined"
-          label="Return Date"
+          // label="Return Date"
           fullWidth
           onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
         />
@@ -148,7 +161,7 @@ const Order = () => {
           label="Number of nights calculated"
           value={calcNights(orderData.startDate, orderData.returnDate)}
           fullWidth
-          // onChange={(e) => setOrderData({ ...orderData, numberNights: e.target.value, })}
+          disabled
         />
         <TextField
           id="name"
@@ -158,6 +171,7 @@ const Order = () => {
           label="name"
           value={order.name}
           fullWidth
+          disabled
         />
         <TextField
           id="email"
@@ -167,15 +181,17 @@ const Order = () => {
           label="email"
           value={order.email}
           fullWidth
+          disabled
         />
         <TextField
           id="message"
           type="text"
-          name="message"
+          name="description"
           variant="outlined"
           label="message"
           value={order.description}
           fullWidth
+          disabled
         />
         <TextField
           id="subject"
@@ -185,6 +201,7 @@ const Order = () => {
           label="subject"
           value="Congrats on your rental."
           fullWidth
+          disabled
         />
         <TextField
           id="recipient"
@@ -194,6 +211,7 @@ const Order = () => {
           label="recipient"
           value={userInfo.email}
           fullWidth
+          disabled
         />
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
       </form>
