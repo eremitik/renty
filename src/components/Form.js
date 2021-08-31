@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
     backgroundColor: 'blue',
     color: 'white',
+    '&:hover': {
+      backgroundColor: '#1E90FF',
+    }
   },
   buttonClear: {
     marginBottom: 10,
