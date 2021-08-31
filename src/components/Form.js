@@ -61,8 +61,6 @@ const Form = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  console.log(itemData)
-
   const redirect = () => {
     return history.push('/main')
   }

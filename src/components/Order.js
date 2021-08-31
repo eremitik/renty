@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import dotenv from "dotenv";
-import moment from "moment";
 dotenv.config();
 
 
@@ -94,8 +93,11 @@ const Order = () => {
     return parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10)
   }
 
+  let url;
+  process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/order/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
+
   const sendToStripe = async () => {
-    const res = await fetch(`http://localhost:4000/stripe/create-checkout-session/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
+    const res = await fetch(`${url}/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
           method: 'POST',
           headers: {
             "Content-Type": 'application/json',

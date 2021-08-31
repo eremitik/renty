@@ -1,9 +1,5 @@
 import PostOrder from '../models/orders.js';
-// import Stripe from 'stripe';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-// const stripe = new Stripe('sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg');
 dotenv.config();
 
 const getOrders = async (req, res) => {
@@ -31,8 +27,6 @@ const createOrder = async (req, res) => {
         lenderEmail,
         lenderName,
         numberNights,
-        // startDate,
-        // returnDate,
         renterEmail,
         renterName,
         paid,
@@ -60,19 +54,6 @@ const createOrder = async (req, res) => {
         res.status(409).json({ message: err.message })
     }
 }
-
-// const updateOrder = async (req, res) => {
-//   const { id } = req.params;
-//   const { title, description, tags, email } = req.body;
-
-//   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
-
-//   const updatedItem = { title, description, tags, email, _id: id };
-
-//   await PostItem.findByIdAndUpdate(id, updatedOrder, { new: true });
-
-//   res.json(updatedOrder);
-// }
 
 
 export {

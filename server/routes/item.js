@@ -7,7 +7,7 @@ import {
   deleteItem,
   getItemsBySearch,
   createOrder
-} from "../controllers/itemController.js"
+} from "../controllers/ItemController.js"
 
 const router = Router();
 

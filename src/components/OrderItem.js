@@ -96,15 +96,10 @@ export default function OrderItem({ orderedItem, userInfo }) {
     setOpen(false);
   };
 
-  console.log(orderedItem)
-
-
 
   return (
     <Card className={classes.card} onClick={handleClick}>
       <CardMedia className={classes.media} title={orderedItem.title} image={orderedItem.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
-      <div className={classes.overlay}>
-      </div>
       <div className={classes.details}>
         <Typography className={classes.metadata} variant="body2">rented {moment(orderedItem.startDate).fromNow()}</Typography>
       </div>
