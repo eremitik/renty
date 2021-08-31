@@ -13,7 +13,7 @@ const getStripe = async (req, res) => {
 
 
 let YOUR_DOMAIN;
-(process.env.ENVIRONMENT === "PROD") ? (YOUR_DOMAIN = 'http://13.212.157.177/') : (YOUR_DOMAIN = 'http://localhost:3000') 
+(process.env.ENVIRONMENT === "PROD") ? (YOUR_DOMAIN = 'http://13.212.157.177') : (YOUR_DOMAIN = 'http://localhost:3000') 
 
 const postStripe = async (req, res) => {
 
