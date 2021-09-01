@@ -142,7 +142,7 @@ function Register() {
                     </Button>
                     <Grid container >
                         <Grid item>
-                            <Link className={classes.link} href="login#/login" variant="body2">
+                            <Link className={classes.link} href="/#/login" variant="body2">
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

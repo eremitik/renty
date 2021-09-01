@@ -107,6 +107,7 @@ const Form = () => {
           name="tags"
           variant="outlined"
           label="Tags"
+          placeholder="ex: laptop,macbook,apple"
           fullWidth
           value={itemData.tags}
           onChange={(e) => setItemData({ ...itemData, tags: e.target.value.split(',') })}
