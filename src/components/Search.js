@@ -72,7 +72,6 @@ const Search = () => {
   }
 
   const searchItem = () => {
-    console.log('search button clicked!')
     if (search.trim()) {
       dispatch(getItemsBySearch({ search }))
       // history.push(`/items/search?searchQuery=${search || 'none'}`)
