@@ -124,7 +124,7 @@ const Order = () => {
     e.preventDefault();
 
     // turning off emails for now
-    sendEmail(e)     
+    // sendEmail(e)     
     dispatch(postOrder(orderData))
     setTimeout(sendToStripe, 2000)
   }

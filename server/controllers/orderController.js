@@ -4,8 +4,8 @@ dotenv.config();
 
 const getOrders = async (req, res) => {
     try {
-        const postOrders = await PostOrder.find();
-        res.status(200).json(postOrders);
+        const getOrders = await PostOrder.find();
+        res.status(200).json(getOrders);
     } catch (err) {
         res.status(404).json({ message: err.body })
     }
