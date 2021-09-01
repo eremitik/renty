@@ -123,7 +123,7 @@ function Login() {
                     <Grid container>
 
                         <Grid item>
-                            <Link href="register#/register" variant="body2" className={classes.link}>
+                            <Link href="/#/register" variant="body2" className={classes.link}>
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

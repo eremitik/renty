@@ -170,6 +170,7 @@ const Order = () => {
           fullWidth
           onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
         />
+        <Typography className={classes.label}>Total rental nights: {calcNights(orderData.startDate, orderData.returnDate) ? calcNights(orderData.startDate, orderData.returnDate) : 0}</Typography>
         <TextField
           className={classes.hideTextField}
           id="numberNights"
