@@ -62,7 +62,7 @@ const Form = () => {
   const dispatch = useDispatch();
 
   const redirect = () => {
-    return history.push('/main')
+    return history.push('/profile')
   }
 
   const handleSubmit = (e) => {
