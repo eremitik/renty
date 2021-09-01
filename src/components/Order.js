@@ -35,10 +35,6 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  fileInput: {
-    width: '97%',
-    margin: '10px 0',
-  },
   buttonSubmit: {
     marginBottom: 10,
     backgroundColor: 'blue',
@@ -49,7 +45,24 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonClear: {
     marginBottom: 10, 
+  },
+  downArrowButton: {
+    border: 'none',
+    backgroundColor: 'white',
+    cursor: 'pointer',
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
+    '&:hover': {
+      color: 'grey',
+    }
+  },
+  downArrow: {
+    width: '4%',
+  },
+  hideTextField: {
+    display: 'none',
   }
+
 }));
 
 const Order = () => {
@@ -94,7 +107,7 @@ const Order = () => {
   }
 
   let url;
-  process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/order/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
+  process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
 
   const sendToStripe = async () => {
     const res = await fetch(`${url}/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
@@ -111,18 +124,19 @@ const Order = () => {
     e.preventDefault();
 
     // turning off emails for now
-    // sendEmail(e)     
+    sendEmail(e)     
     dispatch(postOrder(orderData))
     setTimeout(sendToStripe, 2000)
   }
 
   return (
     <div>
+
     { order ? 
     <Paper className={classes.paper}>
-      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
         { order ? <Typography className={classes.label}>{order.title}</Typography> : null }
         { order ? <Typography className={classes.label}>{order.description}</Typography> : null }
+      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
         <br></br>
         <Typography className={classes.label}>Input Start date: </Typography>
         <TextField
@@ -147,25 +161,26 @@ const Order = () => {
         />
         <br></br>
         <Typography className={classes.label}>Input Return date: </Typography>
+
         <TextField
           id="date"
           type="date"
           name="returnDate"
           variant="outlined"
-          // label="Return Date"
           fullWidth
           onChange={(e) => setOrderData({ ...orderData, returnDate: e.target.value, })}
         />
         <TextField
+          className={classes.hideTextField}
           id="numberNights"
           name="numberNights"
           variant="outlined"
           label="Number of nights calculated"
           value={calcNights(orderData.startDate, orderData.returnDate)}
           fullWidth
-          disabled
         />
         <TextField
+          className={classes.hideTextField}
           id="name"
           type="text"
           name="name"
@@ -173,9 +188,9 @@ const Order = () => {
           label="name"
           value={order.name}
           fullWidth
-          disabled
         />
         <TextField
+          className={classes.hideTextField}
           id="email"
           type="text"
           name="email"
@@ -183,19 +198,19 @@ const Order = () => {
           label="email"
           value={order.email}
           fullWidth
-          disabled
         />
         <TextField
+          className={classes.hideTextField}
           id="message"
           type="text"
-          name="description"
+          name="message"
           variant="outlined"
           label="message"
           value={order.description}
           fullWidth
-          disabled
         />
         <TextField
+          className={classes.hideTextField}
           id="subject"
           type="text"
           name="subject"
@@ -203,9 +218,9 @@ const Order = () => {
           label="subject"
           value="Congrats on your rental."
           fullWidth
-          disabled
         />
         <TextField
+          className={classes.hideTextField}
           id="recipient"
           type="text"
           name="recipient"
@@ -213,8 +228,7 @@ const Order = () => {
           label="recipient"
           value={userInfo.email}
           fullWidth
-          disabled
-        />
+        /> 
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
       </form>
     </Paper>
