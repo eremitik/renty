@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Grid } from '@material-ui/core';
 import { getItems } from "../actions/itemActions";
 import { getOrder } from "../actions/orderActions";
+import Wallet from './Wallet.js';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -57,6 +58,7 @@ export default function Profile() {
       <h1>Profile</h1>
       <h3>Name: {userInfo.name}</h3>
       <h3>Email: {userInfo.email}</h3>
+      <Wallet />
       <br></br>
       <h1>Items you've posted for rent:</h1>
       {!items.length ? <CircularProgress /> : (

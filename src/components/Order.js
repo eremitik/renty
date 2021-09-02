@@ -5,8 +5,13 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
+import { ethers } from 'ethers';
 import dotenv from "dotenv";
 dotenv.config();
+
+ 
+let url;
+process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   buttonSubmit: {
+    width: '400px',
     marginBottom: 10,
     backgroundColor: 'blue',
     color: 'white',
@@ -62,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
   hideTextField: {
     display: 'none',
   }
-
 }));
 
 const Order = () => {
@@ -91,6 +96,13 @@ const Order = () => {
     totalPrice: "",
     selectedFile: "",
   })
+  const [error, setError] = useState();
+  const [txs, setTxs] = useState()
+
+
+  const ETHJPY = 412633
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
  
   const sendEmail = (e) => {
     e.preventDefault();
@@ -106,9 +118,6 @@ const Order = () => {
     return parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10)
   }
 
-  let url;
-  process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
-
   const sendToStripe = async () => {
     const res = await fetch(`${url}/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
           method: 'POST',
@@ -120,7 +129,7 @@ const Order = () => {
         window.location.href = body.url
     }
 
-  const handlePayment = async (e) => {
+  const handleStripePayment = async (e) => {
     e.preventDefault();
 
     // turning off emails for now
@@ -129,6 +138,38 @@ const Order = () => {
     setTimeout(sendToStripe, 2000)
   }
 
+
+  const startPayment = async ({ setError, setTxs, ether, addr }) => {
+    try {
+      if (!window.ethereum) throw new Error("No crypto wallet found, please install MetaMask for best experience!");
+      await window.ethereum.send("eth_accounts")
+      const signer = provider.getSigner()
+      console.log(addr)
+      ethers.utils.getAddress(addr)
+      const tx = await signer.sendTransaction({
+        to: addr,
+        value: ethers.utils.parseEther(ether)
+      })
+      console.log({ ether, addr })
+      console.log("tx", tx.hash)
+      setTxs(tx.hash)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  const handleEthPayment = async () => {
+    setError()
+    await startPayment({
+      setError, 
+      setTxs,
+      ether: `${totalPrice / ETHJPY}`,
+      addr: "0x98DfcD53E4d52B6A6dBF85054A7A95B07De2C88a",
+    })
+  }
+
+  const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
+
   return (
     <div>
 
@@ -136,7 +177,7 @@ const Order = () => {
     <Paper className={classes.paper}>
         { order ? <Typography className={classes.label}>{order.title}</Typography> : null }
         { order ? <Typography className={classes.label}>{order.description}</Typography> : null }
-      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
+      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleStripePayment}>
         <br></br>
         <Typography className={classes.label}>Input Start date: </Typography>
         <TextField
@@ -230,8 +271,11 @@ const Order = () => {
           value={userInfo.email}
           fullWidth
         /> 
-        <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
+        <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit">
+          Pay with credt: {`¥` + Intl.NumberFormat().format(totalPrice)}
+        </Button>
       </form>
+      <Button className={classes.buttonSubmit} size="large" variant="contained" onClick={handleEthPayment}>Pay now in ETH: {(totalPrice/ETHJPY).toFixed(5)}</Button>
     </Paper>
 
    : <button><Link to="/main">Go back</Link></button>  }
