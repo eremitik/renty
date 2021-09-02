@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom'
 import { postOrder } from "../actions/orderActions";
@@ -107,7 +107,7 @@ const Order = () => {
     nightPrice: "",
     lenderEmail: "",
     lenderName: "",
-    numberNights: "",
+    numberNights: 0,
     startDate: "",
     returnDate: "",
     renterEmail: "",
@@ -198,10 +198,6 @@ const Order = () => {
 
   const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
 
-  useEffect(() => {
-      setOrderData({ ...orderData, txhash: txs })
-  },[txs])
-
 
   return (
     <div>
@@ -263,7 +259,7 @@ const Order = () => {
           name="numberNights"
           variant="outlined"
           label="Number of nights calculated"
-          value={calcNights(orderData.startDate, orderData.returnDate)}
+          value={totalPrice ? totalPrice : 0}
           fullWidth
         />
         <TextField

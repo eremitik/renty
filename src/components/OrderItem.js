@@ -120,7 +120,7 @@ export default function OrderItem({ orderedItem, userInfo }) {
           : `total paid: ¥${Intl.NumberFormat().format(orderedItem.totalPrice)}`}
         </Typography>
         {orderedItem.txhash 
-          ? <a href={`https://ropsten.etherscan.io/tx/${orderedItem.txhash}`} className={classes.paymentData} target="_blank">Etherscan tx link</a> 
+          ? <a href={`https://ropsten.etherscan.io/tx/${orderedItem.txhash}`} className={classes.paymentData} target="_blank" rel="noopener noreferrer">Etherscan tx link</a> 
           : <Typography className={classes.paymentData}>Paid with credit card.</Typography>
           }
         {moment(orderedItem.returnDate) > moment() 
