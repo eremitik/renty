@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import { postOrder } from "../actions/orderActions";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import { ethers } from 'ethers';
@@ -67,13 +73,27 @@ const useStyles = makeStyles((theme) => ({
   },
   hideTextField: {
     display: 'none',
-  }
+  },
+  formControl: {
+    width: '100%',
+    textAlign: 'left',
+    margin: theme.spacing(1),
+    minWidth: 300,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const Order = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory()
+  const [error, setError] = useState();
+  const [txs, setTxs] = useState();
+  const [payment, setPayment] = useState("crypto");
+
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -96,13 +116,8 @@ const Order = () => {
     totalPrice: "",
     selectedFile: "",
   })
-  const [error, setError] = useState();
-  const [txs, setTxs] = useState()
 
-
-  const ETHJPY = 412633
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-
+  const ETHJPY = 412633   // spot rate for ETHPY, can make dynamic in the future
  
   const sendEmail = (e) => {
     e.preventDefault();
@@ -129,46 +144,64 @@ const Order = () => {
         window.location.href = body.url
     }
 
-  const handleStripePayment = async (e) => {
-    e.preventDefault();
-
-    // turning off emails for now
-    // sendEmail(e)     
-    dispatch(postOrder(orderData))
-    setTimeout(sendToStripe, 2000)
+  const handleEthPayment = async () => {
+    setError()
+    await startEthPayment({
+      setError, 
+      setTxs,
+      ether: `${(totalPrice/ETHJPY).toFixed(5)}`,
+      addr: "0x98DfcD53E4d52B6A6dBF85054A7A95B07De2C88a", // Renty's wallet
+    })
   }
 
-
-  const startPayment = async ({ setError, setTxs, ether, addr }) => {
+  const startEthPayment = async ({ setError, setTxs, ether, addr }) => {
     try {
       if (!window.ethereum) throw new Error("No crypto wallet found, please install MetaMask for best experience!");
-      await window.ethereum.send("eth_accounts")
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      await window.ethereum.send("eth_requestAccounts")
       const signer = provider.getSigner()
-      console.log(addr)
       ethers.utils.getAddress(addr)
       const tx = await signer.sendTransaction({
         to: addr,
         value: ethers.utils.parseEther(ether)
       })
-      console.log({ ether, addr })
-      console.log("tx", tx.hash)
       setTxs(tx.hash)
+      dispatch(postOrder({ ...orderData, txhash: tx.hash}))
+      setTimeout(redirect, 1000)
     } catch (err) {
       setError(err.message)
     }
   }
+  
+  const redirect = () => {
+    return history.push('/profile')
+  }
 
-  const handleEthPayment = async () => {
-    setError()
-    await startPayment({
-      setError, 
-      setTxs,
-      ether: `${totalPrice / ETHJPY}`,
-      addr: "0x98DfcD53E4d52B6A6dBF85054A7A95B07De2C88a",
-    })
+  const handlePaymentSubmit = (e) => {
+    e.preventDefault();
+
+    if(payment === "credit") {
+      // sendEmail(e) // turn off emails here
+      dispatch(postOrder(orderData))
+      setTimeout(sendToStripe, 2000) 
+
+    } else {
+      // sendEmail(e) // turn off emails here
+      handleEthPayment()
+    } 
+  }
+
+  const handlePaymentMethod = (e) => {
+    setPayment(e.target.value)
   }
 
   const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
+
+  useEffect(() => {
+      setOrderData({ ...orderData, txhash: txs })
+  },[txs])
+
 
   return (
     <div>
@@ -177,15 +210,27 @@ const Order = () => {
     <Paper className={classes.paper}>
         { order ? <Typography className={classes.label}>{order.title}</Typography> : null }
         { order ? <Typography className={classes.label}>{order.description}</Typography> : null }
-      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleStripePayment}>
+      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePaymentSubmit}>
         <br></br>
+        <FormControl className={classes.formControl}>
+        <InputLabel>Payment Method</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={payment}
+            onChange={handlePaymentMethod}
+          >
+            <MenuItem value={"credit"}>Credit Card</MenuItem>
+            <MenuItem value={"crypto"}>Ethereum</MenuItem>
+          </Select>
+        </FormControl>
+
         <Typography className={classes.label}>Input Start date: </Typography>
         <TextField
-          id="date"
+          id="startdate"
           name="startDate"
           type="date"
           variant="outlined"
-          // label="Start Date"
           fullWidth
           onChange={(e) => setOrderData({ 
             ...orderData, 
@@ -204,7 +249,7 @@ const Order = () => {
         <Typography className={classes.label}>Input Return date: </Typography>
 
         <TextField
-          id="date"
+          id="returndate"
           type="date"
           name="returnDate"
           variant="outlined"
@@ -272,10 +317,12 @@ const Order = () => {
           fullWidth
         /> 
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit">
-          Pay with credt: {`¥` + Intl.NumberFormat().format(totalPrice)}
+          { payment === "credit" ? `Pay with credit: ${`¥` + Intl.NumberFormat().format(totalPrice)}` : `Pay now in ETH: ${(totalPrice/ETHJPY).toFixed(5)}`}
         </Button>
       </form>
-      <Button className={classes.buttonSubmit} size="large" variant="contained" onClick={handleEthPayment}>Pay now in ETH: {(totalPrice/ETHJPY).toFixed(5)}</Button>
+      {/* <Button className={classes.buttonSubmit} size="large" variant="contained" onClick={handleEthPayment}>Pay in ETH</Button> */}
+      <p>{error}</p>
+        <p>{ txs && `Your transaction hash: ${txs}`}</p>
     </Paper>
 
    : <button><Link to="/main">Go back</Link></button>  }

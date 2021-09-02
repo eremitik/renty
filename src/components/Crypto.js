@@ -30,6 +30,8 @@ export default function Crypto () {
     }
   }
 
+  console.log(txs)
+
   const handleSubmit = async () => {
     setError()
     await startPayment({
