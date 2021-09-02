@@ -167,7 +167,7 @@ const Order = () => {
         value: ethers.utils.parseEther(ether)
       })
       setTxs(tx.hash)
-      dispatch(postOrder({ ...orderData, txhash: tx.hash}))
+      dispatch(postOrder({ ...orderData, txhash: tx.hash, ethprice: ether}))
       setTimeout(redirect, 1000)
     } catch (err) {
       setError(err.message)

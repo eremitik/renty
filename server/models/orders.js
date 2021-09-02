@@ -22,6 +22,7 @@ const orderSchema = mongoose.Schema({
   },
   selectedFile: String,
   txhash: String,
+  ethprice: String,
 });
 
 const postOrder = mongoose.model("postOrder", orderSchema);
