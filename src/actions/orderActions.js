@@ -12,12 +12,13 @@ let url;
 (process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "http://13.212.157.177/order/") : (url = "http://localhost:4000/order")
 
 const fetchOrdersAPI = () => axios.get(url);
-const createOrderAPI = (newOrder) => {axios.post(url, newOrder)};
+const createOrderAPI = (newOrder) => { axios.post(url, newOrder) };
 
 
 export const getOrder = () => async (dispatch) => {
   try {
-    const { data } = await fetchOrdersAPI();
+    let { data } = await fetchOrdersAPI();
+    data = data.reverse()
     dispatch({ type: ORDER_REQUEST_ALL, payload: data });
   } catch (err) {
     console.log(err)

@@ -14,7 +14,7 @@ let url;
 (process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "http://13.212.157.177/items/") : (url = "http://localhost:4000/items")
 
 const fetchItemsAPI = () => axios.get(url);
-const createItemAPI = (newItem) => {axios.post(url, newItem)};
+const createItemAPI = (newItem) => { axios.post(url, newItem) };
 const updateItemAPI = (id, updatedItem) => axios.patch(`${url}/${id}`, updatedItem);
 const deleteItemAPI = (id) => axios.delete(`${url}/${id}`)
 const fetchItemsBySearchAPI = (searchQuery) => axios.get(`${url}/search?searchQuery=${searchQuery.search || 'none'}`)
@@ -22,7 +22,9 @@ const fetchItemsBySearchAPI = (searchQuery) => axios.get(`${url}/search?searchQu
 
 export const getItems = () => async (dispatch) => {
   try {
-    const { data } = await fetchItemsAPI();
+    let { data } = await fetchItemsAPI();
+    data = data.reverse()
+
     dispatch({ type: ITEM_REQUEST_ALL, payload: data });
   } catch (err) {
     console.log(err)
@@ -64,3 +66,4 @@ export const getItemsBySearch = (searchQuery) => async (dispatch) => {
     console.log(err)
   }
 }
+
