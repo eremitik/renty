@@ -1,77 +1,76 @@
 import React from "react";
 import moment from "moment";
 
-import { Card, CardMedia, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
-
+import { Card, CardMedia, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
 
 const useStyles = makeStyles({
   media: {
     height: 0,
-    paddingTop: '56.25%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    backgroundBlendMode: 'darken',
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0)',
+    paddingTop: "56.25%",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundBlendMode: "darken",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0)",
     },
   },
   border: {
-    border: 'solid',
+    border: "solid",
   },
   fullHeightCard: {
-    height: '100%',
+    height: "100%",
   },
   card: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    borderRadius: '15px',
-    height: '100%',
-    position: 'relative',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    borderRadius: "15px",
+    height: "100%",
+    position: "relative",
   },
   metadata: {
-    fontSize: '12px',
-    color: 'grey',
+    fontSize: "12px",
+    color: "grey",
   },
   metadataTwo: {
-    fontSize: '12px',
-    color: 'red',
+    fontSize: "12px",
+    color: "red",
   },
   overlay: {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    color: 'white',
+    position: "absolute",
+    top: "20px",
+    left: "20px",
+    color: "white",
   },
   overlay2: {
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    color: 'white',
+    position: "absolute",
+    top: "20px",
+    right: "20px",
+    color: "white",
   },
   grid: {
-    display: 'flex',
+    display: "flex",
   },
   details: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '15px',
-    marginBottom: '0px',
+    display: "flex",
+    justifyContent: "space-between",
+    margin: "15px",
+    marginBottom: "0px",
   },
   detailsTwo: {
-    margin: '15px',
-    marginBottom: '10px',
+    margin: "15px",
+    marginBottom: "10px",
   },
   title: {
-    fontSize: '18px',
+    fontSize: "18px",
   },
   name: {
-    color: 'black',
-    fontSize: '12px',
+    color: "black",
+    fontSize: "12px",
   },
   snackbar: {
     color: 'red',
@@ -85,12 +84,11 @@ const useStyles = makeStyles({
       textDecoration: 'underline',
     },
   },
-})
+});
 
 function TransitionUp(props) {
   return <Slide {...props} direction="up" />;
 }
-
 
 export default function OrderItem({ orderedItem, userInfo }) {
   const [open, setOpen] = React.useState(false);
@@ -104,16 +102,30 @@ export default function OrderItem({ orderedItem, userInfo }) {
     setOpen(false);
   };
 
-
   return (
     <Card className={classes.card} onClick={handleClick}>
-      <CardMedia className={classes.media} title={orderedItem.title} image={orderedItem.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
+      <CardMedia
+        className={classes.media}
+        title={orderedItem.title}
+        image={
+          orderedItem.selectedFile ||
+          "https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg"
+        }
+      />
       <div className={classes.details}>
-        <Typography className={classes.metadata} variant="body2">rented {moment(orderedItem.startDate).fromNow()}</Typography>
+        <Typography className={classes.metadata} variant="body2">
+          rented {moment(orderedItem.startDate).fromNow()}
+        </Typography>
+      </div>
+      <div className={classes.details}>
+        <Typography className={classes.metadata} variant="body2">
+          rental start: {moment(orderedItem.startDate).format("MMM do YYYY")}
+        </Typography>
       </div>
       <div className={classes.detailsTwo}>
+
         <Typography className={classes.title} variant="body2">{orderedItem.title}</Typography>
-        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{orderedItem.lenderEmail}</Typography>
+        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">owner:&nbsp;{orderedItem.lenderEmail}</Typography>
         <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{
           orderedItem.txhash
           ? `total paid: ${orderedItem.ethprice} ETH` 
@@ -129,11 +141,10 @@ export default function OrderItem({ orderedItem, userInfo }) {
         }
       </div>
 
-
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: "bottom",
+          horizontal: "right",
         }}
         open={open}
         className={classes.snackbar}
@@ -143,12 +154,17 @@ export default function OrderItem({ orderedItem, userInfo }) {
         TransitionComponent={TransitionUp}
         action={
           <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+            >
               <CloseIcon fontSize="small" />
             </IconButton>
           </React.Fragment>
         }
       />
     </Card>
-  )
+  );
 }
