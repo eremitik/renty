@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import { postOrder } from "../actions/orderActions";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
+import { ethers } from 'ethers';
 import dotenv from "dotenv";
 dotenv.config();
+
+ 
+let url;
+process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   buttonSubmit: {
+    width: '400px',
     marginBottom: 10,
     backgroundColor: 'blue',
     color: 'white',
@@ -61,14 +73,27 @@ const useStyles = makeStyles((theme) => ({
   },
   hideTextField: {
     display: 'none',
-  }
-
+  },
+  formControl: {
+    width: '100%',
+    textAlign: 'left',
+    margin: theme.spacing(1),
+    minWidth: 300,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const Order = () => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory()
+  const [error, setError] = useState();
+  const [txs, setTxs] = useState();
+  const [payment, setPayment] = useState("crypto");
+
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -82,7 +107,7 @@ const Order = () => {
     nightPrice: "",
     lenderEmail: "",
     lenderName: "",
-    numberNights: "",
+    numberNights: 0,
     startDate: "",
     returnDate: "",
     renterEmail: "",
@@ -91,6 +116,8 @@ const Order = () => {
     totalPrice: "",
     selectedFile: "",
   })
+
+  const ETHJPY = 412633   // spot rate for ETHPY, can make dynamic in the future
  
   const sendEmail = (e) => {
     e.preventDefault();
@@ -106,9 +133,6 @@ const Order = () => {
     return parseInt((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24), 10)
   }
 
-  let url;
-  process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url ='http://13.212.157.177/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
-
   const sendToStripe = async () => {
     const res = await fetch(`${url}/${order.price_id}/${calcNights(orderData.startDate, orderData.returnDate)}`, {
           method: 'POST',
@@ -120,14 +144,60 @@ const Order = () => {
         window.location.href = body.url
     }
 
-  const handlePayment = async (e) => {
+  const handleEthPayment = async () => {
+    setError()
+    await startEthPayment({
+      setError, 
+      setTxs,
+      ether: `${(totalPrice/ETHJPY).toFixed(5)}`,
+      addr: "0x98DfcD53E4d52B6A6dBF85054A7A95B07De2C88a", // Renty's wallet
+    })
+  }
+
+  const startEthPayment = async ({ setError, setTxs, ether, addr }) => {
+    try {
+      if (!window.ethereum) throw new Error("No crypto wallet found, please install MetaMask for best experience!");
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      await window.ethereum.send("eth_requestAccounts")
+      const signer = provider.getSigner()
+      ethers.utils.getAddress(addr)
+      const tx = await signer.sendTransaction({
+        to: addr,
+        value: ethers.utils.parseEther(ether)
+      })
+      setTxs(tx.hash)
+      dispatch(postOrder({ ...orderData, txhash: tx.hash, ethprice: ether}))
+      setTimeout(redirect, 1000)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+  
+  const redirect = () => {
+    return history.push('/profile')
+  }
+
+  const handlePaymentSubmit = (e) => {
     e.preventDefault();
 
-    // turning off emails for now
-    // sendEmail(e)     
-    dispatch(postOrder(orderData))
-    setTimeout(sendToStripe, 2000)
+    if(payment === "credit") {
+      // sendEmail(e) // turn off emails here
+      dispatch(postOrder(orderData))
+      setTimeout(sendToStripe, 2000) 
+
+    } else {
+      // sendEmail(e) // turn off emails here
+      handleEthPayment()
+    } 
   }
+
+  const handlePaymentMethod = (e) => {
+    setPayment(e.target.value)
+  }
+
+  const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
+
 
   return (
     <div>
@@ -136,15 +206,27 @@ const Order = () => {
     <Paper className={classes.paper}>
         { order ? <Typography className={classes.label}>{order.title}</Typography> : null }
         { order ? <Typography className={classes.label}>{order.description}</Typography> : null }
-      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePayment}>
+      <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePaymentSubmit}>
         <br></br>
+        <FormControl className={classes.formControl}>
+        <InputLabel>Payment Method</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={payment}
+            onChange={handlePaymentMethod}
+          >
+            <MenuItem value={"credit"}>Credit Card</MenuItem>
+            <MenuItem value={"crypto"}>Ethereum</MenuItem>
+          </Select>
+        </FormControl>
+
         <Typography className={classes.label}>Input Start date: </Typography>
         <TextField
-          id="date"
+          id="startdate"
           name="startDate"
           type="date"
           variant="outlined"
-          // label="Start Date"
           fullWidth
           onChange={(e) => setOrderData({ 
             ...orderData, 
@@ -163,7 +245,7 @@ const Order = () => {
         <Typography className={classes.label}>Input Return date: </Typography>
 
         <TextField
-          id="date"
+          id="returndate"
           type="date"
           name="returnDate"
           variant="outlined"
@@ -177,7 +259,7 @@ const Order = () => {
           name="numberNights"
           variant="outlined"
           label="Number of nights calculated"
-          value={calcNights(orderData.startDate, orderData.returnDate)}
+          value={totalPrice ? totalPrice : 0}
           fullWidth
         />
         <TextField
@@ -230,8 +312,13 @@ const Order = () => {
           value={userInfo.email}
           fullWidth
         /> 
-        <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
+        <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit">
+          { payment === "credit" ? `Pay with credit: ${`¥` + Intl.NumberFormat().format(totalPrice)}` : `Pay now in ETH: ${(totalPrice/ETHJPY).toFixed(5)}`}
+        </Button>
       </form>
+      {/* <Button className={classes.buttonSubmit} size="large" variant="contained" onClick={handleEthPayment}>Pay in ETH</Button> */}
+      <p>{error}</p>
+        <p>{ txs && `Your transaction hash: ${txs}`}</p>
     </Paper>
 
    : <button><Link to="/main">Go back</Link></button>  }
