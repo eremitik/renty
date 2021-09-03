@@ -31,6 +31,8 @@ const createOrder = async (req, res) => {
         renterName,
         paid,
         selectedFile,
+        txhash,
+        ethprice,
       } = req.body;
       const newOrder = {
         title,
@@ -46,6 +48,8 @@ const createOrder = async (req, res) => {
         paid,
         totalPrice: calcNights * nightPrice,
         selectedFile,
+        txhash,
+        ethprice,
       };
         const postMongo = new PostOrder(newOrder);
         await postMongo.save();

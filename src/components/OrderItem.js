@@ -73,7 +73,16 @@ const useStyles = makeStyles({
     fontSize: "12px",
   },
   snackbar: {
-    color: "red",
+    color: 'red',
+  },
+  paymentData: {
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    fontSize: '12px',
+    color: 'black',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
 });
 
@@ -114,40 +123,22 @@ export default function OrderItem({ orderedItem, userInfo }) {
         </Typography>
       </div>
       <div className={classes.detailsTwo}>
-        <Typography className={classes.title} variant="body2">
-          {orderedItem.title}
+
+        <Typography className={classes.title} variant="body2">{orderedItem.title}</Typography>
+        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">owner:&nbsp;{orderedItem.lenderEmail}</Typography>
+        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{
+          orderedItem.txhash
+          ? `total paid: ${orderedItem.ethprice} ETH` 
+          : `total paid: ¥${Intl.NumberFormat().format(orderedItem.totalPrice)}`}
         </Typography>
-        <Typography
-          className={classes.metadata}
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        >
-          owner:
-          {orderedItem.lenderEmail}
-        </Typography>
-        <Typography
-          className={classes.metadata}
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        >
-          total paid: ¥{Intl.NumberFormat().format(orderedItem.totalPrice)}
-        </Typography>
-        {moment(orderedItem.returnDate) > moment() ? (
-          <Typography
-            className={classes.metadataTwo}
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          >
-            Return by: {moment(orderedItem.returnDate).calendar()}
-          </Typography>
-        ) : (
-          <Typography className={classes.metadata}>
-            Item has been returned.
-          </Typography>
-        )}
+        {orderedItem.txhash 
+          ? <a href={`https://ropsten.etherscan.io/tx/${orderedItem.txhash}`} className={classes.paymentData} target="_blank" rel="noopener noreferrer">Etherscan tx link</a> 
+          : <Typography className={classes.paymentData}>Paid with credit card.</Typography>
+          }
+        {moment(orderedItem.returnDate) > moment() 
+          ? <Typography className={classes.metadataTwo} variant="body2" color="textSecondary" component="p">Return by: {moment(orderedItem.returnDate).calendar()}</Typography> 
+          : <Typography className={classes.metadata}>Item has been returned.</Typography>
+        }
       </div>
 
       <Snackbar
@@ -159,14 +150,7 @@ export default function OrderItem({ orderedItem, userInfo }) {
         className={classes.snackbar}
         autoHideDuration={3000}
         onClose={handleClose}
-        // message={`This item is due on ${moment(orderedItem.returnDate).calendar()}!`}
-        message={
-          moment(orderedItem.returnDate) > moment()
-            ? `This item is due on ${moment(
-                orderedItem.returnDate
-              ).calendar()}!`
-            : "You have already returned this item."
-        }
+        message={ moment(orderedItem.returnDate) > moment()  ? `This item is due on ${moment(orderedItem.returnDate).calendar()}!` : "You have already returned this item." }
         TransitionComponent={TransitionUp}
         action={
           <React.Fragment>
