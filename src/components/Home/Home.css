@@ -37,24 +37,23 @@
   display: inline-block;
 }
 
-.h1 {
+.copy {
   color: white;
   padding-top: 15px;
   font-weight: 800;
   margin-bottom: 45px;
   font-size: 25px;
+  letter-spacing: -0.5px;
 }
 
 .button {
   display: inline-block;
-  /* background: #1e90ff; */
   background: #7fffd4;
   color: black;
   border: none;
   border-radius: 8px;
   width: 200px;
   height: 50px;
-  /* display: table; */
   margin-left: 100px;
   cursor: pointer;
   text-decoration: none;
@@ -69,4 +68,40 @@
   color: white;
   background-color: blue;
   transition: 0.4s;
+}
+
+.titleCopy {
+  font-size: 65px;
+  margin-top: 0;
+  margin-bottom: 0px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.subtitleCopy {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.whiteBox {
+  position: absolute;
+  margin-top: 150px;
+  margin-left: calc(9%);
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-bottom: 125px;
+  background-color: white;
+  width: calc(80% - 10px);
+  border-radius: 25px;
+}
+
+.carousel {
+  width: 400px;
+  position: absolute;
+  margin-left: calc(60%);
+  margin-top: calc(14.5%);
+}
+
+.carouselImage {
+  width: 80%;
 }
