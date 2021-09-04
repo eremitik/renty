@@ -55,19 +55,33 @@ const createItem = async (req, res) => {
     res.status(409).json({ message: err.message })
   }
 }
-
+// Removed additional params from req body only to update "rented" field
 const updateItem = async (req, res) => {
   const { id } = req.params;
-  const { title, description, tags, email } = req.body;
+  const { rented } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
 
-  const updatedItem = { title, description, tags, email, _id: id };
+  const updatedItem = { _id: id, rented };
 
   await PostItem.findByIdAndUpdate(id, updatedItem, { new: true });
 
   res.json(updatedItem);
 }
+
+//  Original updateItem  function
+// const updateItem = async (req, res) => {
+//   const { id } = req.params;
+//   const { title, description, tags, email, rented } = req.body;
+
+//   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
+
+//   const updatedItem = { title, description, tags, email, _id: id, rented };
+
+//   await PostItem.findByIdAndUpdate(id, updatedItem, { new: true });
+
+//   res.json(updatedItem);
+// }
 
 const deleteItem = async (req, res) => {
   const { id } = req.params;
