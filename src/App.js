@@ -24,67 +24,27 @@ const theme = createTheme({
   },
 });
 
-function App() {
-
-  const paths = {
-    homePage: "/",
-    loginPage: "/login",
-    registPage: "/register",
-    itemsPage: "/main",
-    formPage: "/form",
-    profilePage: "/profile",
-    orderPage: "/order",
-  };
-
-  const routes = [
-    {
-      path: paths.homePage,
-      exact: true,
-      render: () => <HomePage />,
-    },
-    {
-      path: paths.loginPage,
-      render: () => <LoginPage />,
-    },
-    {
-      path: paths.registPage,
-      render: () => <RegistPage />,
-    },
-    {
-      path: paths.itemsPage,
-      render: () => <ItemsPage />,
-    },
-    {
-      path: paths.formPage,
-      render: () => <FormPage />,
-    },
-    {
-      path: paths.profilePage,
-      render: () => <ProfilePage />,
-    },
-    { 
-      path: paths.orderPage,
-      render: () => <OrderPage />,
-    }
-  ];
+export default function App() {
 
   return (
-  <ThemeProvider theme={theme}> 
-    <HashRouter>
-        <Navbar />
-        <Toolbar />
-      <Switch>
-        {routes.map((route) => (
-          <Route
-            path={route.path}
-            exact={Boolean(route.exact)}
-            render={route.render}
-            key={route.path}
-          />
-        ))}
-      </Switch>
-    </HashRouter>
-  </ThemeProvider>
+    <ThemeProvider theme={theme}> 
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={HomePage}></Route>
+          <React.Fragment>
+          <div>
+            <Navbar />
+            <Toolbar />
+              <Route exact path="/login" component={LoginPage}></Route>
+              <Route exact path="/register" component={RegistPage}></Route>
+              <Route exact path="/main" component={ItemsPage}></Route>
+              <Route exact path="/form" component={FormPage}></Route>
+              <Route exact path="/profile" component={ProfilePage}></Route>
+              <Route exact path="/order" component={OrderPage}></Route>
+          </div>
+          </React.Fragment>
+        </Switch>
+      </HashRouter>
+    </ThemeProvider>
   );
 }
-export default App;

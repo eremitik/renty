@@ -24,7 +24,6 @@ const Items = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getItems())
-
   }, [dispatch])
 
   const itemList = useSelector(state => state.itemList)
