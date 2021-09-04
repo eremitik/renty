@@ -85,8 +85,14 @@ const Form = () => {
 
   return (
     <Paper className={classes.paper}>
+      <h1>Share your item</h1>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-        <Typography variant="h6">Create a new rental posting</Typography>
+        {/* <Typography variant="h6">Create a new rental posting</Typography> */}
+        <FileBase
+          type="file"
+          multiple={false}
+          onDone={({ base64 }) => setItemData({ ...itemData, selectedFile: base64 })}
+        />
         <TextField
           name="title"
           variant="outlined"
@@ -121,11 +127,7 @@ const Form = () => {
           onChange={(e) => setItemData({ ...itemData, price: e.target.value })}
         />
         <div className={classes.fileInput}>
-          <FileBase
-            type="file"
-            multiple={false}
-            onDone={({ base64 }) => setItemData({ ...itemData, selectedFile: base64 })}
-          />
+
         </div>
         <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
         <Button className={classes.buttonClear} variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>

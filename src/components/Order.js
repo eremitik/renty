@@ -5,10 +5,11 @@ import { postOrder } from "../actions/orderActions";
 import { updateItem } from "../actions/itemActions";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
@@ -41,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-block',
     width: '100%',
     textAlign: 'left',
+    fontWeight: 800,
+  },
+  sublabel: {
+    textAlign: 'left',
+    color: 'black',
+    fontWeight: 600,
   },
   form: {
     display: 'flex',
@@ -48,8 +55,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   buttonSubmit: {
-    width: '400px',
+    width: '100%',
     marginBottom: 10,
+    marginTop: '20px',
     backgroundColor: 'blue',
     color: 'white',
     '&:hover': {
@@ -83,6 +91,12 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  radioSelect: {
+    color: 'black',
+    width: '100%',
+    textAlign: 'left',
+    marginTop: '20px',
   },
 }));
 
@@ -214,23 +228,11 @@ const Order = () => {
 
       {order ?
         <Paper className={classes.paper}>
+          <h1>Borrow an item</h1>
           {order ? <Typography className={classes.label}>{order.title}</Typography> : null}
-          {order ? <Typography className={classes.label}>{order.description}</Typography> : null}
+          {order ? <Typography className={classes.sublabel}>{order.description}</Typography> : null}
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePaymentSubmit}>
             <br></br>
-            <FormControl className={classes.formControl}>
-              <InputLabel>Payment Method</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={payment}
-                onChange={handlePaymentMethod}
-              >
-                <MenuItem value={"credit"}>Credit Card</MenuItem>
-                <MenuItem value={"crypto"}>Ethereum</MenuItem>
-              </Select>
-            </FormControl>
-
             <Typography className={classes.label}>Input Start date: </Typography>
             <TextField
               id="startdate"
@@ -322,11 +324,21 @@ const Order = () => {
               value={userInfo.email}
               fullWidth
             />
-            <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit">
-              {payment === "credit" ? `Pay with credit: ${`¥` + Intl.NumberFormat().format(totalPrice)}` : `Pay now in ETH: ${(totalPrice / ETHJPY).toFixed(5)}`}
+
+            <FormControl className={classes.radioSelect} component="fieldset" >
+              <FormLabel className={classes.label} component="legend">Payment Method</FormLabel>
+                <RadioGroup row value={payment} onChange={handlePaymentMethod}>
+                  <FormControlLabel value="credit" control={<Radio color="blue" />} label="Credit" />
+                  <FormControlLabel value="crypto" control={<Radio color="blue" />} label="Crypto" />
+                </RadioGroup>
+              </FormControl>
+
+            <Button className={classes.buttonSubmit} disabled={totalPrice ? false : true} variant="contained" size="large" type="submit">
+              {!totalPrice ? "Please select dates" : payment === "credit" 
+                ? `Pay with credit: ${`¥` + Intl.NumberFormat().format(totalPrice)}` 
+                : `Pay now in ETH: ${(totalPrice / ETHJPY).toFixed(5)}`}
             </Button>
           </form>
-          {/* <Button className={classes.buttonSubmit} size="large" variant="contained" onClick={handleEthPayment}>Pay in ETH</Button> */}
           <p>{error}</p>
           <p>{txs && `Your transaction hash: ${txs}`}</p>
         </Paper>
