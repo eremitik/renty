@@ -92,21 +92,16 @@ const Item = ({ item, userInfo }) => {
   const grabInfo = () => {
     dispatch(createOrder(item))
   }
-  
+
 
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} title={item.title} image={item.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
-      {/* <div className={classes.overlay}>
-        <Typography className={classes.title} variant="body2">{item.title}</Typography>
-      </div> */}
       <div className={classes.details}>
         <Typography className={classes.metadata} variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
-        {/* <Typography className={classes.metadata} variant="body2" color="textSecondary">User: {item.name}</Typography> */}
       </div>
       <div className={classes.detailsTwo}>
         <Typography className={classes.title} variant="body2">{item.title}</Typography>
-        {/* <Typography className={classes.metadata} variant="body2" >added {moment(item.createdAt).fromNow()}</Typography> */}
         <Typography className={classes.name} variant="body2" >user: {item.name}</Typography>
         <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{item.description}</Typography>
       </div>

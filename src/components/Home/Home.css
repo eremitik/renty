@@ -1,0 +1,72 @@
+.logo {
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 25px;
+  color: white;
+  font-weight: 900;
+  font-size: 50px;
+  cursor: default;
+}
+
+.img {
+  position: inline-block;
+  float: right;
+  filter: invert(1);
+  margin-top: 30px;
+  margin-right: 20px;
+  transform: scale(0.8);
+  opacity: 0.5;
+}
+
+.barContainer {
+  position: absolute;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.copyContainer {
+  text-align: left;
+  margin-left: 20px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.h1 {
+  color: white;
+  padding-top: 15px;
+  font-weight: 800;
+  margin-bottom: 45px;
+  font-size: 25px;
+}
+
+.button {
+  display: inline-block;
+  /* background: #1e90ff; */
+  background: #7fffd4;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  width: 200px;
+  height: 50px;
+  /* display: table; */
+  margin-left: 100px;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  font-weight: 800;
+  font-size: 15px;
+  font-family: Montserrat;
+  transition: 0.4s;
+}
+
+.button:hover {
+  color: white;
+  background-color: blue;
+  transition: 0.4s;
+}
