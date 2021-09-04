@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { TextField, Button, Paper } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";

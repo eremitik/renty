@@ -1,63 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'
-import { getItems } from "../../actions/itemActions";
-import { CircularProgress, Grid } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
-import Item from '../Item.js';
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
-
 import Card1 from '../../images/card1.png';
 import Card2 from '../../images/card2.png';
 import Card3 from '../../images/card3.png';
 import './Home.css';
 
-
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  smMargin: {
-    margin: theme.spacing(1),
-  },
-  actionDiv: {
-    textAlign: 'center',
-  },
-  grid: {
-    width: '300px',
-  }
-}))
-
 export default function BottomBar () {
 
   const history = useHistory();
-  const classes = useStyles();
 
   const handleRedirect = () => {
     history.push('/login')
   }
 
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(getItems())
-  }, [dispatch])
-
-
-  const itemList = useSelector(state => state.itemList)
-  const { items } = itemList
-
-  const userLogin = useSelector(state => state.userLogin)
-  const { userInfo } = userLogin
-
   return (
     <div>
+      <div>
       <h2 className="logo">R</h2>
       <a href="https://twitter.com/eremitik">
-        <img className="img" src="https://i.ibb.co/Wnxq2Nq/twitter.png"/>
+        <img className="img" src="https://i.ibb.co/Wnxq2Nq/twitter.png" alt="twitterlogo"/>
       </a>
+      </div>
 
       <div className="positionWB">
       <div className="whiteBox">
@@ -73,23 +38,11 @@ export default function BottomBar () {
 
       <div className="carousel">
       <Carousel plugins={['arrows']}>
-        <img className="carouselImage" src={Card1} />
-        <img className="carouselImage" src={Card2} />
-        <img className="carouselImage" src={Card3} />
+        <img className="carouselImage" src={Card1} alt="democard"/>
+        <img className="carouselImage" src={Card2} alt="democard"/>
+        <img className="carouselImage" src={Card3} alt="democard"/>
       </Carousel>
       </div>
-
-
-
-      {/* <Grid className={classes.container} container spacing={3}>
-      <div className="oneCard">
-        {items.map((item) => (
-          <Grid className={classes.grid} key={item._id} item xs={12} sm={2}>
-            <Item item={item} userInfo={userInfo}/>
-          </Grid>
-          ))}
-        </div>
-        </Grid> */}
 
       <div className="barContainer">
         <div className="copyContainer">
