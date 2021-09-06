@@ -99,3 +99,5 @@ server {
 sudo pm2 start server/index.js
 sudo systemctl start nginx
 ```
+
+![home](./screenshot.png)

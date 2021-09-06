@@ -64,7 +64,7 @@ function Register() {
 
     useEffect(() => {
         if (userInfo) {
-            history.push('/main')
+            history.push('/profile')
         }
     }, [history, userInfo])
 
