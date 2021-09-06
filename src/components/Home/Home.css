@@ -99,9 +99,40 @@
   width: 400px;
   position: absolute;
   margin-left: calc(60%);
-  margin-top: calc(14.5%);
+  /* margin-top: calc(14.5%); */
+  margin-top: 240px;
 }
 
 .carouselImage {
   width: 80%;
+}
+
+@media only screen and (max-width: 812px) {
+  body {
+    height: 1250px;
+  }
+  .titleCopy {
+    font-size: 40px;
+  }
+  .whiteBox {
+    margin-top: 125px;
+    height: 750px;
+    margin-left: calc(8%);
+  }
+  .carousel {
+    width: 375px;
+    margin-left: 0;
+    margin-top: 700px;
+  }
+  .barContainer {
+    position: fixed;
+  }
+  .copyContainer {
+    text-align: center;
+  }
+  .button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+  }
 }

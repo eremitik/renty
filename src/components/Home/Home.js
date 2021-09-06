@@ -34,7 +34,6 @@ export default function BottomBar () {
         <h2 className="subtitleCopy">Borrow, share or browse real items</h2>
         <h2 className="subtitleCopy">and pay with fiat or crypto.</h2>
       </div>
-      </div>
 
       <div className="carousel">
       <Carousel plugins={['arrows']}>
@@ -42,6 +41,7 @@ export default function BottomBar () {
         <img className="carouselImage" src={Card2} alt="democard"/>
         <img className="carouselImage" src={Card3} alt="democard"/>
       </Carousel>
+      </div>
       </div>
 
       <div className="barContainer">
