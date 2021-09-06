@@ -1,10 +1,12 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
-import Carousel from '@brainhubeu/react-carousel';
+import { Link, useHistory } from "react-router-dom";
+import Carousel, { autoplayPlugin } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import Card1 from '../../images/card1.png';
 import Card2 from '../../images/card2.png';
 import Card3 from '../../images/card3.png';
+import Card4 from '../../images/card4.png';
+import Card5 from '../../images/card5.png';
 import './Home.css';
 
 export default function BottomBar () {
@@ -36,10 +38,15 @@ export default function BottomBar () {
       </div>
 
       <div className="carousel">
-      <Carousel plugins={['arrows']}>
+      <Carousel plugins={
+        ['infinite',{resolve: autoplayPlugin, options: {interval: 2000,}},]}   
+          animationSpeed={1000}
+        >
         <img className="carouselImage" src={Card1} alt="democard"/>
         <img className="carouselImage" src={Card2} alt="democard"/>
         <img className="carouselImage" src={Card3} alt="democard"/>
+        <img className="carouselImage" src={Card4} alt="democard"/>
+        <img className="carouselImage" src={Card5} alt="democard"/>
       </Carousel>
       </div>
       </div>
