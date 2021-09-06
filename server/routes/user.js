@@ -1,6 +1,4 @@
 import { Router } from 'express';
-// User Model
-// import User from '../models/users.js';
 
 import {
     authUser,

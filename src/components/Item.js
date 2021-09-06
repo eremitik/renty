@@ -93,6 +93,13 @@ const Item = ({ item, userInfo }) => {
     dispatch(createOrder(item))
   }
 
+  const handleDelete = () => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteItem(item._id))
+      window.location.reload()
+    }
+  }
+
 
   return (
     <Card className={classes.card}>
@@ -107,13 +114,14 @@ const Item = ({ item, userInfo }) => {
       </div>
       
       <CardActions className={classes.cardActions}>
-        { userInfo && userInfo.email === item.email ? 
-          <Button size="small" onClick={() => dispatch(deleteItem(item._id))}>
+        { userInfo && userInfo.email === item.email 
+        ? <Button size="small" 
+            onClick={handleDelete}>
             <DeleteIcon fontSize="small" />
           </Button> 
         : null}
         { userInfo && userInfo.email !== item.email ? 
-            <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">¥{item.price} /night</Link></button> : null }
+            <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">¥{Intl.NumberFormat().format(item.price)} /night</Link></button> : null }
       </CardActions>
     </Card>
   )

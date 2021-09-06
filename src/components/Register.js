@@ -72,7 +72,6 @@ function Register() {
         e.preventDefault()
         try {
             dispatch(register(name, email, password))
-            // window.location.href = "/main";
         } catch (err) {
             alert(err.response.data.msg)
         }

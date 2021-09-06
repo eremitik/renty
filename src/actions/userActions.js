@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import auth from '../../server/middleware/auth.js';
 import {
     USER_LOGIN,
     USER_LOGOUT,
@@ -7,7 +6,6 @@ import {
 } from '../types/userTypes.js';
 
 // User Registration
-
 export const register = (name, email, password) => async (dispatch) => {
     try {
         const config = {
@@ -39,7 +37,6 @@ export const register = (name, email, password) => async (dispatch) => {
 }
 
 // User Login
-
 export const login = (email, password) => async (dispatch) => {
     try {
 
@@ -67,7 +64,6 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 // User Logout
-
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
     dispatch({ type: USER_LOGOUT })

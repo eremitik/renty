@@ -8,22 +8,12 @@ import { getItemsBySearch, getItems } from "../actions/itemActions"
 const useStyles = makeStyles((theme) => ({
   searchPaper: {
     boxShadow: 'none',
-    // width: '700px',
-    // marginLeft: 'auto',
-    // marginRight: 'auto',
-  },
-  gridContainer: {
-    // marginTop: '0px',
   },
   appBarSearch: {
-    // borderRadius: 8,
-    // marginBottom: '1rem',
     display: 'flex',
-    // padding: '16px',
     boxShadow: 'none',
   },
   searchField: {
-    // marginBottom: '5px',
     fontFamily: 'Montserrat',
     fontWeight: 'bold',
     height: '35px',
@@ -74,8 +64,6 @@ const Search = () => {
   const searchItem = () => {
     if (search.trim()) {
       dispatch(getItemsBySearch({ search }))
-      // history.push(`/items/search?searchQuery=${search || 'none'}`)
-      // history.push(`/search`)
     } else {
       dispatch(getItems())
       history.push('/main')
@@ -85,7 +73,7 @@ const Search = () => {
   return (
     <Paper className={classes.searchPaper}>
       <Container maxWidth="xl" >
-        <Grid container justifyContent="center" alignItems="stretch" spacing={5} className={classes.gridContainer}>
+        <Grid container justifyContent="center" alignItems="stretch" spacing={5}>
           <div className={classes.appBarSearch} position="static" color="inherit">
             <input
               className={classes.searchField}
