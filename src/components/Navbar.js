@@ -124,7 +124,7 @@ export default function Navbar() {
               <MenuItem className={classes.link} onClick={handleClose} component={Link} to="/">Home</MenuItem>
               { !userInfo ? <MenuItem onClick={handleClose} component={Link} to="/register">Register</MenuItem> : null }
               { !userInfo ? <MenuItem onClick={handleClose} component={Link} to="/login">Login</MenuItem> : null }
-              <MenuItem onClick={handleClose} component={Link} to="/main">See Rentals</MenuItem>
+              <MenuItem onClick={handleClose} component={Link} to="/main">Marketplace</MenuItem>
               { !userInfo ? null : <MenuItem onClick={handleClose} component={Link} to="/form">Post Rental</MenuItem> }
               <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
             </Menu>
