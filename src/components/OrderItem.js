@@ -102,6 +102,9 @@ export default function OrderItem({ orderedItem, userInfo }) {
     setOpen(false);
   };
 
+  console.log(orderedItem.startDate)
+  console.log(moment(orderedItem.startDate).format("MMM do YYYY"))
+
   return (
     <Card className={classes.card} onClick={handleClick}>
       <CardMedia
@@ -114,12 +117,7 @@ export default function OrderItem({ orderedItem, userInfo }) {
       />
       <div className={classes.details}>
         <Typography className={classes.metadata} variant="body2">
-          rented {moment(orderedItem.startDate).fromNow()}
-        </Typography>
-      </div>
-      <div className={classes.details}>
-        <Typography className={classes.metadata} variant="body2">
-          rental start: {moment(orderedItem.startDate).format("MMM do YYYY")}
+          rental starts {moment(orderedItem.startDate).calendar()}
         </Typography>
       </div>
       <div className={classes.detailsTwo}>
