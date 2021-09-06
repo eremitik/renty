@@ -124,7 +124,7 @@ const Item = ({ item, userInfo }) => {
         : null}
         { userInfo && (userInfo.email !== item.email) && !item.rented
         ? <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">{`¥${Intl.NumberFormat().format(item.price)} /night`}</Link></button> 
-        : <button disabled={true} className={classes.buyButton}>out for rent</button> }
+        : !userInfo ? null : userInfo.email === item.email ? null : <button disabled={true} className={classes.buyButton}>out for rent</button> }
       </CardActions>
     </Card>
   )
