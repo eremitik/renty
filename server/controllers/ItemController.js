@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 // const stripe = new Stripe(process.env.REACT_APP_STRIPE_SECRET_KEY);
-const stripe = new Stripe("sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg");
+const stripe = new Stripe('sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg');
 dotenv.config();
 
 const getItems = async (req, res) => {
