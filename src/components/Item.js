@@ -70,6 +70,8 @@ const useStyles = makeStyles({
     fontSize: '12px',
   },
   buyButton: {
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
     border: 'none',
     borderRadius: '5px',
     backgroundColor: 'white',
@@ -120,8 +122,9 @@ const Item = ({ item, userInfo }) => {
             <DeleteIcon fontSize="small" />
           </Button> 
         : null}
-        { userInfo && userInfo.email !== item.email ? 
-            <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">¥{Intl.NumberFormat().format(item.price)} /night</Link></button> : null }
+        { userInfo && (userInfo.email !== item.email) && !item.rented
+        ? <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">{`¥${Intl.NumberFormat().format(item.price)} /night`}</Link></button> 
+        : <button disabled={true} className={classes.buyButton}>out for rent</button> }
       </CardActions>
     </Card>
   )

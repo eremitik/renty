@@ -74,6 +74,7 @@
   font-size: 65px;
   margin-top: 0;
   margin-bottom: 0px;
+  margin-left: 10px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
@@ -81,27 +82,60 @@
 .subtitleCopy {
   margin-top: 0px;
   margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 .whiteBox {
   position: absolute;
   margin-top: 150px;
-  margin-left: calc(9%);
+  margin-left: calc(12%);
   padding-top: 30px;
   padding-left: 30px;
   padding-bottom: 125px;
   background-color: white;
-  width: calc(80% - 10px);
+  width: calc(75% - 10px);
   border-radius: 25px;
 }
 
 .carousel {
-  width: 400px;
+  width: 325px;
   position: absolute;
-  margin-left: calc(60%);
-  margin-top: calc(14.5%);
+  margin-left: calc(62%);
+  margin-top: 230px;
 }
 
 .carouselImage {
   width: 80%;
+}
+
+@media only screen and (max-width: 812px) {
+  body {
+    height: 1250px;
+  }
+  .titleCopy {
+    font-size: 40px;
+  }
+  .whiteBox {
+    margin-top: 125px;
+    height: 750px;
+    margin-left: calc(10%);
+  }
+  .carousel {
+    width: 275px;
+    margin-left: calc(13.5%);
+    margin-top: 700px;
+  }
+  .barContainer {
+    /* position: fixed; */
+    position: fixed;
+    bottom: 0;
+  }
+  .copyContainer {
+    text-align: center;
+  }
+  .button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+  }
 }

@@ -1,11 +1,13 @@
-The Mercari for Renting.
+A decentralized P2P rent-anything platform.
+![home](./home.png)
+![home](./marketplace.png)
 
 Instructions to run locally (make sure to update the .env file):
 
 ```
-git clone https://github.com/eremitik/renty.git
+git clone -b main https://github.com/eremitik/renty.git
 cd renty && npm i
-cp .env.example .env
+cp .env.example .env        //copy in your creds
 npm run dev
 ```
 
@@ -31,10 +33,10 @@ sudo n stable
 [clone repo, prep]
 
 ```
-git clone https://github.com/eremitik/renty.git
+git clone -b main https://github.com/eremitik/renty.git
 cd renty && sudo npm i
-sudo cp .env.example .env
-sudo vim .env (enter DB password + JWT token)
+sudo cp .env.example .env   //copy in your creds, change environment to 'PROD'
+sudo vim .env               //enter DB password + JWT token
 sudo npm run build
 ```
 
@@ -72,6 +74,23 @@ server {
     proxy_cache_bypass $http_upgrade;
     }
 
+  location /order/ {
+    proxy_pass http://127.0.0.1:4000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+    }
+
+  location /stripe/ {
+    proxy_pass http://127.0.0.1:4000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+    }
 }
 
 ```
