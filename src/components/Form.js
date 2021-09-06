@@ -55,6 +55,7 @@ const Form = () => {
     email: userInfo.email,
     name: userInfo.name,
     tags: "",
+    rented: false,
     price: "",
     selectedFile: "",
   })
