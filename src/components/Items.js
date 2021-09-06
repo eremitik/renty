@@ -37,7 +37,8 @@ const Items = () => {
   return (
     !items.length ? <CircularProgress /> : (
       <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        {items.filter(item => !item.rented).map((item) => (
+        {/* {items.filter(item => !item.rented).map((item) => ( */}
+        {items.map((item) => (
           <Grid key={item._id} item xs={12} sm={2}>
             <Item item={item} userInfo={userInfo} />
           </Grid>

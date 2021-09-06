@@ -204,7 +204,7 @@ const Order = () => {
     if (payment === "credit") {
       sendEmail(e) // turn off emails here
       dispatch(postOrder(orderData))
-      setTimeout(sendToStripe, 12000)
+      setTimeout(sendToStripe, 2000)
 
     } else {
       sendEmail(e) // turn off emails here
