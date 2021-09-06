@@ -76,7 +76,6 @@ const Form = () => {
     setItemData({ 
     title: "", 
     description: "", 
-    // email: "",
     tags: "",
     price: "",
     selectedFile: "",
@@ -87,7 +86,6 @@ const Form = () => {
     <Paper className={classes.paper}>
       <h1>Share your item</h1>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-        {/* <Typography variant="h6">Create a new rental posting</Typography> */}
         <FileBase
           type="file"
           multiple={false}

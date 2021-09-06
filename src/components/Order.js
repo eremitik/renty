@@ -10,7 +10,6 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-
 import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import { ethers } from 'ethers';
@@ -119,8 +118,6 @@ const Order = () => {
   const itemList = useSelector(state => state.itemList)
   const { items } = itemList
 
-
-
   const [orderData, setOrderData] = useState({
     title: "",
     price_id: "",
@@ -205,23 +202,21 @@ const Order = () => {
 
 
     if (payment === "credit") {
-      // sendEmail(e) // turn off emails here
+      sendEmail(e) // turn off emails here
       dispatch(postOrder(orderData))
       setTimeout(sendToStripe, 12000)
 
     } else {
-      // sendEmail(e) // turn off emails here
+      sendEmail(e) // turn off emails here
       handleEthPayment()
     }
   }
 
   const handlePaymentMethod = (e) => {
     setPayment(e.target.value)
-
   }
 
   const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
-
 
   return (
     <div>
@@ -328,8 +323,8 @@ const Order = () => {
             <FormControl className={classes.radioSelect} component="fieldset" >
               <FormLabel className={classes.label} component="legend">Payment Method</FormLabel>
                 <RadioGroup row value={payment} onChange={handlePaymentMethod}>
-                  <FormControlLabel value="credit" control={<Radio color="blue" />} label="Credit" />
-                  <FormControlLabel value="crypto" control={<Radio color="blue" />} label="Crypto" />
+                  <FormControlLabel value="credit" control={<Radio color="primary" />} label="Credit" />
+                  <FormControlLabel value="crypto" control={<Radio color="primary" />} label="Crypto" />
                 </RadioGroup>
               </FormControl>
 

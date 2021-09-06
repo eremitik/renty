@@ -16,16 +16,9 @@ import Menu from '@material-ui/core/Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // backdropFilter: 'blur(8px)',
   },
   navBar: {
     boxShadow: 'none',
-    // opacity: 0.9,
-    // filter: 'blur(8px)',
-  },
-  toolBar: {
-    // backdropFilter: 'blur(3px)',
-    // filter: 'blur(8px)',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -99,8 +92,7 @@ export default function Navbar() {
 
   return (
       <AppBar className={classes.navBar} position="fixed" color="inherit">
-        <Toolbar className={classes.toolBar}>
-
+        <Toolbar>
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"

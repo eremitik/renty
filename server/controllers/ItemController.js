@@ -3,8 +3,7 @@ import PostOrder from '../models/orders.js';
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const stripe = new Stripe('sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 dotenv.config();
 
 const getItems = async (req, res) => {
@@ -55,6 +54,7 @@ const createItem = async (req, res) => {
     res.status(409).json({ message: err.message })
   }
 }
+
 // Removed additional params from req body only to update "rented" field
 const updateItem = async (req, res) => {
   const { id } = req.params;
@@ -68,20 +68,6 @@ const updateItem = async (req, res) => {
 
   res.json(updatedItem);
 }
-
-//  Original updateItem  function
-// const updateItem = async (req, res) => {
-//   const { id } = req.params;
-//   const { title, description, tags, email, rented } = req.body;
-
-//   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
-
-//   const updatedItem = { title, description, tags, email, _id: id, rented };
-
-//   await PostItem.findByIdAndUpdate(id, updatedItem, { new: true });
-
-//   res.json(updatedItem);
-// }
 
 const deleteItem = async (req, res) => {
   const { id } = req.params;
@@ -105,12 +91,9 @@ const getItemsBySearch = async (req, res) => {
   }
 }
 
-
-
 const createOrder = async (req, res) => {
 
   const { returnDate, startDate } = req.body
-
   let calcNights = parseInt((new Date(returnDate) - new Date(startDate)) / (1000 * 60 * 60 * 24), 10)
 
   try {
@@ -122,8 +105,6 @@ const createOrder = async (req, res) => {
       lenderEmail,
       lenderName,
       numberNights,
-      // startDate,
-      // returnDate,
       renterEmail,
       renterName,
       paid,
@@ -149,20 +130,6 @@ const createOrder = async (req, res) => {
     res.status(409).json({ message: err.message })
   }
 }
-
-// const updateOrder = async (req, res) => {
-//   const { id } = req.params;
-//   const { title, description, tags, email } = req.body;
-
-//   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
-
-//   const updatedItem = { title, description, tags, email, _id: id };
-
-//   await PostItem.findByIdAndUpdate(id, updatedOrder, { new: true });
-
-//   res.json(updatedOrder);
-// }
-
 
 export {
   getItems,

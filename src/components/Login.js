@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-// Styling 
+import { login } from '../actions/userActions'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +12,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { login } from '../actions/userActions'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,8 +57,6 @@ function Login() {
     const history = useHistory()
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
-
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
     const classes = useStyles();
 
     useEffect(() => {
@@ -133,28 +131,5 @@ function Login() {
         </Container>
     );
 }
-
-
-
-
-
-// <div className="login-page">
-//     <form onSubmit={loginSubmit}>
-//         <h2>Login</h2>
-//         <input type="email" name="email" required
-//             placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
-//         <input type="password" name="password" required autoComplete="on"
-//             placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-//         <div className="row">
-//             <button type="submit">Login</button>
-//             <Link to="/register">Register</Link>
-//         </div>
-//     </form>
-// </div>
-//     )
-// }
-
 
 export default Login

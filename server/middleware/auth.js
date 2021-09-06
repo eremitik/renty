@@ -1,11 +1,9 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler' //Simple middleware for handling exceptions inside of async express routes and passing them to your express error handlers.
 import dotenv from "dotenv";
-// import config from '../config';
 import User from '../models/users.js';
 dotenv.config();
 
-// const JWT_SECRET = "dsfgrdsfgrsdfgsdgrdsfgf"  //process.env.JWT_SECRET;
 
 const auth = asyncHandler(async (req, res, next) => {
     let token

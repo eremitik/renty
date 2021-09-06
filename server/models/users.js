@@ -21,8 +21,6 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: new Date(),
     },
-    // country: String,
-    // zipcode: Number, 
 });
 
 

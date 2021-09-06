@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema({
-  //   user:{type:mongoose.Schema.Types.ObjectId,
-  // ref:"User"
-  // },
-
   title: String,
   price_id: String,
   nightPrice: Number,

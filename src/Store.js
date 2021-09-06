@@ -12,9 +12,6 @@ import {
     itemRequestAllReducer,
     itemUpdateReducer,
     itemDeleteReducer,
-    // itemSearchReducer,
-    // createOrderReducer,
-    // postOrderReducer,
 } from './reducers/itemReducers'
 
 import {
@@ -30,7 +27,6 @@ const reducer = combineReducers({
     itemList: itemRequestAllReducer,
     itemUpdate: itemUpdateReducer,
     itemDelete: itemDeleteReducer,
-    // itemSearch: itemSearchReducer,
     createOrder: createOrderReducer,
     postOrder: postOrderReducer,
     orderList: orderRequestAllReducer,
