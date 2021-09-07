@@ -50,9 +50,6 @@ export default function Profile() {
   const filteredItems = filterItems(userInfo.email);
   const orderedItems = orderItems(userInfo.email);
 
-  console.log('items ', items)
-  console.log('orders ', orders)
-
   return (
     <div>
       <h1>Profile</h1>
