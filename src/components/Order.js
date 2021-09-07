@@ -202,12 +202,12 @@ const Order = () => {
 
 
     if (payment === "credit") {
-      // sendEmail(e) // turn off emails here
+      sendEmail(e) // turn off emails here
       dispatch(postOrder(orderData))
       setTimeout(sendToStripe, 2000)
 
     } else {
-      // sendEmail(e) // turn off emails here
+      sendEmail(e) // turn off emails here
       handleEthPayment()
     }
   }
@@ -217,6 +217,7 @@ const Order = () => {
   }
 
   const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
+
 
   return (
     <div>
@@ -316,9 +317,20 @@ const Order = () => {
               name="recipient"
               variant="outlined"
               label="recipient"
+              value={userInfo.name}
+              fullWidth
+            />
+            <TextField
+              className={classes.hideTextField}
+              id="recipientEmail"
+              type="text"
+              name="recipientEmail"
+              variant="outlined"
+              label="recipientEmail"
               value={userInfo.email}
               fullWidth
             />
+
 
             <FormControl className={classes.radioSelect} component="fieldset" >
               <FormLabel className={classes.label} component="legend">Payment Method</FormLabel>

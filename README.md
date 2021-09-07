@@ -92,7 +92,6 @@ server {
     proxy_cache_bypass $http_upgrade;
     }
 }
-
 ```
 
 [start server + nginx]
