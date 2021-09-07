@@ -102,9 +102,6 @@ export default function OrderItem({ orderedItem, userInfo }) {
     setOpen(false);
   };
 
-  console.log(orderedItem.startDate)
-  console.log(moment(orderedItem.startDate).format("MMM do YYYY"))
-
   return (
     <Card className={classes.card} onClick={handleClick}>
       <CardMedia
