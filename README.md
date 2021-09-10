@@ -1,102 +1,33 @@
-A decentralized P2P rent-anything platform.
+# Renty
+
+A web3.0 ready rental marketplace - inspired by Mercari and Rarible.\
+Please visit the site [here](http://13.212.157.177/#/)!
+
 ![home](./home.png)
 ![home](./marketplace.png)
 
-Instructions to run locally (make sure to update the .env file):
+## Quick start
+
+You will need to have a [MongoDB Atlas](https://www.mongodb.com/) instance, an [EmailJS](https://docs.ethers.io/v5/) account and [Stripe API](https://stripe.com/docs/api) key ready.
 
 ```
-git clone -b main https://github.com/eremitik/renty.git
-cd renty && npm i
-cp .env.example .env        //copy in your creds
+npm install
+cp .env.example .env
 npm run dev
 ```
 
-EC2 Setup instructions:
+## Technologies used
 
-1. Create free instance of EC2, Ubuntu 18.04. Set security change with HTTP.
-2. SSH into EC2, and do the following:
-
-[install node, nginx, pm2]
-
-```
-curl https://gist.githubusercontent.com/cornflourblue/f0abd30f47d96d6ff127fe8a9e5bbd9f/raw/e3047c9dc3ce8b796e7354c92d2c47ce61981d2f/setup-nodejs-mongodb-production-server-on-ubuntu-1804.sh | sudo bash
-```
-
-[update node]
-
-```
-npm cache clean -f
-npm install -g n
-sudo n stable
-```
-
-[clone repo, prep]
-
-```
-git clone -b main https://github.com/eremitik/renty.git
-cd renty && sudo npm i
-sudo cp .env.example .env   //copy in your creds, change environment to 'PROD'
-sudo vim .env               //enter DB password + JWT token
-sudo npm run build
-```
-
-[setup nginx]
-
-```
-sudo vim /etc/nginx/sites-available/default
-```
-
-amend file as:
-
-```
-server {
-  listen 80 default_server;
-  listen [::]:80 default_server;
-  server_name localhost;
-  root /home/ubuntu/renty/build;
-  index index.html;
-
-  location /users/ {
-    proxy_pass http://127.0.0.1:4000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    }
-
-  location /items/ {
-    proxy_pass http://127.0.0.1:4000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    }
-
-  location /order/ {
-    proxy_pass http://127.0.0.1:4000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    }
-
-  location /stripe/ {
-    proxy_pass http://127.0.0.1:4000;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-[start server + nginx]
-
-```
-sudo pm2 start server/index.js
-sudo systemctl start nginx
-```
+[React](https://reactjs.org/)\
+[Axios](https://axios-http.com/docs/intro)\
+[Bcrypt.js](https://www.npmjs.com/package/bcryptjs)\
+[Email.js](https://www.emailjs.com/)\
+[Ethers.js](https://docs.ethers.io/v5/)\
+[JWT](https://jwt.io/)\
+[Material-UI](https://material-ui.com/)\
+[Moment.js](https://momentjs.com/)\
+[MongoDB](https://www.mongodb.com/)\
+[Mongoose.js](https://mongoosejs.com/docs/api.html)\
+[React-carousel](https://www.npmjs.com/package/@brainhubeu/react-carousel)
+[Redux](https://redux.js.org/)\
+[Stripe API](https://stripe.com/docs/api)
