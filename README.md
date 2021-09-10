@@ -8,7 +8,7 @@ Please visit the site [here](http://13.212.157.177/#/)!
 
 ## Quick start
 
-You will need to have a MongoDB Atlas instance, an EmailJS account and Stripe API key ready.
+You will need to have a [MongoDB Atlas](https://www.mongodb.com/) instance, an [EmailJS](https://docs.ethers.io/v5/) account and [Stripe API](https://stripe.com/docs/api) key ready.
 
 ```
 npm install
@@ -30,4 +30,4 @@ npm run dev
 [Mongoose.js](https://mongoosejs.com/docs/api.html)\
 [React-carousel](https://www.npmjs.com/package/@brainhubeu/react-carousel)
 [Redux](https://redux.js.org/)\
-[Stripe API](https://stripe.com/docs/api)\
+[Stripe API](https://stripe.com/docs/api)
