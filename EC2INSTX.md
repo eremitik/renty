@@ -1,4 +1,4 @@
-## EC2 Setup instructions:
+## EC2 Setup instructions
 
 1. Create free instance of EC2, Ubuntu 18.04. Set security change with HTTP.
 2. SSH into EC2, and do the following:
