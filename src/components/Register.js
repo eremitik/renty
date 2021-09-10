@@ -124,7 +124,7 @@ function Register() {
                                 label="Password"
                                 type="new-password"
                                 id="password"
-                                autoComplete="off"
+                                autoComplete="current-password"
                                 inputProps={{
                                   autoComplete: 'off'
                                }}
