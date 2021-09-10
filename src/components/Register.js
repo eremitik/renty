@@ -122,9 +122,12 @@ function Register() {
                                 fullWidth
                                 name="password"
                                 label="Password"
-                                type="password"
+                                type="new-password"
                                 id="password"
                                 autoComplete="current-password"
+                                inputProps={{
+                                  autoComplete: 'off'
+                               }}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
