@@ -28,6 +28,6 @@ npm run dev
 [Moment.js](https://momentjs.com/)\
 [MongoDB](https://www.mongodb.com/)\
 [Mongoose.js](https://mongoosejs.com/docs/api.html)\
-[React-carousel](https://www.npmjs.com/package/@brainhubeu/react-carousel)
+[React-carousel](https://www.npmjs.com/package/@brainhubeu/react-carousel)\
 [Redux](https://redux.js.org/)\
 [Stripe API](https://stripe.com/docs/api)
