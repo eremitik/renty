@@ -11,7 +11,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 let url;
-(process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "http://13.212.157.177/items/") : (url = "http://localhost:4000/items")
+(process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "http://rentyhq.com/items/") : (url = "http://localhost:4000/items")
 
 const fetchItemsAPI = () => axios.get(url);
 const createItemAPI = (newItem) => { axios.post(url, newItem) };
