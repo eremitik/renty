@@ -4,35 +4,30 @@ import {
   POST_ORDER
 } from '../types/orderTypes.js'
 
-
-
 export const orderRequestAllReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
-      case ORDER_REQUEST_ALL:
-          return { orders: action.payload };
-
-      default:
-          return state;
+    case ORDER_REQUEST_ALL:
+      return { orders: action.payload };
+    default:
+      return state;
   }
 }
 
 export const createOrderReducer = (state = {}, action) => {
-switch (action.type) {
+  switch (action.type) {
     case CREATE_ORDER:
-        return { tempOrder: action.payload };
-
+      return { tempOrder: action.payload };
     default:
-        return state;
+      return state;
   }
 };
 
 // Post Order to MongoDB
 export const postOrderReducer = (state = {}, action) => {
-switch (action.type) {
+  switch (action.type) {
     case POST_ORDER:
-        return { order: action.payload };
-
+      return { order: action.payload };
     default:
-        return state;
+      return state;
   }
 };

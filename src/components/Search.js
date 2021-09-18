@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { getItemsBySearch, getItems } from "../actions/itemActions"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   searchPaper: {
     boxShadow: 'none',
   },
@@ -48,9 +48,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Search = () => {
+export default function Search() {
   const [search, setSearch] = useState("")
-
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -91,5 +90,3 @@ const Search = () => {
     </Paper>
   )
 }
-
-export default Search;

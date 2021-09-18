@@ -43,11 +43,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Form = () => {
-
+export default function Form() {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   const history = useHistory();
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [itemData, setItemData] = useState({
     title: "", 
@@ -59,8 +60,6 @@ const Form = () => {
     price: "",
     selectedFile: "",
   })
-  const classes = useStyles();
-  const dispatch = useDispatch();
 
   const redirect = () => {
     return history.push('/profile')
@@ -68,9 +67,8 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-      dispatch(createItem(itemData));
-      setTimeout(redirect, 2000)
+    dispatch(createItem(itemData));
+    setTimeout(redirect, 2000)
   }
 
   const clear = () => {
@@ -126,13 +124,10 @@ const Form = () => {
           onChange={(e) => setItemData({ ...itemData, price: e.target.value })}
         />
         <div className={classes.fileInput}>
-
+          <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
+          <Button className={classes.buttonClear} variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
         </div>
-        <Button className={classes.buttonSubmit} variant="contained" size="large" type="submit" fullWidth>Submit</Button>
-        <Button className={classes.buttonClear} variant="contained" size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
     </Paper>
   )
 }
-
-export default Form;

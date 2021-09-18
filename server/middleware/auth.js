@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import User from '../models/users.js';
 dotenv.config();
 
-
 const auth = asyncHandler(async (req, res, next) => {
     let token
 
@@ -33,4 +32,5 @@ const auth = asyncHandler(async (req, res, next) => {
         throw new Error('Not authorized, no token')
     }
 })
+
 export default auth

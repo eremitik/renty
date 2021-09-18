@@ -87,7 +87,7 @@ const useStyles = makeStyles({
   },
 })
 
-const Item = ({ item, userInfo }) => {
+export default function Item({ item, userInfo }) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -102,32 +102,35 @@ const Item = ({ item, userInfo }) => {
     }
   }
 
-
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} title={item.title} image={item.selectedFile || 'https://d25tv1xepz39hi.cloudfront.net/2016-07-16/files/cat-sample_1313.jpg'} />
-      <div className={classes.details}>
-        <Typography className={classes.metadata} variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
-      </div>
-      <div className={classes.detailsTwo}>
-        <Typography className={classes.title} variant="body2">{item.title}</Typography>
-        <Typography className={classes.name} variant="body2" >user: {item.name}</Typography>
-        <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{item.description}</Typography>
-      </div>
+        <div className={classes.details}>
+          <Typography className={classes.metadata} variant="body2" color="textSecondary">{item.tags.map((tag) => `#${tag} `)}</Typography>
+        </div>
+        <div className={classes.detailsTwo}>
+          <Typography className={classes.title} variant="body2">{item.title}</Typography>
+          <Typography className={classes.name} variant="body2" >user: {item.name}</Typography>
+          <Typography className={classes.metadata} variant="body2" color="textSecondary" component="p">{item.description}</Typography>
+        </div>
       
       <CardActions className={classes.cardActions}>
-        { userInfo && userInfo.email === item.email 
-        ? <Button size="small" 
-            onClick={handleDelete}>
+        {userInfo && (userInfo.email === item.email) &&
+          <Button size="small" onClick={handleDelete}>
             <DeleteIcon fontSize="small" />
           </Button> 
-        : null}
-        { userInfo && (userInfo.email !== item.email) && !item.rented
-        ? <button className={classes.buyButton} onClick={grabInfo}><Link className={classes.buyButtonText} to="/order">{`¥${Intl.NumberFormat().format(item.price)} /night`}</Link></button> 
-        : !userInfo ? null : userInfo.email === item.email ? null : <button disabled={true} className={classes.buyButton}>out for rent</button> }
+        }
+
+        {userInfo && (userInfo.email !== item.email) && !item.rented
+          ? <button className={classes.buyButton} onClick={grabInfo}>
+              <Link className={classes.buyButtonText} to="/order">{`¥${Intl.NumberFormat().format(item.price)} /night`}</Link>
+            </button> 
+          : !userInfo 
+            ? null 
+            : userInfo.email === item.email 
+              ? null 
+              : <button disabled={true} className={classes.buyButton}>out for rent</button>}
       </CardActions>
     </Card>
   )
 }
-
-export default Item;

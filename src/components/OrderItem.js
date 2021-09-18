@@ -90,7 +90,7 @@ function TransitionUp(props) {
   return <Slide {...props} direction="up" />;
 }
 
-export default function OrderItem({ orderedItem, userInfo }) {
+export default function OrderItem({ orderedItem }) {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -129,13 +129,12 @@ export default function OrderItem({ orderedItem, userInfo }) {
         {orderedItem.txhash 
           ? <a href={`https://ropsten.etherscan.io/tx/${orderedItem.txhash}`} className={classes.paymentData} target="_blank" rel="noopener noreferrer">Etherscan tx link</a> 
           : <Typography className={classes.paymentData}>Paid with credit card.</Typography>
-          }
+        }
         {moment(orderedItem.returnDate) > moment() 
           ? <Typography className={classes.metadataTwo} variant="body2" color="textSecondary" component="p">Return by: {moment(orderedItem.returnDate).calendar()}</Typography> 
           : <Typography className={classes.metadata}>Item has been returned.</Typography>
         }
       </div>
-
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
