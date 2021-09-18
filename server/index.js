@@ -15,12 +15,10 @@ app.use(express.json({ limit: "30mb", extended: true }))
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-
 // just to say hello from server app launch
 app.get('/', (req, res) => {
   res.send('Hello world!')
 })
-
 
 const password = process.env.DB_PASS
 const CONNECTION_URL = "mongodb+srv://renty:" + password + "@cluster0.trccm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"

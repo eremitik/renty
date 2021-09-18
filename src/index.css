@@ -2,15 +2,8 @@
 
 body {
   margin: 0;
-  /* margin-left: 75px; */
-  /* margin-right: 75px; */
-  /* margin-top: 0px; */
   margin-bottom: 65px;
   font-family: "Montserrat";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: "Montserrat";
 }

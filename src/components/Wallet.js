@@ -29,6 +29,13 @@ export default function Crypto () {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const classes = useStyles();
 
+  const handleConnect = async() => {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    const account = accounts[0]
+    window.localStorage.setItem('addr', account)
+    setMmConnected(true)
+  }
+
   const isMetaMaskConnected = async() => {
     const accounts = await provider.listAccounts()
     return (accounts.length > 0)
@@ -38,16 +45,9 @@ export default function Crypto () {
     if (connected) setMmConnected(true)
   })
 
-  const handleConnect = async() => {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const account = accounts[0]
-    window.localStorage.setItem('addr', account)
-    setMmConnected(true)
-  }
-
   return (
     <div>
-      {mmConnected ? <h3>Your ethereum address is: {window.localStorage.getItem('addr')}</h3> : null}
+      {mmConnected && <h3>Your ethereum address is: {window.localStorage.getItem('addr')}</h3>}
       {!mmConnected && <button className={classes.connectButton} onClick={handleConnect}>Connect wallet</button>}
     </div>
   )

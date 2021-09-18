@@ -14,12 +14,11 @@ import { Link } from "react-router-dom";
 import emailjs from 'emailjs-com';
 import { ethers } from 'ethers';
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 
 let url;
 process.env.REACT_APP_ENVIRONMENT === "PROD" ? (url = 'http://13.212.157.177/stripe/create-checkout-session') : (url = 'http://localhost:4000/stripe/create-checkout-session')
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,15 +98,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Order = () => {
-
+export default function Order() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory()
   const [error, setError] = useState();
   const [txs, setTxs] = useState();
   const [payment, setPayment] = useState("crypto");
-
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
@@ -174,7 +171,6 @@ const Order = () => {
   const startEthPayment = async ({ setError, setTxs, ether, addr }) => {
     try {
       if (!window.ethereum) throw new Error("No crypto wallet found, please install MetaMask for best experience!");
-
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       await window.ethereum.send("eth_requestAccounts")
       const signer = provider.getSigner()
@@ -200,12 +196,10 @@ const Order = () => {
     const itemToUpdate = items.filter(item => item.price_id === orderData.price_id)
     dispatch(updateItem((itemToUpdate[0]._id), ({ rented: true })))
 
-
     if (payment === "credit") {
       sendEmail(e) // turn off emails here
       dispatch(postOrder(orderData))
       setTimeout(sendToStripe, 2000)
-
     } else {
       sendEmail(e) // turn off emails here
       handleEthPayment()
@@ -218,15 +212,13 @@ const Order = () => {
 
   const totalPrice = orderData.nightPrice * calcNights(orderData.startDate, orderData.returnDate)
 
-
   return (
     <div>
-
       {order ?
         <Paper className={classes.paper}>
           <h1>Borrow an item</h1>
-          {order ? <Typography className={classes.label}>{order.title}</Typography> : null}
-          {order ? <Typography className={classes.sublabel}>{order.description}</Typography> : null}
+          {order && <Typography className={classes.label}>{order.title}</Typography>}
+          {order && <Typography className={classes.sublabel}>{order.description}</Typography>}
           <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handlePaymentSubmit}>
             <br></br>
             <Typography className={classes.label}>Input Start date: </Typography>
@@ -251,7 +243,6 @@ const Order = () => {
             />
             <br></br>
             <Typography className={classes.label}>Input Return date: </Typography>
-
             <TextField
               id="returndate"
               type="date"
@@ -330,8 +321,6 @@ const Order = () => {
               value={userInfo.email}
               fullWidth
             />
-
-
             <FormControl className={classes.radioSelect} component="fieldset" >
               <FormLabel className={classes.label} component="legend">Payment Method</FormLabel>
                 <RadioGroup row value={payment} onChange={handlePaymentMethod}>
@@ -339,21 +328,17 @@ const Order = () => {
                   <FormControlLabel value="crypto" control={<Radio color="primary" />} label="Crypto" />
                 </RadioGroup>
               </FormControl>
-
             <Button className={classes.buttonSubmit} disabled={totalPrice ? false : true} variant="contained" size="large" type="submit">
-              {!totalPrice ? "Please select dates" : payment === "credit" 
-                ? `Pay with credit: ${`¥` + Intl.NumberFormat().format(totalPrice)}` 
-                : `Pay now in ETH: ${(totalPrice / ETHJPY).toFixed(5)}`}
+              {!totalPrice 
+                ? "Please select dates" 
+                : payment === "credit" 
+                  ? `Pay with credit: ${`¥` + Intl.NumberFormat().format(totalPrice)}` 
+                  : `Pay now in ETH: ${(totalPrice / ETHJPY).toFixed(5)}`}
             </Button>
           </form>
           <p>{error}</p>
-          <p>{txs && `Your transaction hash: ${txs}`}</p>
         </Paper>
-
-        : <button><Link to="/main">Go back</Link></button>}
-
+      : <button><Link to="/main">Go back</Link></button>}
     </div>
   )
 }
-
-export default Order;

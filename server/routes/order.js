@@ -9,5 +9,4 @@ const router = Router();
 router.get('/', getOrders)
 router.post('/', createOrder)
 
-
 export default router;

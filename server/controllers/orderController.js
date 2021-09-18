@@ -1,5 +1,6 @@
 import PostOrder from '../models/orders.js';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const getOrders = async (req, res) => {
@@ -11,11 +12,8 @@ const getOrders = async (req, res) => {
     }
 }
 
-
 const createOrder = async (req, res) => {
-
     const { returnDate, startDate } = req.body
-
     let calcNights = parseInt((new Date(returnDate) - new Date(startDate)) / (1000 * 60 * 60 * 24), 10)
 
     try {
@@ -23,10 +21,8 @@ const createOrder = async (req, res) => {
         title,
         price_id,
         nightPrice,
-        totalPrice,
         lenderEmail,
         lenderName,
-        numberNights,
         renterEmail,
         renterName,
         paid,
@@ -58,7 +54,6 @@ const createOrder = async (req, res) => {
         res.status(409).json({ message: err.message })
     }
 }
-
 
 export {
     getOrders,

@@ -21,26 +21,22 @@ import {
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
-    userLogin: userLoginReducer,
-    userRegister: userRegisterReducer,
-    itemCreate: itemCreateReducer,
-    itemList: itemRequestAllReducer,
-    itemUpdate: itemUpdateReducer,
-    itemDelete: itemDeleteReducer,
-    createOrder: createOrderReducer,
-    postOrder: postOrderReducer,
-    orderList: orderRequestAllReducer,
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  itemCreate: itemCreateReducer,
+  itemList: itemRequestAllReducer,
+  itemUpdate: itemUpdateReducer,
+  itemDelete: itemDeleteReducer,
+  createOrder: createOrderReducer,
+  postOrder: postOrderReducer,
+  orderList: orderRequestAllReducer,
 })
 
-const userInfoFromStorage = localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo'))
-    : null
+const userInfoFromStorage = localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo'))
 
 const initialState = {
-    userLogin: { userInfo: userInfoFromStorage },
+  userLogin: { userInfo: userInfoFromStorage },
 }
-
-
 
 const middleware = [thunk]
 
