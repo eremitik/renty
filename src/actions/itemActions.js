@@ -7,8 +7,8 @@ import {
   ITEM_REQUEST_SEARCH,
 } from '../types/itemTypes.js'
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 
 let url;
 (process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "http://13.212.157.177/items/") : (url = "http://localhost:4000/items")
@@ -18,7 +18,6 @@ const createItemAPI = (newItem) => { axios.post(url, newItem) };
 const updateItemAPI = (id, updatedItem) => axios.patch(`${url}/${id}`, updatedItem);
 const deleteItemAPI = (id) => axios.delete(`${url}/${id}`)
 const fetchItemsBySearchAPI = (searchQuery) => axios.get(`${url}/search?searchQuery=${searchQuery.search || 'none'}`)
-
 
 export const getItems = () => async (dispatch) => {
   try {
@@ -66,4 +65,3 @@ export const getItemsBySearch = (searchQuery) => async (dispatch) => {
     console.log(err)
   }
 }
-

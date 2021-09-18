@@ -1,8 +1,9 @@
 import PostItem from '../models/postItem.js';
 import PostOrder from '../models/orders.js';
 import Stripe from 'stripe';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
 // const stripe = new Stripe(process.env.REACT_APP_STRIPE_SECRET_KEY);
 const stripe = new Stripe('sk_test_51JKIuDIZNIF6strf1jaT9lK5m0jtirHlhgdQJ0TLqvAEuqtlRZDIxd83cvXPRchs7WmZMhurhtsXZFBDMHbL5r97004DqN6MGg');
 dotenv.config();
@@ -17,7 +18,6 @@ const getItems = async (req, res) => {
 }
 
 const createItem = async (req, res) => {
-
   try {
     const {
       title,
@@ -60,13 +60,10 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   const { id } = req.params;
   const { rented } = req.body;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
-
   const updatedItem = { _id: id, rented };
 
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No item with id: ${id}`);
   await PostItem.findByIdAndUpdate(id, updatedItem, { new: true });
-
   res.json(updatedItem);
 }
 
@@ -74,9 +71,7 @@ const deleteItem = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Item with id: ${id}`);
-
   await PostItem.findByIdAndRemove(id);
-
   res.json({ message: "Item deleted successfully." });
 }
 
@@ -93,7 +88,6 @@ const getItemsBySearch = async (req, res) => {
 }
 
 const createOrder = async (req, res) => {
-
   const { returnDate, startDate } = req.body
   let calcNights = parseInt((new Date(returnDate) - new Date(startDate)) / (1000 * 60 * 60 * 24), 10)
 
@@ -102,10 +96,8 @@ const createOrder = async (req, res) => {
       title,
       price_id,
       nightPrice,
-      totalPrice,
       lenderEmail,
       lenderName,
-      numberNights,
       renterEmail,
       renterName,
       paid,

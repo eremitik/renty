@@ -2,12 +2,8 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/users.js'
 
-
-
-
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
-
     const user = await User.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
@@ -23,10 +19,8 @@ const authUser = asyncHandler(async (req, res) => {
     }
 })
 
-
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body
-
     const userExists = await User.findOne({ email })
 
     if (userExists) {
@@ -53,13 +47,10 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 })
 
-
-
 const getUsers = asyncHandler(async (req, res) => {
     const users = await User.find({})
     res.json(users)
 })
-
 
 const deleteUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
@@ -73,7 +64,6 @@ const deleteUser = asyncHandler(async (req, res) => {
     }
 })
 
-
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id).select('-password')
 
@@ -85,7 +75,6 @@ const getUserById = asyncHandler(async (req, res) => {
     }
 })
 
-
 const updateUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
 
@@ -93,9 +82,7 @@ const updateUser = asyncHandler(async (req, res) => {
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
 
-
         const updatedUser = await user.save()
-
         res.json({
             _id: updatedUser._id,
             name: updatedUser.name,

@@ -60,13 +60,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 export default function Navbar() {
   const dispatch = useDispatch()
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   const logoutSubmit = async (e) => {
     e.preventDefault()
@@ -78,9 +79,6 @@ export default function Navbar() {
     }
   }
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -89,53 +87,50 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-
   return (
-      <AppBar className={classes.navBar} position="fixed" color="inherit">
-        <Toolbar>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-              edge="start"
-              className={classes.menu}
-            >
-              <MenuIcon className={classes.menuIcon}/>
-            </IconButton>
-
-            <Menu
-              className={classes.link}
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem className={classes.link} onClick={handleClose} component={Link} to="/">Home</MenuItem>
-              { !userInfo ? <MenuItem onClick={handleClose} component={Link} to="/register">Register</MenuItem> : null }
-              { !userInfo ? <MenuItem onClick={handleClose} component={Link} to="/login">Login</MenuItem> : null }
-              <MenuItem onClick={handleClose} component={Link} to="/main">Marketplace</MenuItem>
-              { !userInfo ? null : <MenuItem onClick={handleClose} component={Link} to="/form">Post Rental</MenuItem> }
-              <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
-            </Menu>
-          <Typography variant="h6" className={classes.title} component={Link} to="/main">RENTY</Typography>
-          <Search />
-
-              { !userInfo ? 
-                <Link to="/login"><button style={{color:"black"}} className={classes.profileButton}>Sign in</button></Link> :
-                <Link to="/profile"><button style={{color:"black"}} className={classes.profileButton}>Profile</button></Link>
-              }
-        </Toolbar>
-      </AppBar>
+    <AppBar className={classes.navBar} position="fixed" color="inherit">
+      <Toolbar>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+          edge="start"
+          className={classes.menu}
+        >
+          <MenuIcon className={classes.menuIcon}/>
+        </IconButton>
+        <Menu
+          className={classes.link}
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem className={classes.link} onClick={handleClose} component={Link} to="/">Home</MenuItem>
+          {!userInfo && <MenuItem onClick={handleClose} component={Link} to="/register">Register</MenuItem>}
+          {!userInfo && <MenuItem onClick={handleClose} component={Link} to="/login">Login</MenuItem>}
+          <MenuItem onClick={handleClose} component={Link} to="/main">Marketplace</MenuItem>
+          {userInfo && <MenuItem onClick={handleClose} component={Link} to="/form">Post Rental</MenuItem>}
+          <MenuItem onClick={logoutSubmit}>Logout</MenuItem>
+        </Menu>
+        <Typography variant="h6" className={classes.title} component={Link} to="/main">RENTY</Typography>
+        <Search />
+          { !userInfo 
+            ? <Link to="/login"><button style={{color:"black"}} className={classes.profileButton}>Sign in</button></Link>
+            : <Link to="/profile"><button style={{color:"black"}} className={classes.profileButton}>Profile</button></Link>
+          }
+      </Toolbar>
+    </AppBar>
   );
 }

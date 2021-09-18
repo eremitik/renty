@@ -5,15 +5,14 @@ import {
   POST_ORDER
 } from '../types/orderTypes.js'
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 
 let url;
 (process.env.REACT_APP_ENVIRONMENT === "PROD") ? (url = "http://13.212.157.177/order/") : (url = "http://localhost:4000/order")
 
 const fetchOrdersAPI = () => axios.get(url);
 const createOrderAPI = (newOrder) => { axios.post(url, newOrder) };
-
 
 export const getOrder = () => async (dispatch) => {
   try {
