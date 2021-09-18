@@ -1,7 +1,7 @@
 # Renty
 
 A web3.0 ready rental marketplace - inspired by Mercari and Rarible.\
-Please visit the site [here](http://13.212.157.177/#/)!
+Please visit the site [here](http://rentyhq.com/#/)!
 
 ![home](./home.png)
 ![home](./marketplace.png)
